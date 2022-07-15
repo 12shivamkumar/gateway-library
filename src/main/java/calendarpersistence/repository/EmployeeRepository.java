@@ -1,12 +1,12 @@
 package calendarpersistence.repository;
 
 import calendarpersistence.model.Employee;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface EmployeeRepository {
-    Employee addEmployee(Employee employee);
-    Employee removeEmployee(String empID);
-    int getOffice(List<String> empID);
-    List<String> findEmployeeByID(List<String> empID);
+
+
 }

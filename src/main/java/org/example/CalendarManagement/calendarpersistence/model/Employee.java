@@ -1,13 +1,15 @@
-package calendarpersistence.model;
+package org.example.CalendarManagement.calendarpersistence.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
+@Table
 public class Employee {
     @Id
     private String employeeId;
@@ -30,6 +32,7 @@ public class Employee {
     @Column
     private LocalDateTime createdDateTime;
 
+    public Employee(){}
     public Employee(String employeeId, String name, int officeId, String email, boolean isDeleted, LocalDateTime createdDateTime) {
         this.employeeId = employeeId;
         this.name = name;
@@ -42,41 +45,17 @@ public class Employee {
     public String getEmployeeId() {
         return employeeId;
     }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getOfficeId() {
         return officeId;
     }
-
-    public void setOfficeId(int officeId) {
-        this.officeId = officeId;
-    }
-
     public String getEmail() {
         return email;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public boolean isDeleted() {
         return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package calendarpersistence.model;
+package org.example.CalendarManagement.calendarpersistence.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -6,11 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class EmployeeMeeting
+public class EmployeeMeeting implements Serializable
 {
     @Id
     private String employeeId;
@@ -29,6 +30,7 @@ public class EmployeeMeeting
     @Column
     private LocalDateTime createdDateTime;
 
+    public EmployeeMeeting(){}
     public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate, LocalDateTime createdDateTime) {
         this.employeeId = employeeId;
         this.meetingId = meetingId;
@@ -40,41 +42,15 @@ public class EmployeeMeeting
     public String getEmployeeId() {
         return employeeId;
     }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getMeetingId() {
-        return meetingId;
-    }
-
-    public void setMeetingId(String meetingId) {
-        this.meetingId = meetingId;
-    }
-
+    public String getMeetingId() {return meetingId;}
     public String getStatus() {
         return status;
     }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public LocalDate getMeetDate() {
         return meetDate;
     }
-
-    public void setMeetDate(LocalDate meetDate) {
-        this.meetDate = meetDate;
-    }
-
     public LocalDateTime getCreatedDateTime() {
         return createdDateTime;
-    }
-
-    public void setCreatedDateTime(LocalDateTime createdDateTime) {
-        this.createdDateTime = createdDateTime;
     }
 
     @Override
@@ -86,5 +62,15 @@ public class EmployeeMeeting
                 ", meetDate=" + meetDate +
                 ", createdDateTime=" + createdDateTime +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

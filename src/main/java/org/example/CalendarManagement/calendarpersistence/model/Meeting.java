@@ -1,4 +1,4 @@
-package calendarpersistence.model;
+package org.example.CalendarManagement.calendarpersistence.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.Column;

@@ -1,4 +1,4 @@
-package calendarpersistence.model;
+package org.example.CalendarManagement.calendarpersistence.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,6 +25,8 @@ public class MeetingRoom {
     @Column
     private LocalDateTime createdDateTime;
 
+    public MeetingRoom(){}
+
     public MeetingRoom(int roomId, String roomName, int officeId, LocalDateTime createdDateTime) {
         this.roomId = roomId;
         this.roomName = roomName;
@@ -35,35 +37,11 @@ public class MeetingRoom {
     public int getRoomId() {
         return roomId;
     }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
-    public String getRoomName() {
-        return roomName;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
-    public int getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(int officeId) {
-        this.officeId = officeId;
-    }
-
+    public String getRoomName() {return roomName;}
+    public int getOfficeId() {return officeId;}
     public LocalDateTime getCreatedDateTime() {
         return createdDateTime;
     }
-
-    public void setCreatedDateTime(LocalDateTime createdDateTime) {
-        this.createdDateTime = createdDateTime;
-    }
-
     @Override
     public String toString() {
         return "MeetingRoom{" +

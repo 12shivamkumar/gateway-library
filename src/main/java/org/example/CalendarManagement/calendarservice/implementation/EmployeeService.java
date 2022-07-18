@@ -20,15 +20,7 @@ public class EmployeeService implements  EmployeeInterface
     @Transactional
     public Employee addEmployee(Employee employee)
     {
-        try {
-            employeeRepository.save(employee);
-            return employee;
-        }catch (Exception ex)
-        {
-            EmployeeAlreadyExistsException exception =
-                    new EmployeeAlreadyExistsException("Employee Already exists",ex);
-            throw exception;
-        }
+        return employeeRepository.save(employee);
     }
 
     @Override

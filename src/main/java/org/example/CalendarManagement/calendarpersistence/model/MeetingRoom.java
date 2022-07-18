@@ -3,6 +3,7 @@ package org.example.CalendarManagement.calendarpersistence.model;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -18,8 +19,12 @@ public class MeetingRoom {
     private String roomName;
 
     @Column
-    @NotNull(message = "Room must belong to an office")
+    @Min(value = 0,message = "Room must belong to an office")
     private int officeId;
+
+    @Column
+    @NotNull
+    private boolean isOpen;
 
     @CreationTimestamp
     @Column
@@ -27,11 +32,11 @@ public class MeetingRoom {
 
     public MeetingRoom(){}
 
-    public MeetingRoom(int roomId, String roomName, int officeId, LocalDateTime createdDateTime) {
-        this.roomId = roomId;
+    public MeetingRoom( String roomName, int officeId,boolean isOpen) {
         this.roomName = roomName;
         this.officeId = officeId;
-        this.createdDateTime = createdDateTime;
+        this.isOpen = isOpen;
+
     }
 
     public int getRoomId() {

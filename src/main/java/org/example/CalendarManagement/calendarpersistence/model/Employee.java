@@ -32,14 +32,13 @@ public class Employee {
     @Column
     private LocalDateTime createdDateTime;
 
-    public Employee(){}
-    public Employee(String employeeId, String name, int officeId, String email, boolean isDeleted, LocalDateTime createdDateTime) {
+
+    public Employee(String employeeId, String name, int officeId, String email) {
         this.employeeId = employeeId;
         this.name = name;
         this.officeId = officeId;
         this.email = email;
-        this.isDeleted = isDeleted;
-        this.createdDateTime = createdDateTime;
+
     }
 
     public String getEmployeeId() {

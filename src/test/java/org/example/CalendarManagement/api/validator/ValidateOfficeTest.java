@@ -1,4 +1,4 @@
-package api.validator;
+package org.example.CalendarManagement.api.validator;
 
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
@@ -39,9 +39,9 @@ public class ValidateOfficeTest {
         AddEmployeeDataRequest employeeRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
 
         Mockito.when(officeRepository.findById(officeID)).thenReturn(Optional.of(new Office(officeID,"XYZ ",
-                "Bangalore" , LocalDateTime.now())));
+                "Bangalore")));
 
-        ValidateResponse validateResponse = validateOfficeId.checkOfficeId(employeeRequest);
+        ValidateResponse validateResponse = validateOfficeId.checkOfficeId(employeeRequest.getOfficeId());
 
         assertNotNull(validateResponse);
 
@@ -58,13 +58,12 @@ public class ValidateOfficeTest {
 
         AddEmployeeDataRequest employeeRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
 
-        Mockito.when(officeRepository.findById(officeID)).thenReturn(Optional.of(new Office(102,"abc" ,
-                "Bangalore", LocalDateTime.now())));
+        Mockito.when(officeRepository.findById(officeID)).thenReturn(Optional.empty());
 
-        ValidateResponse validateResponse = validateOfficeId.checkOfficeId(employeeRequest);
+        ValidateResponse validateResponse = validateOfficeId.checkOfficeId(employeeRequest.getOfficeId());
 
         assertNotNull(validateResponse);
 
-        assertTrue(validateResponse.isValid());
+        assertFalse(validateResponse.isValid());
     }
 }

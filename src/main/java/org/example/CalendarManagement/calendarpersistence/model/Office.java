@@ -1,17 +1,15 @@
 package org.example.CalendarManagement.calendarpersistence.model;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
 public class Office {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int officeID;
 
     @Column
@@ -28,11 +26,10 @@ public class Office {
 
     public Office(){}
 
-    public Office(int officeID, String officeName, String officeLocation, LocalDateTime createdDateTime) {
+    public Office(int officeID, String officeName, String officeLocation) {
         this.officeID = officeID;
         this.officeName = officeName;
         this.officeLocation = officeLocation;
-        this.createdDateTime = createdDateTime;
     }
 
     public int getOfficeID() {

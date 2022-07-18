@@ -14,7 +14,7 @@ public class AddEmployeeDataRequest {
 
 
     @NotNull(message = "Employee Email Cannot be Null")
-   // @Pattern(regexp = "^([a-zA-Z0-9_\\-]+)@([cap]+)\\.([com])$")
+   // @Pattern(regexp = "^[a-zA-Z0-9_\\-]+@[cap]+\\.[com]$")
     private String email;
 
     @NotNull(message = "Employee must belongs to an office")

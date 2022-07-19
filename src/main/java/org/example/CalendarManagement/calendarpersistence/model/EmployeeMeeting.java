@@ -5,30 +5,27 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "EmployeeMeeting")
 public class EmployeeMeeting implements Serializable
 {
     @Id
-    @Column(name = "EmployeeId")
     private String employeeId;
 
     @Id
-    @Column(name = "MeetingId")
     private String meetingId;
 
-    @Column(name = "Status")
+    @Column
     private String status;
 
-    @Column(name = "Date")
+    @Column(name = "date")
     @NotNull(message = "meeting must have date")
     private LocalDate meetDate;
+
 
     public EmployeeMeeting(){}
     public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate) {
@@ -48,6 +45,7 @@ public class EmployeeMeeting implements Serializable
     public LocalDate getMeetDate() {
         return meetDate;
     }
+
 
     @Override
     public String toString() {

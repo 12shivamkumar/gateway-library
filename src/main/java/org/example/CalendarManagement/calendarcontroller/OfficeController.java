@@ -1,4 +1,4 @@
-package org.example.CalendarManagement.calendarfacade;
+package org.example.CalendarManagement.calendarcontroller;
 
 import org.example.CalendarManagement.calendarpersistence.model.Office;
 import org.example.CalendarManagement.calendarservice.implementation.OfficeService;
@@ -11,7 +11,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/office")
-public class OfficeFacade {
+public class OfficeController {
     @Autowired
     OfficeService officeService;
     @PostMapping

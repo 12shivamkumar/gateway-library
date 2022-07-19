@@ -9,28 +9,27 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Employee")
+@Table
 public class Employee {
     @Id
-    @Column(name = "EmployeeId")
     private String employeeId;
-    @Column(name = "Name")
+    @Column
     @NotNull(message = "employee name cannot be null")
     private String name;
 
-    @Column(name = "OfficeId")
+    @Column
     @NotNull(message = "employee must belongs to office")
     private int officeId;
 
-    @Column(name = "Email", unique = true)
+    @Column(unique = true)
     @NotNull(message = "employee email cannot be null")
     private String email;
 
-    @Column(name = "IsDeleted")
+    @Column
     private boolean isDeleted;
 
     @CreationTimestamp
-    @Column(name = "Log")
+    @Column
     private LocalDateTime createdDateTime;
 
 

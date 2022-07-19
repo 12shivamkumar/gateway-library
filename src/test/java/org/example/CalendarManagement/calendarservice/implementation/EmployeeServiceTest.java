@@ -35,7 +35,7 @@ class EmployeeServiceTest {
         assertNotNull(employeeService.addEmployee(employeeWithValidArguments));
     }
 
-    @Test()
+    @Test
     public void addEmployeeTest_employeeSaveFailed(){
         String employeeId = "CAP-1";
         String name = "xyz";

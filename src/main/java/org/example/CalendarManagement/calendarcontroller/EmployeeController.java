@@ -5,6 +5,7 @@ import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
+import org.example.CalendarManagement.calendarfacade.EmployeeFacade;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +24,27 @@ import java.time.LocalDateTime;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService employeeService;
-    @Autowired
     ValidateOfficeId validateOfficeId;
     @Autowired
     ValidateEmployeeEmail validateEmployeeEmail;
+
+    @Autowired
+    EmployeeFacade employeeFacade;
+
     @PostMapping
     public ResponseEntity<Object> saveEmployee(@Valid @RequestBody AddEmployeeDataRequest request)
     {
 
         ValidateResponse validationResponseOfficeIdInDb = validateOfficeId.checkOfficeId(request.getOfficeId());
         ValidateResponse validateResponseEmployeeEmailDuplicate = validateEmployeeEmail.checkEmployeeEmailExist(request.getEmail());
-        return null;
 
+
+        if(!validateResponseEmployeeEmailDuplicate.isValid())
+            return new ResponseEntity<>(validateResponseEmployeeEmailDuplicate.getMessage(),HttpStatus.BAD_REQUEST);
+
+        if(!validationResponseOfficeIdInDb.isValid())
+            return new ResponseEntity<>(validationResponseOfficeIdInDb.getMessage(),HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>( employeeFacade.saveEmployee(request) ,HttpStatus.CREATED);
     }
-
 }

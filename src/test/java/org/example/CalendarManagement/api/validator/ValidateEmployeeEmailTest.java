@@ -29,7 +29,7 @@ class ValidateEmployeeEmailTest {
         Mockito.when(employeeRepository.findByEmail(email)).thenReturn(Optional.of(new Employee(employeeId,name,officeID,email)));
         ValidateResponse responseForDuplicateEmail =validateEmployeeEmail.checkEmployeeEmailExist(email);
         assertNotNull(responseForDuplicateEmail);
-        assertTrue(responseForDuplicateEmail.isValid());
+        assertFalse(responseForDuplicateEmail.isValid());
     }
     @Test
     public void validateEmployeeEmailTest_emailIsNotDuplicate(){
@@ -40,6 +40,6 @@ class ValidateEmployeeEmailTest {
         Mockito.when(employeeRepository.findByEmail(email)).thenReturn(Optional.empty());
         ValidateResponse responseForDuplicateEmail =validateEmployeeEmail.checkEmployeeEmailExist(email);
         assertNotNull(responseForDuplicateEmail);
-        assertFalse(responseForDuplicateEmail.isValid());
+        assertTrue(responseForDuplicateEmail.isValid());
     }
 }

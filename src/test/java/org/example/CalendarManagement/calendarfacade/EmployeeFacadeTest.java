@@ -42,7 +42,5 @@ public class EmployeeFacadeTest {
         Employee savedEmployee = employeeFacade.saveEmployee(requestTesting);
         assertNotNull(savedEmployee);
         assertFalse(savedEmployee.isDeleted());
-
     }
-
 }

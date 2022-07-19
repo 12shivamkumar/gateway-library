@@ -33,6 +33,8 @@ public class Employee {
     private LocalDateTime createdDateTime;
 
 
+    public Employee(){}
+
     public Employee(String employeeId, String name, int officeId, String email) {
         this.employeeId = employeeId;
         this.name = name;

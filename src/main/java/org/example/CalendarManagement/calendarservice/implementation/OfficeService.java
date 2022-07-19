@@ -22,6 +22,7 @@ OfficeRepository officeRepository;
 
 
     public Office addOffice(Office office){
+        System.out.println(office.getOfficeLocation()+office.getOfficeID()+office.getOfficeName());
         officeRepository.save(office);
         return office;
     }

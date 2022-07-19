@@ -27,7 +27,7 @@ public class MeetingRoom {
     private boolean isOpen;
 
     @CreationTimestamp
-    @Column
+    @Column(name = "log")
     private LocalDateTime createdDateTime;
 
     public MeetingRoom(){}

@@ -9,19 +9,19 @@ import java.time.LocalDateTime;
 @Entity
 public class Office {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int officeID;
 
     @Column
     @NotNull(message = "office name cannot be null")
     private String officeName;
 
-    @Column(unique = true)
-    @NotNull(message = "office location cannot be null")
+    @Column(name = "Location",unique = true)
+    //@NotNull(message = "office location cannot be null")
     private String officeLocation;
 
     @CreationTimestamp
-    @Column
+    @Column(name = "log")
     private LocalDateTime createdDateTime;
 
     public Office(){}

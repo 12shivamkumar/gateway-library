@@ -22,21 +22,17 @@ public class EmployeeMeeting implements Serializable
     @Column
     private String status;
 
-    @Column
+    @Column(name = "date")
     @NotNull(message = "meeting must have date")
     private LocalDate meetDate;
 
-    @CreationTimestamp
-    @Column
-    private LocalDateTime createdDateTime;
 
     public EmployeeMeeting(){}
-    public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate, LocalDateTime createdDateTime) {
+    public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate) {
         this.employeeId = employeeId;
         this.meetingId = meetingId;
         this.status = status;
         this.meetDate = meetDate;
-        this.createdDateTime = createdDateTime;
     }
 
     public String getEmployeeId() {
@@ -49,9 +45,7 @@ public class EmployeeMeeting implements Serializable
     public LocalDate getMeetDate() {
         return meetDate;
     }
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
-    }
+
 
     @Override
     public String toString() {
@@ -60,7 +54,6 @@ public class EmployeeMeeting implements Serializable
                 ", meetingId='" + meetingId + '\'' +
                 ", status='" + status + '\'' +
                 ", meetDate=" + meetDate +
-                ", createdDateTime=" + createdDateTime +
                 '}';
     }
 

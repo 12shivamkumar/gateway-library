@@ -22,7 +22,7 @@ public class Meeting
     @NotNull(message = "meeting must have an agenda")
     private String agenda;
 
-    @Column
+    @Column(name = "OwnerId")
     @NotNull(message = "Employee ID cannot be null")
     private String employeeId;
 
@@ -42,8 +42,7 @@ public class Meeting
     private boolean isAvailable = true;
 
     @CreationTimestamp
-    @Column
-    @NotNull()
+    @Column(name = "log")
     private LocalDateTime createdDateTime;
 
     @Column

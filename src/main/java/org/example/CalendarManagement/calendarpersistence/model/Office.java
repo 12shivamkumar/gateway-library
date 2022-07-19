@@ -7,21 +7,23 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "Office")
 public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "OfficeId")
     private int officeID;
 
-    @Column
+    @Column(name = "OfficeName")
     @NotNull(message = "office name cannot be null")
     private String officeName;
 
-    @Column(unique = true)
+    @Column(unique = true , name = "Location")
     @NotNull(message = "office location cannot be null")
     private String officeLocation;
 
     @CreationTimestamp
-    @Column
+    @Column(name = "Log")
     private LocalDateTime createdDateTime;
 
     public Office(){}

@@ -5,38 +5,37 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "EmployeeMeeting")
 public class EmployeeMeeting implements Serializable
 {
     @Id
+    @Column(name = "EmployeeId")
     private String employeeId;
 
     @Id
+    @Column(name = "MeetingId")
     private String meetingId;
 
-    @Column
+    @Column(name = "Status")
     private String status;
 
-    @Column
+    @Column(name = "Date")
     @NotNull(message = "meeting must have date")
     private LocalDate meetDate;
 
-    @CreationTimestamp
-    @Column
-    private LocalDateTime createdDateTime;
-
     public EmployeeMeeting(){}
-    public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate, LocalDateTime createdDateTime) {
+    public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate) {
         this.employeeId = employeeId;
         this.meetingId = meetingId;
         this.status = status;
         this.meetDate = meetDate;
-        this.createdDateTime = createdDateTime;
     }
 
     public String getEmployeeId() {
@@ -49,9 +48,6 @@ public class EmployeeMeeting implements Serializable
     public LocalDate getMeetDate() {
         return meetDate;
     }
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
-    }
 
     @Override
     public String toString() {
@@ -60,7 +56,6 @@ public class EmployeeMeeting implements Serializable
                 ", meetingId='" + meetingId + '\'' +
                 ", status='" + status + '\'' +
                 ", meetDate=" + meetDate +
-                ", createdDateTime=" + createdDateTime +
                 '}';
     }
 

@@ -42,7 +42,7 @@ public class Employee {
         this.email = email;
 
     }
-
+/*
     public String getEmployeeId() {
         return employeeId;
     }
@@ -54,12 +54,12 @@ public class Employee {
     }
     public String getEmail() {
         return email;
-    }
+    }*/
     public boolean isDeleted() {
         return isDeleted;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Employee{" +
                 "employeeId='" + employeeId + '\'' +
@@ -69,5 +69,5 @@ public class Employee {
                 ", isDeleted=" + isDeleted +
                 ", createdDateTime=" + createdDateTime +
                 '}';
-    }
+    }*/
 }

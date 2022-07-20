@@ -1,5 +1,6 @@
 package org.example.CalendarManagement.calendarcontroller;
 
+import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
@@ -20,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+
 class EmployeeControllerTest {
 
     @Mock
@@ -47,10 +48,11 @@ class EmployeeControllerTest {
         Mockito.when(validateOfficeId.checkOfficeId(officeID)).thenReturn(new ValidateResponse("Valid OfficeID" , true));
         Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("valid Email", true));
         Mockito.when(employeeFacade.saveEmployee(addEmployeeDataRequest)).thenReturn(employee);
-        ResponseEntity<Object> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
+        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
         assertNotNull(responseEntity);
         assertEquals(201, responseEntity.getStatusCodeValue());
-        assertEquals(employee , responseEntity.getBody());
+        assertNotNull(responseEntity.getBody());
+        assertEquals(employee , responseEntity.getBody().getData());
     }
 
     @Test
@@ -62,13 +64,12 @@ class EmployeeControllerTest {
         int officeID = 101;
         Employee employee = new Employee(employeeId,name,officeID,email);
         AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
-        Mockito.when(validateOfficeId.checkOfficeId(officeID)).thenReturn(new ValidateResponse("Valid OfficeID" , true));
         Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("Employee with this email exists", false));
-        Mockito.when(employeeFacade.saveEmployee(addEmployeeDataRequest)).thenReturn(employee);
-        ResponseEntity<Object> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
+        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
         assertNotNull(responseEntity);
         assertEquals(400, responseEntity.getStatusCodeValue());
-        assertEquals("Employee with this email exists" , responseEntity.getBody());
+        assertNotNull(responseEntity.getBody());
+        assertEquals("Employee with this email exists" , responseEntity.getBody().getError());
     }
 
     @Test
@@ -82,11 +83,11 @@ class EmployeeControllerTest {
         AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
         Mockito.when(validateOfficeId.checkOfficeId(officeID)).thenReturn(new ValidateResponse("Office Information is Not Present" , false));
         Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("Employee with this email does not exist", true));
-        Mockito.when(employeeFacade.saveEmployee(addEmployeeDataRequest)).thenReturn(employee);
-        ResponseEntity<Object> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
+        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
         assertNotNull(responseEntity);
         assertEquals(400, responseEntity.getStatusCodeValue());
-        assertEquals("Office Information is Not Present" , responseEntity.getBody());
+        assertNotNull(responseEntity.getBody());
+        assertEquals("Office Information is Not Present" , responseEntity.getBody().getError());
     }
 
 }

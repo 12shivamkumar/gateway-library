@@ -8,9 +8,10 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+/*
 @Entity
 public class Meeting
+
 {
     @Id
     private String meetId;
@@ -48,4 +49,4 @@ public class Meeting
     @Column
     @NotNull(message = "meeting must belongs to a room")
     private int roomId;
-}
+}*/

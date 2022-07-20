@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+/*@MockitoSettings(strictness = Strictness.LENIENT)*/
 public class EmployeeFacadeTest {
 
 
@@ -37,7 +37,7 @@ public class EmployeeFacadeTest {
         String name = "xyz";
         int officeID = 101;
         Employee employee = new Employee(employeeId,name,officeID,email);
-        Mockito.when(employeeService.addEmployee(new Employee(employeeId,name,officeID,email))).thenReturn(employee);
+        Mockito.when(employeeService.addEmployee(Mockito.any(Employee.class))).thenReturn(employee);
         AddEmployeeDataRequest requestTesting = new AddEmployeeDataRequest(employeeId,name,email,officeID);
         Employee savedEmployee = employeeFacade.saveEmployee(requestTesting);
         assertNotNull(savedEmployee);

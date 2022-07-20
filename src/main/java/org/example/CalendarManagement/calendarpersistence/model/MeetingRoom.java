@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+/*
 
 @Entity
 public class MeetingRoom {
@@ -56,4 +57,4 @@ public class MeetingRoom {
                 ", createdDateTime=" + createdDateTime +
                 '}';
     }
-}
+}*/

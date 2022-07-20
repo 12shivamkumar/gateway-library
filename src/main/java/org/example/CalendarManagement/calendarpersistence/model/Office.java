@@ -34,7 +34,7 @@ public class Office {
         this.officeLocation = officeLocation;
     }
 
-    public int getOfficeID() {
+    /*public int getOfficeID() {
         return officeID;
     }
     public String getOfficeName() {
@@ -45,9 +45,9 @@ public class Office {
     }
     public LocalDateTime getCreatedDateTime() {
         return createdDateTime;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public String toString() {
         return "Office{" +
                 "officeID=" + officeID +
@@ -55,5 +55,5 @@ public class Office {
                 ", officeLocation='" + officeLocation + '\'' +
                 ", createdDateTime=" + createdDateTime +
                 '}';
-    }
+    }*/
 }

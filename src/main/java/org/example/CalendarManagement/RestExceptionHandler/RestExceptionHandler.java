@@ -9,6 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+/*
 
 @ControllerAdvice
 public class RestExceptionHandler
@@ -22,9 +23,5 @@ public class RestExceptionHandler
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({EmployeeAlreadyExistsException.class})
-    protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request)
-    {
-        return new ResponseEntity<>("Employee already exists", HttpStatus.BAD_REQUEST);
-    }
 }
+*/

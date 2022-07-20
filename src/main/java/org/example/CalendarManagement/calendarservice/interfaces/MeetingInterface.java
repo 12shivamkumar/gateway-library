@@ -1,5 +1,5 @@
 package org.example.CalendarManagement.calendarservice.interfaces;
-
+/*
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarpersistence.model.Meeting;
 
@@ -15,4 +15,4 @@ public interface MeetingInterface {
     Boolean cancelMeeting(String meetingID);
     List<Meeting> findMeetingsByID(List<String> meetingIDList);
     Meeting findMeetingByID(String meetingID);
-}
+}*/

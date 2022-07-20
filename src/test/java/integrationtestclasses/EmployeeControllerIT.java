@@ -19,7 +19,8 @@ import org.springframework.http.ResponseEntity;
 public class EmployeeControllerIT extends BaseIntegrationTestClass{
 
     @Test
-    public void addEmployeeTest() throws JSONException, JsonProcessingException {
+    public void addEmployeeSuccessTest() throws JsonProcessingException {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         AddEmployeeDataRequest request =
@@ -38,5 +39,25 @@ public class EmployeeControllerIT extends BaseIntegrationTestClass{
         Employee employeeSaved =
             objectMapper.convertValue(responseEntity.getBody().getData(), Employee.class);
         assertEquals(employee, employeeSaved);
+    }
+
+    @Test
+    public void addEmployeeFailedTest() throws JsonProcessingException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        AddEmployeeDataRequest request =
+                new AddEmployeeDataRequest("xyz-13", "shivam","shivam@xyz.com", 3);
+
+        String employeeRequestString = objectMapper.writeValueAsString(request);
+
+        HttpEntity<String> httpEntity = new HttpEntity<String>(employeeRequestString,headers);
+
+        ResponseEntity<Response> responseEntity =
+                restTemplate.exchange(createURLWithPort("/employee") , HttpMethod.POST , httpEntity,  Response.class);
+
+        assertEquals(400, responseEntity.getStatusCodeValue());
+        assertNotNull(responseEntity.getBody());
+        assertEquals("Office Information is Not Present" , responseEntity.getBody().getError());
     }
 }

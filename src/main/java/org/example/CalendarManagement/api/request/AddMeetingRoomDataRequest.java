@@ -1,9 +1,10 @@
+
 package org.example.CalendarManagement.api.request;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
+/*
 public class AddMeetingRoomDataRequest {
 
     @NotNull(message = "room name cannot be null")
@@ -46,3 +47,4 @@ public class AddMeetingRoomDataRequest {
         this.isOpen = isOpen;
     }
 }
+*/

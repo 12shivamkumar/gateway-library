@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+/*
 
 @Entity
 public class EmployeeMeeting implements Serializable
@@ -66,4 +67,4 @@ public class EmployeeMeeting implements Serializable
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
-}
+}*/

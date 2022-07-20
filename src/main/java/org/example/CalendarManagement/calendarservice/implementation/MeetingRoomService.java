@@ -1,6 +1,7 @@
-package org.example.CalendarManagement.calendarservice.implementation;
 
-import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
+package org.example.CalendarManagement.calendarservice.implementation;
+/*
+//import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
 import org.example.CalendarManagement.calendarservice.interfaces.MeetingRoomInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,3 +50,4 @@ public class MeetingRoomService implements MeetingRoomInterface {
         return 0;
     }
 }
+*/

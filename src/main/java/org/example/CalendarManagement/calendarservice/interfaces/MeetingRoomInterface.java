@@ -1,9 +1,10 @@
 package org.example.CalendarManagement.calendarservice.interfaces;
 
-import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
+//import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+/*
 
 public interface MeetingRoomInterface {
     MeetingRoom addMeetingRoom(MeetingRoom meetingRoom);
@@ -14,3 +15,4 @@ public interface MeetingRoomInterface {
     String findMeetingRoomNameByRoomId(int ID);
     int findFreeMeetingRoom(int officeID, LocalDate date, LocalTime startTime, LocalTime endTime);
 }
+*/

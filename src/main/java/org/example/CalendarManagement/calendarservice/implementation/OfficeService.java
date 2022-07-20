@@ -9,21 +9,29 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/*
 
 @Service
 public class OfficeService implements OfficeInterface {
-@Autowired
-OfficeRepository officeRepository;
+*/
+/*@Autowired
+OfficeRepository officeRepository;*//*
 
-    @Override
+
+    */
+/*@Override
     public Iterable findAll() {
         return officeRepository.findAll();
-    }
+    }*//*
 
 
-    public Office addOffice(Office office){
+
+   */
+/* public Office addOffice(Office office){
         System.out.println(office.getOfficeLocation()+office.getOfficeID()+office.getOfficeName());
         officeRepository.save(office);
         return office;
-    }
+    }*//*
+
 }
+*/

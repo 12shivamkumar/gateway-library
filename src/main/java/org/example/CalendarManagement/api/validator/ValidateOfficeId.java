@@ -3,7 +3,7 @@ package org.example.CalendarManagement.api.validator;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Office;
 import org.example.CalendarManagement.calendarpersistence.repository.OfficeRepository;
-import org.example.CalendarManagement.calendarservice.implementation.OfficeService;
+//import org.example.CalendarManagement.calendarservice.implementation.OfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +14,7 @@ public class ValidateOfficeId {
 
     @Autowired
     private OfficeRepository officeRepository;
-    @Autowired
-    OfficeService officeService;
+
     public ValidateResponse checkOfficeId(int officeId)
     {
         ValidateResponse validateResponse = null;

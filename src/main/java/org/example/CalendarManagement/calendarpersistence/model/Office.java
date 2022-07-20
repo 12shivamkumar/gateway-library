@@ -12,25 +12,25 @@ import java.time.LocalDateTime;
 public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int officeID;
+    private int id;
 
     @Column
-    @NotNull(message = "office name cannot be null")
-    private String officeName;
+    @NotNull
+    private String name;
 
-    @Column(name = "Location",unique = true)
-    //@NotNull(message = "office location cannot be null")
+    @Column(name = "location",unique = true)
+    @NotNull
     private String officeLocation;
 
     @CreationTimestamp
-    @Column(name = "log")
+    @Column(name = "created_time")
     private LocalDateTime createdDateTime;
 
     public Office(){}
 
     public Office(int officeID, String officeName, String officeLocation) {
-        this.officeID = officeID;
-        this.officeName = officeName;
+        this.id = officeID;
+        this.name = officeName;
         this.officeLocation = officeLocation;
     }
 

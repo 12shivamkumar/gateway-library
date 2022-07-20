@@ -1,4 +1,4 @@
-package testclasses;
+package integrationtestclasses.config;
 
 
 import org.springframework.boot.test.context.TestConfiguration;

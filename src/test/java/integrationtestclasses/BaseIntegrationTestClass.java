@@ -1,22 +1,26 @@
 package integrationtestclasses;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.CalendarManagement.CalendarManagementApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.ActiveProfiles;
-import testclasses.EmbeddedMySqlConfiguration;
-import testclasses.EmbeddedRedisConfiguration;
-//import testclasses.PopulateDatabase;
+import integrationtestclasses.config.MySqlConfiguration;
+//import integrationtestclasses.testclasses.PopulateDatabase;
 
 
-@SpringBootTest(classes = { EmbeddedMySqlConfiguration.class,CalendarManagementApplication.class },
+@SpringBootTest(classes = { MySqlConfiguration.class,CalendarManagementApplication.class },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class BaseIntegrationTestClass {
     @LocalServerPort
     private int port;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     TestRestTemplate restTemplate = new TestRestTemplate();
 

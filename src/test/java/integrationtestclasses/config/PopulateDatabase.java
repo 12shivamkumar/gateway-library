@@ -1,11 +1,4 @@
-package testclasses;
-
-import org.example.CalendarManagement.calendarpersistence.model.Office;
-import org.example.CalendarManagement.calendarpersistence.repository.OfficeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
+package integrationtestclasses.config;
 
 /*
 @Component

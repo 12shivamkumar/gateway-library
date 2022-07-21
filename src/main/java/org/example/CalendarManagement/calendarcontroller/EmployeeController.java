@@ -1,6 +1,7 @@
 package org.example.CalendarManagement.calendarcontroller;
 
 
+import org.apache.thrift.TException;
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
@@ -55,7 +56,7 @@ public class EmployeeController {
         return new ResponseEntity<Response>(addEmployeeResponse,HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> removeEmployee(@PathVariable String identity,@RequestParam String findBy){
+    public ResponseEntity<Response> removeEmployee(@PathVariable String identity,@RequestParam String findBy)  {
 
         ValidateResponse validateResponseForEmployeeIdentity= null;
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(identity);

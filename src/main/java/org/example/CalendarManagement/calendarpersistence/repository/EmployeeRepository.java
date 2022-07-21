@@ -18,5 +18,6 @@ public interface EmployeeRepository extends CrudRepository<Employee,String>
 
     @Query("UPDATE  employee e SET is_deleted = ”true” WHERE e.email = :email")
     Employee deleteByEmail(@Param("email") String email);
+
 }
 

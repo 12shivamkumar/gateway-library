@@ -1,10 +1,12 @@
 package org.example.CalendarManagement.calendarfacade;
 
+import org.apache.thrift.TException;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
+import org.example.CalendarManagement.thriftclients.implementation.Client;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +30,10 @@ public class EmployeeFacadeTest {
 
     @Mock
     EmployeeService employeeService;
+
+    @Mock
+    Client client;
+
     @InjectMocks
     EmployeeFacade employeeFacade;
 
@@ -46,14 +52,16 @@ public class EmployeeFacadeTest {
     }
 
     @Test
-    public void employeeFacadeTest_employeeRemovedByIdSuccessfully()
-    {
+    public void employeeFacadeTest_employeeRemovedByIdSuccessfully() throws TException {
         String id = "xyz-123";
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
 
         Mockito.when(employeeService.removeEmployeeById(id)).
                 thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
+
+        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
+        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
 
         Employee removedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest , "id");
 
@@ -63,14 +71,16 @@ public class EmployeeFacadeTest {
     }
 
     @Test
-    public void employeeFacadeTest_employeeRemovedByEmailSuccessfully()
-    {
+    public void employeeFacadeTest_employeeRemovedByEmailSuccessfully() throws TException {
         String email = "tushar@xyz.com";
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(email);
 
         Mockito.when(employeeService.removeEmployeeByEmail(email)).
                 thenReturn(new Employee("xyz-123", "tushar", 1, email));
+
+        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
+        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
 
         Employee removedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest , "email");
 

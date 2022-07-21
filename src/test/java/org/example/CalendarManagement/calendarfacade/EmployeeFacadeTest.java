@@ -1,6 +1,7 @@
 package org.example.CalendarManagement.calendarfacade;
 
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
+import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
@@ -43,4 +44,40 @@ public class EmployeeFacadeTest {
         assertNotNull(savedEmployee);
         assertFalse(savedEmployee.isDeleted());
     }
+
+    @Test
+    public void employeeFacadeTest_employeeRemovedByIdSuccessfully()
+    {
+        String id = "xyz-123";
+
+        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
+
+        Mockito.when(employeeService.removeEmployeeById(id)).
+                thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
+
+        Employee removedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest , "id");
+
+        assertNotNull(removedEmployee);
+
+        assertEquals(id , removedEmployee.getId());
+    }
+
+    @Test
+    public void employeeFacadeTest_employeeRemovedByEmailSuccessfully()
+    {
+        String email = "tushar@xyz.com";
+
+        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(email);
+
+        Mockito.when(employeeService.removeEmployeeByEmail(email)).
+                thenReturn(new Employee("xyz-123", "tushar", 1, email));
+
+        Employee removedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest , "email");
+
+        assertNotNull(removedEmployee);
+
+        assertEquals(email , removedEmployee.getEmail());
+    }
+
+
 }

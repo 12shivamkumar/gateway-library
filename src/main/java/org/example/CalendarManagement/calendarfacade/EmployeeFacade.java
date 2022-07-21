@@ -1,6 +1,7 @@
 package org.example.CalendarManagement.calendarfacade;
 
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
+import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
@@ -26,6 +27,20 @@ public class EmployeeFacade {
         Employee employee = new Employee(request.getEmployeeId(),request.getName(), request.getOfficeId(), request.getEmail());
         employeeService.addEmployee(employee);
         return employee;
+    }
+
+    public Employee removeEmployee(RemoveEmployeeDataRequest request,  String findEmployeeBy)
+    {
+        Employee removedEmployee = null;
+
+        if(findEmployeeBy.equals("id")) {
+            removedEmployee= employeeService.removeEmployeeById(request.getIdentity());
+        }
+
+        if(findEmployeeBy.equals("email")) {
+            removedEmployee= employeeService.removeEmployeeByEmail(request.getIdentity());
+        }
+      return removedEmployee;
     }
 
 }

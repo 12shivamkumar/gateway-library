@@ -20,19 +20,14 @@ public class EmployeeService implements  EmployeeInterface
     {
         return employeeRepository.save(employee);
     }
-/*
+
     @Override
-    public Employee removeEmployee(String empID) {
-        return null;
+    public Employee removeEmployeeById(String id) {
+        return employeeRepository.deletedById(id);
     }
 
     @Override
-    public int getOffice(List<String> empID) {
-        return 0;
+    public Employee removeEmployeeByEmail(String email) {
+        return employeeRepository.deleteByEmail(email);
     }
-
-    @Override
-    public List<String> findEmployeeByID(List<String> empID) {
-        return null;
-    }*/
 }

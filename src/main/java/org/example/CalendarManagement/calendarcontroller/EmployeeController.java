@@ -3,7 +3,9 @@ package org.example.CalendarManagement.calendarcontroller;
 
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
+import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
+import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
 import org.example.CalendarManagement.calendarfacade.EmployeeFacade;
@@ -11,10 +13,7 @@ import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,6 +25,9 @@ public class EmployeeController {
     ValidateOfficeId validateOfficeId;
     @Autowired
     ValidateEmployeeEmail validateEmployeeEmail;
+
+    @Autowired
+    ValidateEmployeeIdentity validateEmployeeIdentity;
 
     @Autowired
     EmployeeFacade employeeFacade;
@@ -52,4 +54,30 @@ public class EmployeeController {
         Response addEmployeeResponse = new Response("",saveEmployee);
         return new ResponseEntity<Response>(addEmployeeResponse,HttpStatus.CREATED);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> removeEmployee(@PathVariable String identity,@RequestParam String findBy){
+
+        ValidateResponse validateResponseForEmployeeIdentity= null;
+        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(identity);
+        if(findBy.equals("id")){
+            validateResponseForEmployeeIdentity = validateEmployeeIdentity.checkEmployeeId(identity);
+
+        }
+        else if(findBy.equals("email")){
+            validateResponseForEmployeeIdentity = validateEmployeeIdentity.checkEmployeeEmail(identity);
+        }
+        else{
+            validateResponseForEmployeeIdentity = new ValidateResponse("find by has to be email or id",false);
+        }
+
+        if(!validateResponseForEmployeeIdentity.isValid()){
+            return new ResponseEntity<Response>(new Response(validateResponseForEmployeeIdentity.getMessage(),null),HttpStatus.BAD_REQUEST);
+        }
+        else{
+            Employee deletedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest,findBy);
+            return new ResponseEntity<Response>(new Response(null,deletedEmployee),HttpStatus.OK);
+        }
+
+    }
+
 }

@@ -3,6 +3,7 @@ package org.example.CalendarManagement.calendarservice.implementation;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
+import org.example.CalendarManagement.calendarpersistence.repository.MeetingRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployeeServiceTest {
     @Mock
     EmployeeRepository employeeRepository;
+
+    @Mock
+    MeetingRepository meetingRepository;
     @InjectMocks
     EmployeeService employeeService;
+
 
     @Test
     public void addEmployeeTest_employeeSavedSuccessfully() {
@@ -111,4 +116,6 @@ class EmployeeServiceTest {
 
         Assertions.assertThrows(DataAccessException.class, () -> employeeService.removeEmployeeByEmail(email));
     }
+
+
 }

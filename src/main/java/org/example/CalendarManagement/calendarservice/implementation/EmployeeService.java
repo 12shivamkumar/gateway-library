@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class EmployeeService implements  EmployeeInterface
@@ -30,4 +31,9 @@ public class EmployeeService implements  EmployeeInterface
     public Employee removeEmployeeByEmail(String email) {
         return employeeRepository.deleteByEmail(email);
     }
+
+    /*@Override
+    public List<String> cancelMeetingsOfDeletedEmployee(String id){
+        return null;
+    }*/
 }

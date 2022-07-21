@@ -38,7 +38,7 @@ public class Employee {
     private LocalDateTime autoDateTime;
 
 
-    public Employee(){}
+   // public Employee(){}
 
     public Employee(String employeeId, String name, int officeId, String email) {
         this.id = employeeId;
@@ -87,13 +87,13 @@ public class Employee {
         return isDeleted;
     }
 
-    public LocalDateTime getCreatedDateTime() {
+   /* public LocalDateTime getCreatedDateTime() {
         return createdDateTime;
     }
 
     public LocalDateTime getAutoDateTime() {
         return autoDateTime;
-    }
+    }*/
 
     /*@Override
     public String toString() {

@@ -10,6 +10,8 @@ public interface EmployeeInterface {
 
     Employee removeEmployeeByEmail(String email);
 
+    //List<String> cancelMeetingsOfDeletedEmployee(String id);
+
    /* int getOffice(List<String> empID);
     List<String> findEmployeeByID(List<String> empID);*/
 }

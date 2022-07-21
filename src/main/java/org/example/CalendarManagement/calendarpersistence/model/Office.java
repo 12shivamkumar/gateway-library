@@ -26,7 +26,7 @@ public class Office {
     @Column(name = "created_time")
     private LocalDateTime createdDateTime;
 
-    public Office(){}
+    //public Office(){}
 
     public Office(int officeID, String officeName, String officeLocation) {
         this.id = officeID;

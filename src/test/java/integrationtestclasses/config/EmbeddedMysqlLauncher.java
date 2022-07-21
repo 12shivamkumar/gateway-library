@@ -43,5 +43,4 @@ public class EmbeddedMysqlLauncher {
     mysqld.stop();
   }
 
-
 }

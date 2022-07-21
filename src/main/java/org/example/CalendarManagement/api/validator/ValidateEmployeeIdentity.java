@@ -28,11 +28,11 @@ public class ValidateEmployeeIdentity {
       return validateResponse;
     }
 
-    public ValidateResponse checkEmployeeEmail(String mail)
+    public ValidateResponse checkEmployeeEmail(String email)
     {
         ValidateResponse validateResponse = null;
 
-        Optional<Employee> responseFromDb = employeeRepository.findByEmail(mail);
+        Optional<Employee> responseFromDb = employeeRepository.findByEmail(email);
 
         if(responseFromDb.isPresent())
         {

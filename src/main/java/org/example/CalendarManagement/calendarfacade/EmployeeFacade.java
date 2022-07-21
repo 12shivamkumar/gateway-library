@@ -40,6 +40,7 @@ public class EmployeeFacade {
         if(findEmployeeBy.equals("email")) {
             removedEmployee= employeeService.removeEmployeeByEmail(request.getIdentity());
         }
+
       return removedEmployee;
     }
 

@@ -1,6 +1,7 @@
 package org.example.CalendarManagement.calendarpersistence.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,15 +10,17 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-/*
+
 
 @Entity
 public class EmployeeMeeting implements Serializable
 {
-    @Id
+    @Id()
+    @Column(name = "emp_id")
     private String employeeId;
 
     @Id
+    @Column(name ="meet_id")
     private String meetingId;
 
     @Column
@@ -27,16 +30,22 @@ public class EmployeeMeeting implements Serializable
     @NotNull(message = "meeting must have date")
     private LocalDate meetDate;
 
+    @Column(name = "created_timestamp")
+    @CreationTimestamp
+    private LocalDateTime createdTimeStamp;
 
-    public EmployeeMeeting(){}
-    public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate) {
+    @Column(name = "updated_timestamp")
+    @UpdateTimestamp
+    private LocalDateTime updatedTimeStamp;
+    //public EmployeeMeeting(){}
+    /*public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate) {
         this.employeeId = employeeId;
         this.meetingId = meetingId;
         this.status = status;
         this.meetDate = meetDate;
-    }
+    }*/
 
-    public String getEmployeeId() {
+    /*public String getEmployeeId() {
         return employeeId;
     }
     public String getMeetingId() {return meetingId;}
@@ -57,14 +66,6 @@ public class EmployeeMeeting implements Serializable
                 ", meetDate=" + meetDate +
                 '}';
     }
+*/
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-}*/
+}

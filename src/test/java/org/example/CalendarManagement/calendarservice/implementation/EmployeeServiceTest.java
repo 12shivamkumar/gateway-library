@@ -62,8 +62,8 @@ class EmployeeServiceTest {
     public void removeEmployeeByIdTest_employeeRemovedSuccessfully() {
         String id = "XYZ-123";
 
-        Mockito.when(employeeRepository.deletedById(id)).
-                thenReturn(new Employee(id, "shivam", 1, "shivam@xyz.com"));
+        Mockito.when(employeeRepository.findById(id)).
+                thenReturn(Optional.of(new Employee(id, "shivam", 1, "shivam@xyz.com")));
 
         Employee deletedEmployee = employeeService.removeEmployeeById(id);
 
@@ -82,7 +82,7 @@ class EmployeeServiceTest {
             }
         };
 
-        Mockito.when(employeeRepository.deletedById(id)).thenThrow(dataAccessException);
+        Mockito.when(employeeRepository.findById(id)).thenThrow(dataAccessException);
 
         Assertions.assertThrows(DataAccessException.class, () -> employeeService.removeEmployeeById(id));
 

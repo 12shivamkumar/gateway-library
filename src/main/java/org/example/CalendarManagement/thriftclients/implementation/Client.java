@@ -9,8 +9,9 @@ import org.example.CalendarManagement.thriftclients.interfaces.ClientInterface;
 import org.example.CalendarThriftConfiguration.MeetingSvc;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-@Profile("!test")
+
 @Component
+@Profile("!test")
 public class Client implements ClientInterface
 {
     @Override

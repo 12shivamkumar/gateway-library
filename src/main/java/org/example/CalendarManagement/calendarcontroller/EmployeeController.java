@@ -60,8 +60,7 @@ public class EmployeeController {
         return new ResponseEntity<Response>(addEmployeeResponse,HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> removeEmployee(@NotNull @PathVariable String employeeId)  {
-
+    public ResponseEntity<Response> removeEmployee(@NotNull @PathVariable(name = "id") String employeeId)  {
         ValidateResponse validateResponseForEmployeeIdentity= null;
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(employeeId);
         validateResponseForEmployeeIdentity = validateEmployeeIdentity.checkEmployeeId(employeeId);
@@ -70,9 +69,13 @@ public class EmployeeController {
             return new ResponseEntity<Response>(new Response(validateResponseForEmployeeIdentity.getMessage(),null),HttpStatus.BAD_REQUEST);
         }
         else{
-
-            Response deletedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest);
-            return new ResponseEntity<Response>(deletedEmployeeResponse,HttpStatus.OK);
+            try {
+                Response deletedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest);
+                return new ResponseEntity<Response>(deletedEmployeeResponse, HttpStatus.OK);
+            }catch (RuntimeException exception)
+            {
+                return  new ResponseEntity<>(new Response("Thrift Error" ,null) , HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
     }

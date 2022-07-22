@@ -2,11 +2,8 @@ package org.example.CalendarManagement.calendarcontroller;
 
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
-//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
-//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
-//import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
@@ -95,7 +92,6 @@ class EmployeeControllerTest {
     @Test
     public void employeeControllerTest_removeEmployeeFailedIdValidation(){
         String id = "xyz-123";
-        String findBy = "id";
         Mockito.when(validateEmployeeIdentity.checkEmployeeId(id)).thenReturn(new ValidateResponse("Employee does not exists", false));
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
         ResponseEntity<Response> responseEntity = employeeController.removeEmployee(id);
@@ -106,8 +102,6 @@ class EmployeeControllerTest {
     @Test
     public void employeeControllerTest_removeEmployeeByIdSuccessfully(){
         String id = "xyz-123";
-        String findBy = "id";
-        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
         Mockito.when(validateEmployeeIdentity.checkEmployeeId(id)).
                 thenReturn(new ValidateResponse("Employee Exists", true));
         Mockito.when(employeeFacade.removeEmployee(Mockito.any(RemoveEmployeeDataRequest.class))).
@@ -117,4 +111,18 @@ class EmployeeControllerTest {
         assertEquals(200,responseEntity.getStatusCodeValue());
     }
 
+    @Test
+    public void employeeControllerTest_removeEmployeeFailedDueToThriftException()
+    {
+        String id = "xyz-123";
+
+        Mockito.when(validateEmployeeIdentity.checkEmployeeId(id)).
+                thenReturn(new ValidateResponse("Employee Exists", true));
+        Mockito.when(employeeFacade.removeEmployee(Mockito.any(RemoveEmployeeDataRequest.class))).
+                thenThrow(RuntimeException.class);
+
+        ResponseEntity<Response> responseEntity = employeeController.removeEmployee(id);
+        assertNotNull(responseEntity);
+        assertEquals(500 , responseEntity.getStatusCodeValue());
+    }
 }

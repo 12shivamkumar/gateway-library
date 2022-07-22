@@ -16,17 +16,17 @@ public class EmployeeMeetingRelationship implements Serializable {
     public EmployeeMeetingRelationship() {
 
     }
-
-    public EmployeeMeetingRelationship(String employeeId, String meetingId) {
-        this.employeeId = employeeId;
-        this.meetingId = meetingId;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public String getMeetingId() {
-        return meetingId;
-    }
+//
+//    public EmployeeMeetingRelationship(String employeeId, String meetingId) {
+//        this.employeeId = employeeId;
+//        this.meetingId = meetingId;
+//    }
+//
+//    public String getEmployeeId() {
+//        return employeeId;
+//    }
+//
+//    public String getMeetingId() {
+//        return meetingId;
+//    }
 }

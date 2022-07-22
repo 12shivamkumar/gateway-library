@@ -73,8 +73,7 @@ public class EmployeeFacadeTest {
         Mockito.when(employeeService.removeEmployeeById(id)).
                 thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
         Mockito.when(client.cancelMeetingForRemovedEmployee(id)).thenThrow(TException.class);
-        Response removeEmployeeThriftFailResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest);
-        Assertions.assertEquals("Thrift Exception unable to update Meetings for removed employee",removeEmployeeThriftFailResponse.getError());
+        Assertions.assertThrows(RuntimeException.class , () -> employeeFacade.removeEmployee(removeEmployeeDataRequest));
     }
 
     @Test
@@ -85,7 +84,6 @@ public class EmployeeFacadeTest {
         Mockito.when(employeeService.removeEmployeeById(id)).
                 thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
         Mockito.when(client.updateStatusForRemovedEmployee(id)).thenThrow(TException.class);
-        Response removeEmployeeThriftFailResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest);
-        Assertions.assertEquals("Thrift Exception unable to update Meetings for removed employee",removeEmployeeThriftFailResponse.getError());
+        Assertions.assertThrows(RuntimeException.class , () -> employeeFacade.removeEmployee(removeEmployeeDataRequest));
     }
 }

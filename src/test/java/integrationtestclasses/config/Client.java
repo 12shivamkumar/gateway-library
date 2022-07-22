@@ -10,8 +10,9 @@ import org.example.CalendarThriftConfiguration.MeetingSvc;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile("test")
+
 @Component
+@Profile("test")
 public class Client implements ClientInterface {
     @Override
     public boolean cancelMeetingForRemovedEmployee(String employeeId) throws TException {
@@ -20,8 +21,6 @@ public class Client implements ClientInterface {
     }
     @Override
     public boolean updateStatusForRemovedEmployee(String employeeId) throws TException {
-
-
         return  true;
     }
 

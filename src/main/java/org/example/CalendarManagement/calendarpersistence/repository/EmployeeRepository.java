@@ -15,8 +15,8 @@ public interface EmployeeRepository extends CrudRepository<Employee,String>
     Optional<Employee> findByEmail(String email);
 
     @Modifying
-    @Query(value = "UPDATE  employee e SET is_deleted = ”true” WHERE e.id = :id" , nativeQuery = true)
-    Employee deletedById(@Param("id") String id);
+    @Query(value = "UPDATE  employee e SET is_deleted = true WHERE e.id = :id" , nativeQuery = true)
+    void deletedById(@Param("id") String id);
 
 
 }

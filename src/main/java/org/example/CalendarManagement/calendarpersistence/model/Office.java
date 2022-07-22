@@ -37,15 +37,15 @@ public class Office {
     public int getOfficeID() {
         return id;
     }
-    public String getOfficeName() {
-        return name;
-    }
-    public String getOfficeLocation() {
-        return officeLocation;
-    }
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
-    }
+//    public String getOfficeName() {
+//        return name;
+//    }
+//    public String getOfficeLocation() {
+//        return officeLocation;
+//    }
+//    public LocalDateTime getCreatedDateTime() {
+//        return createdDateTime;
+//    }
 
     /*@Override
     public String toString() {

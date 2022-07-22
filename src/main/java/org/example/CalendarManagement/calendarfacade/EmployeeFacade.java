@@ -8,6 +8,7 @@ import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
+import org.example.CalendarManagement.thriftclients.implementation.Client;
 import org.example.CalendarManagement.thriftclients.interfaces.ClientInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ public class EmployeeFacade {
 
     @Autowired
     private EmployeeService employeeService;
+
     @Autowired
     private ClientInterface meetingClient;
 

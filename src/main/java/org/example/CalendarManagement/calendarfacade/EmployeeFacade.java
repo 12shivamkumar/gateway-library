@@ -1,5 +1,6 @@
 package org.example.CalendarManagement.calendarfacade;
 
+import org.apache.thrift.TException;
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 //import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
@@ -8,6 +9,7 @@ import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
 //import org.example.CalendarManagement.thriftclients.implementation.Client;
+import org.example.CalendarManagement.thriftclients.implementation.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,8 @@ public class EmployeeFacade {
 
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private Client meetingClient;
 
     public Employee saveEmployee(AddEmployeeDataRequest request)
     {
@@ -24,7 +28,7 @@ public class EmployeeFacade {
         return employee;
     }
 
-    public Response removeEmployee(RemoveEmployeeDataRequest request, String findEmployeeBy){
+    public Response removeEmployee(RemoveEmployeeDataRequest request, String findEmployeeBy) {
         Employee removedEmployee = null;
 
         Response removedEmployeeResponse = null;
@@ -38,6 +42,12 @@ public class EmployeeFacade {
         }
 
         removedEmployeeResponse = new Response(null, removedEmployee);
+        try {
+            meetingClient.cancelMeetingForRemovedEmployee(removedEmployee.getId());
+            meetingClient.updateStatusForRemovedEmployee(removedEmployee.getId());
+        }catch (TException ex){
+            removedEmployeeResponse.setError("Thrift Exception unable to update Meetings for removed employee");
+        }
 
         return removedEmployeeResponse;
     }

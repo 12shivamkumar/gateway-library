@@ -12,6 +12,7 @@ import org.example.CalendarManagement.calendarservice.implementation.EmployeeSer
 //import org.example.CalendarManagement.thriftclients.implementation.Client;
 import org.example.CalendarManagement.thriftclients.implementation.Client;
 import org.example.CalendarThriftConfiguration.MeetingSvc;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -64,10 +65,6 @@ public class EmployeeFacadeTest {
         Mockito.when(employeeService.removeEmployeeById(id)).
                 thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
 
-//        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
-//        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
-
-
         Response removedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest , "id");
 
         assertNotNull(removedEmployeeResponse);
@@ -86,9 +83,6 @@ public class EmployeeFacadeTest {
         Mockito.when(employeeService.removeEmployeeByEmail(email)).
                 thenReturn(new Employee("xyz-123", "tushar", 1, email));
 
-//        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
-//        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
-
         Response removedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest , "email");
 
         assertNotNull(removedEmployeeResponse);
@@ -98,12 +92,27 @@ public class EmployeeFacadeTest {
         assertEquals(email , employee.getEmail());
     }
 
-//    @Test
-//    public void employeeFacadeTest_employeeRemovedMeetingCancelledSuccessfully(){
-//        String employeeId = "xyz-123";
-//
-//   //     Mockito.when(client.cancelMeetingForRemovedEmployee(employeeId)).thenReturn(true);
-//
-//    }
+    @Test
+    public void employeeFacadeTest_removedEmployeeMeetingCancelFail() throws TException {
+        String id = "xyz-123";
+        String findBy = "id";
+        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
+        Mockito.when(employeeService.removeEmployeeById(id)).
+                thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
+        Mockito.when(client.cancelMeetingForRemovedEmployee(id)).thenThrow(TException.class);
+        Response removeEmployeeThriftFailResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest,findBy);
+        Assertions.assertEquals("Thrift Exception unable to update Meetings for removed employee",removeEmployeeThriftFailResponse.getError());
+    }
 
+    @Test
+    public void  employeeFacadeTest_removedEmployeeUpdateStatusFail() throws TException {
+        String id = "xyz-123";
+        String findBy = "id";
+        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
+        Mockito.when(employeeService.removeEmployeeById(id)).
+                thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
+        Mockito.when(client.updateStatusForRemovedEmployee(id)).thenThrow(TException.class);
+        Response removeEmployeeThriftFailResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest,findBy);
+        Assertions.assertEquals("Thrift Exception unable to update Meetings for removed employee",removeEmployeeThriftFailResponse.getError());
+    }
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
+import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -59,5 +60,14 @@ public class EmployeeControllerIT extends BaseIntegrationTestClass{
         assertEquals(400, responseEntity.getStatusCodeValue());
         assertNotNull(responseEntity.getBody());
         assertEquals("Office Information is Not Present" , responseEntity.getBody().getError());
+    }
+    @Test
+    public void removeEmployeeSuccessTest() throws JsonProcessingException{
+
+        String id = "xyz-12";
+        HttpEntity<?> httpEntity = HttpEntity.EMPTY;
+        ResponseEntity<Response> responseEntity =
+                restTemplate.exchange(createURLWithPort("employee/"+id),HttpMethod.DELETE,httpEntity,Response.class);
+        assertEquals(200,responseEntity.getStatusCodeValue());
     }
 }

@@ -54,33 +54,4 @@ public class ValidateEmployeeIdentityTest {
         Assertions.assertFalse(validateResponse.isValid());
     }
 
-    @Test
-    public void validateEmployeeIdentityTest_employeeEmailExists(){
-
-        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("shivam@xyz.com");
-
-        Mockito.when(employeeRepository.findByEmail(removeEmployeeDataRequest.getIdentity())).
-                thenReturn(Optional.of(new Employee("XYZ-123" , "Shivam" , 1 , removeEmployeeDataRequest.getIdentity())));
-
-        ValidateResponse validateResponse = validateEmployeeIdentity.checkEmployeeEmail(removeEmployeeDataRequest.getIdentity());
-
-        Assertions.assertNotNull(validateResponse);
-
-        Assertions.assertTrue(validateResponse.isValid());
-    }
-
-    @Test
-    public void validateEmployeeIdentityTest_employeeEmailNotExists(){
-
-        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("shivam@xyz.com");
-
-        Mockito.when(employeeRepository.findByEmail(removeEmployeeDataRequest.getIdentity())).
-                thenReturn(Optional.empty());
-
-        ValidateResponse validateResponse = validateEmployeeIdentity.checkEmployeeEmail(removeEmployeeDataRequest.getIdentity());
-
-        Assertions.assertNotNull(validateResponse);
-
-        Assertions.assertFalse(validateResponse.isValid());
-    }
 }

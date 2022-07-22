@@ -27,11 +27,6 @@ public class EmployeeService implements  EmployeeInterface
         return employeeRepository.deletedById(id);
     }
 
-    @Override
-    public Employee removeEmployeeByEmail(String email) {
-        return employeeRepository.deleteByEmail(email);
-    }
-
     /*@Override
     public List<String> cancelMeetingsOfDeletedEmployee(String id){
         return null;

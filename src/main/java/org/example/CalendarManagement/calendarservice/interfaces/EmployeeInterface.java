@@ -8,7 +8,6 @@ public interface EmployeeInterface {
     Employee addEmployee(Employee employee);
     Employee removeEmployeeById(String id);
 
-    Employee removeEmployeeByEmail(String email);
 
     //List<String> cancelMeetingsOfDeletedEmployee(String id);
 

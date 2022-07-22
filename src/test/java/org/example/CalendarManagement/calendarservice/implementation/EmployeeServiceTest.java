@@ -88,34 +88,5 @@ class EmployeeServiceTest {
 
     }
 
-    @Test
-    public void removeEmployeeByEmailTest_removeEmployeeSuccess() {
-        String email = "shivam@xyz.com";
-
-        Mockito.when(employeeRepository.deleteByEmail(email)).
-                thenReturn(new Employee("xyz-123", "Shivam", 1, email));
-
-        Employee deletedEmployee = employeeService.removeEmployeeByEmail(email);
-
-        assertNotNull(deletedEmployee);
-
-        assertEquals(email, deletedEmployee.getEmail());
-    }
-
-    @Test
-    public void removeEmployeeByEmailTest_employeeRemoveSuccess() {
-        String email = "shivam@xyz.com";
-        DataAccessException dataAccessException = new DataAccessException("Data cannot be accessed") {
-            @Override
-            public String getMessage() {
-                return super.getMessage();
-            }
-        };
-
-        Mockito.when(employeeRepository.deleteByEmail(email)).thenThrow(dataAccessException);
-
-        Assertions.assertThrows(DataAccessException.class, () -> employeeService.removeEmployeeByEmail(email));
-    }
-
 
 }

@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/employee")
@@ -59,29 +60,20 @@ public class EmployeeController {
         return new ResponseEntity<Response>(addEmployeeResponse,HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> removeEmployee(@PathVariable String identity,@RequestParam String findBy)  {
+    public ResponseEntity<Response> removeEmployee(@NotNull @PathVariable String employeeId)  {
 
         ValidateResponse validateResponseForEmployeeIdentity= null;
-        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(identity);
-        if(findBy.equals("id")){
-            validateResponseForEmployeeIdentity = validateEmployeeIdentity.checkEmployeeId(identity);
-
-        }
-        else if(findBy.equals("email")){
-            validateResponseForEmployeeIdentity = validateEmployeeIdentity.checkEmployeeEmail(identity);
-        }
-        else{
-            validateResponseForEmployeeIdentity = new ValidateResponse("find by has to be email or id",false);
-        }
+        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(employeeId);
+        validateResponseForEmployeeIdentity = validateEmployeeIdentity.checkEmployeeId(employeeId);
 
         if(!validateResponseForEmployeeIdentity.isValid()){
             return new ResponseEntity<Response>(new Response(validateResponseForEmployeeIdentity.getMessage(),null),HttpStatus.BAD_REQUEST);
         }
         else{
-            Response deletedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest,findBy);
+
+            Response deletedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest);
             return new ResponseEntity<Response>(deletedEmployeeResponse,HttpStatus.OK);
         }
 
     }
-
 }

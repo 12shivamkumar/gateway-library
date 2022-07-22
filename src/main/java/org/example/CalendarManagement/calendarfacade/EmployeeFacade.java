@@ -8,10 +8,10 @@ import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
-//import org.example.CalendarManagement.thriftclients.implementation.Client;
-import org.example.CalendarManagement.thriftclients.implementation.Client;
+import org.example.CalendarManagement.thriftclients.interfaces.ClientInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class EmployeeFacade {
@@ -19,7 +19,7 @@ public class EmployeeFacade {
     @Autowired
     private EmployeeService employeeService;
     @Autowired
-    private Client meetingClient;
+    private ClientInterface meetingClient;
 
     public Employee saveEmployee(AddEmployeeDataRequest request)
     {
@@ -27,28 +27,19 @@ public class EmployeeFacade {
         employeeService.addEmployee(employee);
         return employee;
     }
-
-    public Response removeEmployee(RemoveEmployeeDataRequest request, String findEmployeeBy) {
+    @Transactional
+    public Response removeEmployee(RemoveEmployeeDataRequest request) {
         Employee removedEmployee = null;
 
         Response removedEmployeeResponse = null;
-
-        if(findEmployeeBy.equals("id")) {
-            removedEmployee= employeeService.removeEmployeeById(request.getIdentity());
-        }
-
-        if(findEmployeeBy.equals("email")) {
-            removedEmployee= employeeService.removeEmployeeByEmail(request.getIdentity());
-        }
-
+        removedEmployee= employeeService.removeEmployeeById(request.getIdentity());
         removedEmployeeResponse = new Response(null, removedEmployee);
         try {
             meetingClient.cancelMeetingForRemovedEmployee(removedEmployee.getId());
             meetingClient.updateStatusForRemovedEmployee(removedEmployee.getId());
         }catch (TException ex){
-            removedEmployeeResponse.setError("Thrift Exception unable to update Meetings for removed employee");
+            throw new RuntimeException(ex.getMessage());
         }
-
         return removedEmployeeResponse;
     }
 

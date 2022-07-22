@@ -7,8 +7,9 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.example.CalendarManagement.thriftclients.interfaces.ClientInterface;
 import org.example.CalendarThriftConfiguration.MeetingSvc;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
+@Profile("!test")
 @Component
 public class Client implements ClientInterface
 {

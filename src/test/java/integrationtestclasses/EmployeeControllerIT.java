@@ -79,14 +79,4 @@ public class EmployeeControllerIT extends BaseIntegrationTestClass{
                 restTemplate.exchange(createURLWithPort("/employee/"+id),HttpMethod.DELETE,httpEntity,Response.class);
         assertEquals(400, responseEntity.getStatusCodeValue());
     }
-
-//    @Test
-//    public void removeEmployeeFailsThriftSeverTest()
-//    {
-//        String id = "xyz-123";
-//        HttpEntity<?> httpEntity = HttpEntity.EMPTY;
-//        ResponseEntity<Response> responseEntity =
-//                restTemplate.exchange(createURLWithPort("/employee/"+id),HttpMethod.DELETE,httpEntity,Response.class);
-//        assertEquals(500, responseEntity.getStatusCodeValue());
-//    }
 }

@@ -3,9 +3,7 @@ package org.example.CalendarManagement.calendarpersistence.model;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,13 +13,8 @@ import java.time.LocalDateTime;
 @Entity
 public class EmployeeMeeting implements Serializable
 {
-    @Id()
-    @Column(name = "emp_id")
-    private String employeeId;
-
-    @Id
-    @Column(name ="meet_id")
-    private String meetingId;
+    @EmbeddedId
+    private EmployeeMeetingRelationship id;
 
     @Column
     private String status;
@@ -37,7 +30,8 @@ public class EmployeeMeeting implements Serializable
     @Column(name = "updated_timestamp")
     @UpdateTimestamp
     private LocalDateTime updatedTimeStamp;
-    //public EmployeeMeeting(){}
+    public EmployeeMeeting(){}
+
     /*public EmployeeMeeting(String employeeId, String meetingId, String status, LocalDate meetDate) {
         this.employeeId = employeeId;
         this.meetingId = meetingId;

@@ -2,8 +2,11 @@ package org.example.CalendarManagement.calendarcontroller;
 
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
+//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
+//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
+//import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
@@ -131,7 +134,7 @@ class EmployeeControllerTest {
         Mockito.when(validateEmployeeIdentity.checkEmployeeId(id)).
                 thenReturn(new ValidateResponse("Employee Exists", true));
         Mockito.when(employeeFacade.removeEmployee(Mockito.any(RemoveEmployeeDataRequest.class),Mockito.anyString())).
-                thenReturn(new Employee(id,"tushar",2,"tushar@xyz.com"));
+                thenReturn(new Response(null, new Employee(id,"tushar",2,"tushar@xyz.com")));
         ResponseEntity<Response> responseEntity = employeeController.removeEmployee(id,findBy);
         assertNotNull(responseEntity);
         assertEquals(200,responseEntity.getStatusCodeValue());
@@ -145,7 +148,7 @@ class EmployeeControllerTest {
         Mockito.when(validateEmployeeIdentity.checkEmployeeEmail(email)).
                 thenReturn(new ValidateResponse("Employee Exists", true));
         Mockito.when(employeeFacade.removeEmployee(Mockito.any(RemoveEmployeeDataRequest.class),Mockito.anyString())).
-                thenReturn(new Employee("xyz-12","tushar",2,email));
+                thenReturn(new Response(null, new Employee("xyz-12","tushar",2,email)));
         ResponseEntity<Response> responseEntity = employeeController.removeEmployee(email,findBy);
         assertNotNull(responseEntity);
         assertEquals(200,responseEntity.getStatusCodeValue());

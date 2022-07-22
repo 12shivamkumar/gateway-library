@@ -26,7 +26,7 @@ public class Office {
     @Column(name = "created_time")
     private LocalDateTime createdDateTime;
 
-    //public Office(){}
+    public Office(){}
 
     public Office(int officeID, String officeName, String officeLocation) {
         this.id = officeID;
@@ -34,18 +34,18 @@ public class Office {
         this.officeLocation = officeLocation;
     }
 
-    /*public int getOfficeID() {
-        return officeID;
+    public int getOfficeID() {
+        return id;
     }
     public String getOfficeName() {
-        return officeName;
+        return name;
     }
     public String getOfficeLocation() {
         return officeLocation;
     }
     public LocalDateTime getCreatedDateTime() {
         return createdDateTime;
-    }*/
+    }
 
     /*@Override
     public String toString() {

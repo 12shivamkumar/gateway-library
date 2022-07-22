@@ -6,6 +6,7 @@ public class Response {
     private String error;
     private Object data;
 
+    public Response(){}
 
     public Response(String error, Object data) {
         this.error = error;

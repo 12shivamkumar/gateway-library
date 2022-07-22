@@ -10,9 +10,5 @@ import java.util.List;
 
 @Repository
 public interface MeetingRepository extends CrudRepository<Meeting,String> {
-    @Query("UPDATE meeting m SET m.is_available = 0 WHERE owner_name = (select name from employee e where e.id =:id)")
-    void cancelMeetingsOfDeletedEmployee(@Param("id")String id);
-    @Query("SELECT m.id from meeting m WHERE m.is_available= 0 AND owner_name = (select name from employee e where e.id =:id)")
-    List<String> cancelledMeetingsWhoseOwnerWasRemoved(@Param("id") String id);
 
 }

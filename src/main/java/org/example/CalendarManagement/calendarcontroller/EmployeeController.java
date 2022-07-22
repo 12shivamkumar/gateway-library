@@ -4,8 +4,11 @@ package org.example.CalendarManagement.calendarcontroller;
 import org.apache.thrift.TException;
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
+//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
+//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
+//import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
@@ -75,8 +78,8 @@ public class EmployeeController {
             return new ResponseEntity<Response>(new Response(validateResponseForEmployeeIdentity.getMessage(),null),HttpStatus.BAD_REQUEST);
         }
         else{
-            Employee deletedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest,findBy);
-            return new ResponseEntity<Response>(new Response(null,deletedEmployee),HttpStatus.OK);
+            Response deletedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest,findBy);
+            return new ResponseEntity<Response>(deletedEmployeeResponse,HttpStatus.OK);
         }
 
     }

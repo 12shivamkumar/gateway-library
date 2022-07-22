@@ -38,7 +38,7 @@ public class Employee {
     private LocalDateTime autoDateTime;
 
 
-   // public Employee(){}
+    public Employee(){}
 
     public Employee(String employeeId, String name, int officeId, String email) {
         this.id = employeeId;

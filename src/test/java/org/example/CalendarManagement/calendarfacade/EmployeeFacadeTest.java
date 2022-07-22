@@ -1,12 +1,17 @@
 package org.example.CalendarManagement.calendarfacade;
 
 import org.apache.thrift.TException;
+import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
+//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
+//import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
+//import org.example.CalendarManagement.thriftclients.implementation.Client;
 import org.example.CalendarManagement.thriftclients.implementation.Client;
+import org.example.CalendarThriftConfiguration.MeetingSvc;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,12 +35,11 @@ public class EmployeeFacadeTest {
 
     @Mock
     EmployeeService employeeService;
+    @InjectMocks
+    EmployeeFacade employeeFacade;
 
     @Mock
     Client client;
-
-    @InjectMocks
-    EmployeeFacade employeeFacade;
 
     @Test
     public void employeeFacadeTest_employeeSavedInRepository(){
@@ -60,14 +64,17 @@ public class EmployeeFacadeTest {
         Mockito.when(employeeService.removeEmployeeById(id)).
                 thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
 
-        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
-        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
+//        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
+//        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
 
-        Employee removedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest , "id");
 
-        assertNotNull(removedEmployee);
+        Response removedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest , "id");
 
-        assertEquals(id , removedEmployee.getId());
+        assertNotNull(removedEmployeeResponse);
+
+        Employee employee = (Employee) removedEmployeeResponse.getData();
+
+        assertEquals(id , employee.getId());
     }
 
     @Test
@@ -79,16 +86,24 @@ public class EmployeeFacadeTest {
         Mockito.when(employeeService.removeEmployeeByEmail(email)).
                 thenReturn(new Employee("xyz-123", "tushar", 1, email));
 
-        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
-        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
+//        Mockito.when(client.cancelMeetingForRemovedEmployee(Mockito.anyString())).thenReturn(true);
+//        Mockito.when(client.updateStatusForRemovedEmployee(Mockito.anyString())).thenReturn(true);
 
-        Employee removedEmployee = employeeFacade.removeEmployee(removeEmployeeDataRequest , "email");
+        Response removedEmployeeResponse = employeeFacade.removeEmployee(removeEmployeeDataRequest , "email");
 
-        assertNotNull(removedEmployee);
+        assertNotNull(removedEmployeeResponse);
 
-        assertEquals(email , removedEmployee.getEmail());
+        Employee employee = (Employee) removedEmployeeResponse.getData();
+
+        assertEquals(email , employee.getEmail());
     }
 
-
+//    @Test
+//    public void employeeFacadeTest_employeeRemovedMeetingCancelledSuccessfully(){
+//        String employeeId = "xyz-123";
+//
+//   //     Mockito.when(client.cancelMeetingForRemovedEmployee(employeeId)).thenReturn(true);
+//
+//    }
 
 }

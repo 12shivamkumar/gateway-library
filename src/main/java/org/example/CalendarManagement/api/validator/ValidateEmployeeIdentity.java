@@ -3,9 +3,11 @@ package org.example.CalendarManagement.api.validator;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class ValidateEmployeeIdentity {
 
     @Autowired

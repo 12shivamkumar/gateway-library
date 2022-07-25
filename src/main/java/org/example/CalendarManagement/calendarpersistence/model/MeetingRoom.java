@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-/*
 
 @Entity
 public class MeetingRoom {
@@ -15,15 +14,15 @@ public class MeetingRoom {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int roomId;
 
-    @Column(unique = true)
+    @Column(unique = true,name = "room_name")
     @NotNull(message = "room name cannot be null")
     private String roomName;
 
-    @Column
+    @Column(name = "office_id")
     @Min(value = 0,message = "Room must belong to an office")
     private int officeId;
 
-    @Column
+    @Column(name = "is_open")
     @NotNull
     private boolean isOpen;
 
@@ -57,4 +56,4 @@ public class MeetingRoom {
                 ", createdDateTime=" + createdDateTime +
                 '}';
     }
-}*/
+}

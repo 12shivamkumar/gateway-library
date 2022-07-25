@@ -7,11 +7,19 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee,String>
 {
     Optional<Employee> findByEmail(String email);
+
+    @Query(value = "SELECT e.office_id FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false")
+    List<Integer> findOfficeByEmployeeId(@Param("listOfEmployeeId")List<String> listOfEmployeeId);
+
+    @Query(value = "SELECT COUNT(id) FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false")
+    Integer countByIdIn(@Param("listOfEmployeeId")List<String> listOfEmployeeId);
+
 }
 

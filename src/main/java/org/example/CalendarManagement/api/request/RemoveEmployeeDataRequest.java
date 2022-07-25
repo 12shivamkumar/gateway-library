@@ -1,16 +1,14 @@
 package org.example.CalendarManagement.api.request;
 
-import javax.validation.constraints.NotNull;
-
 public class RemoveEmployeeDataRequest {
 
-    private String identity;
+    private String employeeId;
 
-    public RemoveEmployeeDataRequest(String identity) {
-        this.identity = identity;
+    public RemoveEmployeeDataRequest(String employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public String getIdentity() {
-        return identity;
+    public String getEmployeeId() {
+        return employeeId;
     }
 }

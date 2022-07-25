@@ -74,7 +74,7 @@ public class EmployeeController {
                 return new ResponseEntity<Response>(deletedEmployeeResponse, HttpStatus.OK);
             }catch (RuntimeException exception)
             {
-                return  new ResponseEntity<>(new Response("Thrift Error" ,null) , HttpStatus.INTERNAL_SERVER_ERROR);
+                return  new ResponseEntity<>(new Response(exception.getMessage() ,null) , HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 

@@ -70,11 +70,6 @@ public class Employee {
     public String getId() {
         return id;
     }
-//
-//    public String getName() {
-//        return name;
-//    }
-
     public int getOfficeId() {
         return officeId;
     }
@@ -87,23 +82,7 @@ public class Employee {
         return isDeleted;
     }
 
-   /* public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
-
-    public LocalDateTime getAutoDateTime() {
-        return autoDateTime;
-    }*/
-
-    /*@Override
-    public String toString() {
-        return "Employee{" +
-                "employeeId='" + employeeId + '\'' +
-                ", name='" + name + '\'' +
-                ", officeId=" + officeId +
-                ", email='" + email + '\'' +
-                ", isDeleted=" + isDeleted +
-                ", createdDateTime=" + createdDateTime +
-                '}';
-    }*/
 }

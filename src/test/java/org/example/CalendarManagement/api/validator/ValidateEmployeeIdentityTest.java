@@ -29,10 +29,10 @@ public class ValidateEmployeeIdentityTest {
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("XYZ-123");
 
-        Mockito.when(employeeRepository.findById(removeEmployeeDataRequest.getIdentity())).
-                thenReturn(Optional.of(new Employee(removeEmployeeDataRequest.getIdentity(), "shiavm", 1, "shivam@xyz.com")));
+        Mockito.when(employeeRepository.findById(removeEmployeeDataRequest.getEmployeeId())).
+                thenReturn(Optional.of(new Employee(removeEmployeeDataRequest.getEmployeeId(), "shiavm", 1, "shivam@xyz.com")));
 
-        ValidateResponse validateResponse = validateEmployeeIdentity.checkEmployeeId(removeEmployeeDataRequest.getIdentity());
+        ValidateResponse validateResponse = validateEmployeeIdentity.checkEmployeeId(removeEmployeeDataRequest.getEmployeeId());
 
         Assertions.assertNotNull(validateResponse);
 
@@ -44,10 +44,10 @@ public class ValidateEmployeeIdentityTest {
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("XYZ-123");
 
-        Mockito.when(employeeRepository.findById(removeEmployeeDataRequest.getIdentity())).
+        Mockito.when(employeeRepository.findById(removeEmployeeDataRequest.getEmployeeId())).
                 thenReturn(Optional.empty());
 
-        ValidateResponse validateResponse = validateEmployeeIdentity.checkEmployeeId(removeEmployeeDataRequest.getIdentity());
+        ValidateResponse validateResponse = validateEmployeeIdentity.checkEmployeeId(removeEmployeeDataRequest.getEmployeeId());
 
         Assertions.assertNotNull(validateResponse);
 

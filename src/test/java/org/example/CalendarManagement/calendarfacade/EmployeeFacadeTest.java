@@ -9,7 +9,7 @@ import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
 //import org.example.CalendarManagement.thriftclients.implementation.Client;
-import org.example.CalendarManagement.thriftclients.implementation.Client;
+import org.example.CalendarManagement.thriftclients.implementation.ThriftMeetingServiceClientImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +30,7 @@ public class EmployeeFacadeTest {
     EmployeeFacade employeeFacade;
 
     @Mock
-    Client client;
+    ThriftMeetingServiceClientImpl client;
 
     @Test
     public void employeeFacadeTest_employeeSavedInRepository(){

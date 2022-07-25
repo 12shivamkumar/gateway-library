@@ -20,7 +20,17 @@ class ValidateMeetingDateTimeTest {
     public void validateMeetingDateTimeTest_validDateTime()
     {
         LocalDate date = LocalDate.of(2022,07,25);
-        LocalTime startTime = LocalTime.of(16,30);
+        LocalTime startTime = LocalTime.of(19,30);
+        ValidateResponse validateResponse = validateMeetingDateTime.checkMeetingDateTime(date , startTime);
+        assertNotNull(validateResponse);
+        assertTrue(validateResponse.isValid());
+    }
+
+    @Test
+    public void validateMeetingDateTimeTest_validFutureDate()
+    {
+        LocalDate date = LocalDate.of(2022,07,26);
+        LocalTime startTime = LocalTime.of(14,30);
         ValidateResponse validateResponse = validateMeetingDateTime.checkMeetingDateTime(date , startTime);
         assertNotNull(validateResponse);
         assertTrue(validateResponse.isValid());

@@ -7,7 +7,8 @@ public class ValidateMeetingDateTime {
 
     public ValidateResponse checkMeetingDateTime(LocalDate date , LocalTime startTime)
     {
-        if(!date.isBefore(LocalDate.now()))
+
+        if(date.isEqual(LocalDate.now()))
         {
            if(startTime.getHour()>=LocalTime.now().getHour()){
                return new ValidateResponse("meeting can be scheduled" , true);
@@ -15,7 +16,11 @@ public class ValidateMeetingDateTime {
            else{
                 return new ValidateResponse("Invalid TIme for Meeting" , false);
            }
-        }else {
+        }
+        else if (date.isAfter(LocalDate.now())) {
+            return new ValidateResponse("meeting can be scheduled" , true);
+        }
+        else {
             return  new ValidateResponse("Invalid Date for Meeting" , false);
         }
     }

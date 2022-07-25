@@ -18,7 +18,7 @@ public class ValidateCompanyPolicies {
         }
     }
 
-    public ValidateResponse meetingDurationGreaterThanThirty(LocalTime startTime, LocalTime endTime)
+    public ValidateResponse meetingDurationGreaterThanThirtyMinutes(LocalTime startTime, LocalTime endTime)
     {
         Duration duration = Duration.between(startTime , endTime);
 

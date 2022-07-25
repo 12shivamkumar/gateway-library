@@ -14,9 +14,9 @@ import javax.validation.Valid;
 @RequestMapping("/meeting")
 public class MeetingController {
 
-
     @PostMapping
     public ResponseEntity<Response> scheduleMeeting(@Valid @RequestBody AddMeetingDataRequest addMeetingDataRequest){
+
         return null;
     }
 }

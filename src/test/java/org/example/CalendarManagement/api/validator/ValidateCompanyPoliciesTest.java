@@ -44,7 +44,7 @@ class ValidateCompanyPoliciesTest {
     {
         LocalTime startTime = LocalTime.of(11,30);
         LocalTime endTime = LocalTime.of(12,30);
-        ValidateResponse validateResponse = validateCompanyPolicies.meetingDurationGreaterThanThirty(startTime,endTime);
+        ValidateResponse validateResponse = validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime);
         assertNotNull(validateResponse);
         assertTrue(validateResponse.isValid());
     }
@@ -54,7 +54,7 @@ class ValidateCompanyPoliciesTest {
     {
         LocalTime startTime = LocalTime.of(11,30);
         LocalTime endTime = LocalTime.of(11,55);
-        ValidateResponse validateResponse = validateCompanyPolicies.meetingDurationGreaterThanThirty(startTime,endTime);
+        ValidateResponse validateResponse = validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime);
         assertNotNull(validateResponse);
         assertFalse(validateResponse.isValid());
     }

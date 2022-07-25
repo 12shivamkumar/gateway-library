@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface MeetingRoomRepository extends CrudRepository<MeetingRoom, Integer> {
 
-    @Query(value = "SELECT * FROM meetingroom m WHERE m.name = :name AND m.is_open = true")
+    @Query(value = "SELECT * FROM meeting_room m WHERE m.room_name = :name AND m.is_open = true" , nativeQuery = true)
     Optional<MeetingRoom> findByName(@Param("name")String name);
 }

@@ -8,7 +8,7 @@ import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
-import org.example.CalendarManagement.thriftclients.interfaces.ThriftMeetingServiceClient;
+import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class EmployeeFacade {
     private EmployeeService employeeService;
 
     @Autowired
-    private ThriftMeetingServiceClient meetingClient;
+    private MeetingServiceClient meetingClient;
 
     public Employee saveEmployee(AddEmployeeDataRequest request)
     {
@@ -38,7 +38,7 @@ public class EmployeeFacade {
         try {
             meetingClient.cancelMeetingForRemovedEmployee(removedEmployee.getId());
             meetingClient.updateStatusForRemovedEmployee(removedEmployee.getId());
-        }catch (TException ex){
+        }catch (RuntimeException ex){
             throw new RuntimeException(ex.getMessage());
         }
         return removedEmployeeResponse;

@@ -1,7 +1,6 @@
 package org.example.CalendarManagement.calendarcontroller;
 
 
-import org.apache.thrift.TException;
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 //import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
@@ -9,7 +8,7 @@ import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
 //import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
-import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
+import org.example.CalendarManagement.api.validator.ValidateEmployeeId;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
 import org.example.CalendarManagement.calendarfacade.EmployeeFacade;
@@ -32,7 +31,7 @@ public class EmployeeController {
     ValidateEmployeeEmail validateEmployeeEmail;
 
     @Autowired
-    ValidateEmployeeIdentity validateEmployeeIdentity;
+    ValidateEmployeeId validateEmployeeId;
 
     @Autowired
     EmployeeFacade employeeFacade;
@@ -63,7 +62,7 @@ public class EmployeeController {
     public ResponseEntity<Response> removeEmployee(@NotNull @PathVariable(name = "id") String employeeId)  {
         ValidateResponse validateResponseForEmployeeIdentity= null;
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(employeeId);
-        validateResponseForEmployeeIdentity = validateEmployeeIdentity.checkEmployeeId(employeeId);
+        validateResponseForEmployeeIdentity = validateEmployeeId.checkEmployeeId(employeeId);
 
         if(!validateResponseForEmployeeIdentity.isValid()){
             return new ResponseEntity<Response>(new Response(validateResponseForEmployeeIdentity.getMessage(),null),HttpStatus.BAD_REQUEST);

@@ -9,7 +9,7 @@ import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
 //import org.example.CalendarManagement.thriftclients.implementation.Client;
-import org.example.CalendarManagement.thriftclients.implementation.ThriftMeetingServiceClientImpl;
+import org.example.CalendarManagement.thriftclients.implementation.MeetingServiceClientImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +30,7 @@ public class EmployeeFacadeTest {
     EmployeeFacade employeeFacade;
 
     @Mock
-    ThriftMeetingServiceClientImpl client;
+    MeetingServiceClientImpl client;
 
     @Test
     public void employeeFacadeTest_employeeSavedInRepository(){
@@ -72,7 +72,7 @@ public class EmployeeFacadeTest {
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
         Mockito.when(employeeService.removeEmployeeById(id)).
                 thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
-        Mockito.when(client.cancelMeetingForRemovedEmployee(id)).thenThrow(TException.class);
+        Mockito.when(client.cancelMeetingForRemovedEmployee(id)).thenThrow(RuntimeException.class);
         Assertions.assertThrows(RuntimeException.class , () -> employeeFacade.removeEmployee(removeEmployeeDataRequest));
     }
 
@@ -83,7 +83,7 @@ public class EmployeeFacadeTest {
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
         Mockito.when(employeeService.removeEmployeeById(id)).
                 thenReturn(new Employee(id, "tushar", 1, "tushar@gmail.com"));
-        Mockito.when(client.updateStatusForRemovedEmployee(id)).thenThrow(TException.class);
+        Mockito.when(client.updateStatusForRemovedEmployee(id)).thenThrow(RuntimeException.class);
         Assertions.assertThrows(RuntimeException.class , () -> employeeFacade.removeEmployee(removeEmployeeDataRequest));
     }
 }

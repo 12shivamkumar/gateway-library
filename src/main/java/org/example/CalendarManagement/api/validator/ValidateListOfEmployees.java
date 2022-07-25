@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ValidateListOfEmployees {
     @Autowired
-    ValidateEmployeeIdentity validateEmployeeIdentity;
+    ValidateEmployeeId validateEmployeeId;
 
     @Autowired
     EmployeeRepository employeeRepository;

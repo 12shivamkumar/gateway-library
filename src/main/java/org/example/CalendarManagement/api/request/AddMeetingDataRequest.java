@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Component
 public class AddMeetingDataRequest {
     @NotNull(message = "owner id cannot be nulll")
     private String ownerId;

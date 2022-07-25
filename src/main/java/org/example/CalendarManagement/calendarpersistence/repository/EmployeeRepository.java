@@ -15,11 +15,11 @@ public interface EmployeeRepository extends CrudRepository<Employee,String>
 {
     Optional<Employee> findByEmail(String email);
 
-    @Query(value = "SELECT e.office_id FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false")
-    List<Integer> findOfficeByEmployeeId(@Param("listOfEmployeeId")List<String> listOfEmployeeId);
+    @Query(value = "SELECT e.office_id FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false" ,nativeQuery = true)
+    List<Integer> findOfficeByEmployeeId(@Param("listOfEmployeeId") List<String> listOfEmployeeId);
 
-    @Query(value = "SELECT COUNT(id) FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false")
-    Integer countByIdIn(@Param("listOfEmployeeId")List<String> listOfEmployeeId);
+    @Query(value = "SELECT COUNT(e.id) FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false" , nativeQuery = true)
+    Integer countByIdIn(@Param("listOfEmployeeId") List<String> listOfEmployeeId);
 
 }
 

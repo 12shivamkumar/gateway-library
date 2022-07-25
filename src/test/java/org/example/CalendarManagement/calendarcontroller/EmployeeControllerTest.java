@@ -4,7 +4,7 @@ import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddEmployeeDataRequest;
 import org.example.CalendarManagement.api.request.RemoveEmployeeDataRequest;
 import org.example.CalendarManagement.api.validator.ValidateEmployeeEmail;
-import org.example.CalendarManagement.api.validator.ValidateEmployeeIdentity;
+import org.example.CalendarManagement.api.validator.ValidateEmployeeId;
 import org.example.CalendarManagement.api.validator.ValidateOfficeId;
 import org.example.CalendarManagement.api.validator.ValidateResponse;
 import org.example.CalendarManagement.calendarfacade.EmployeeFacade;
@@ -25,7 +25,7 @@ class EmployeeControllerTest {
     @Mock
     EmployeeFacade employeeFacade;
     @Mock
-    ValidateEmployeeIdentity validateEmployeeIdentity;
+    ValidateEmployeeId validateEmployeeId;
 
     @Mock
     ValidateOfficeId validateOfficeId;
@@ -92,7 +92,7 @@ class EmployeeControllerTest {
     @Test
     public void employeeControllerTest_removeEmployeeFailedIdValidation(){
         String id = "xyz-123";
-        Mockito.when(validateEmployeeIdentity.checkEmployeeId(id)).thenReturn(new ValidateResponse("Employee does not exists", false));
+        Mockito.when(validateEmployeeId.checkEmployeeId(id)).thenReturn(new ValidateResponse("Employee does not exists", false));
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
         ResponseEntity<Response> responseEntity = employeeController.removeEmployee(id);
         assertNotNull(responseEntity);
@@ -102,7 +102,7 @@ class EmployeeControllerTest {
     @Test
     public void employeeControllerTest_removeEmployeeByIdSuccessfully(){
         String id = "xyz-123";
-        Mockito.when(validateEmployeeIdentity.checkEmployeeId(id)).
+        Mockito.when(validateEmployeeId.checkEmployeeId(id)).
                 thenReturn(new ValidateResponse("Employee Exists", true));
         Mockito.when(employeeFacade.removeEmployee(Mockito.any(RemoveEmployeeDataRequest.class))).
                 thenReturn(new Response(null, new Employee(id,"tushar",2,"tushar@xyz.com")));
@@ -116,7 +116,7 @@ class EmployeeControllerTest {
     {
         String id = "xyz-123";
 
-        Mockito.when(validateEmployeeIdentity.checkEmployeeId(id)).
+        Mockito.when(validateEmployeeId.checkEmployeeId(id)).
                 thenReturn(new ValidateResponse("Employee Exists", true));
         Mockito.when(employeeFacade.removeEmployee(Mockito.any(RemoveEmployeeDataRequest.class))).
                 thenThrow(RuntimeException.class);

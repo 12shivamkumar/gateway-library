@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("!test")
-public interface ThriftMeetingServiceClient {
+public interface MeetingServiceClient {
 
-    boolean cancelMeetingForRemovedEmployee(String employeeId) throws TException;
+    boolean cancelMeetingForRemovedEmployee(String employeeId);
 
-    boolean updateStatusForRemovedEmployee(String employeeId) throws TException;
+    boolean updateStatusForRemovedEmployee(String employeeId);
 
 }

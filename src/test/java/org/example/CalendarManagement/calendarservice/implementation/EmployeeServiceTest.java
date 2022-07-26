@@ -1,20 +1,16 @@
 package org.example.CalendarManagement.calendarservice.implementation;
 
-import org.example.CalendarManagement.api.validator.ValidateResponse;
 import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
-import org.example.CalendarManagement.calendarpersistence.repository.MeetingRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataAccessException;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,8 +20,6 @@ class EmployeeServiceTest {
     @Mock
     EmployeeRepository employeeRepository;
 
-    @Mock
-    MeetingRepository meetingRepository;
     @InjectMocks
     EmployeeService employeeService;
 

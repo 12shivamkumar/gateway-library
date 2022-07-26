@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class ValidateMeetingDateTimeTest {
+class ValidateMeetingDateTimeTestDetails {
     @InjectMocks
     private ValidateMeetingDateTime validateMeetingDateTime;
 

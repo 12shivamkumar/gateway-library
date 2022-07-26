@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class ValidateMeetingRoomTest {
+class ValidateMeetingRoomTestDetails {
 
     @Mock
     MeetingRoomRepository meetingRoomRepository;

@@ -1,10 +1,8 @@
 package org.example.CalendarManagement.api.validator;
 
 import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
-import org.example.CalendarManagement.calendarpersistence.repository.MeetingRepository;
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

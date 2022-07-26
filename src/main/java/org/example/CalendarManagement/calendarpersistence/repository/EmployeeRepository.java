@@ -21,5 +21,7 @@ public interface EmployeeRepository extends CrudRepository<Employee,String>
     @Query(value = "SELECT COUNT(e.id) FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false" , nativeQuery = true)
     Integer countByIdIn(@Param("listOfEmployeeId") List<String> listOfEmployeeId);
 
+    @Query(value = "SELECT e.office_id FROM employee e WHERE e.id = :id" , nativeQuery = true)
+    Integer findOfficeIdById(String id);
 }
 

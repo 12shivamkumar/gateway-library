@@ -1,7 +1,7 @@
 
 package org.example.CalendarManagement.calendarservice.implementation;
 
-//import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
+
 import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
 import org.example.CalendarManagement.calendarservice.interfaces.MeetingRoomInterface;
@@ -27,19 +27,8 @@ public class MeetingRoomService implements MeetingRoomInterface {
     private MeetingServiceClient meetingServiceClient;
 
     @Override
-    public MeetingRoom findMeetingRoomByRoomID(int roomID) {
-        return null;
-    }
-
-    @Override
-    public int findMeetingRoomIDByRoomName(String roomName) {
-        return 0;
-    }
-
-    @Override
     public Integer findFreeMeetingRoom(int officeID, LocalDate date, LocalTime startTime, LocalTime endTime) {
         List<Integer> listOfRoomsInOffice = meetingRoomRepository.findByOffice(officeID);
-        System.out.println(listOfRoomsInOffice);
         if(listOfRoomsInOffice.size()==0){
             return 0;
         }
@@ -47,9 +36,7 @@ public class MeetingRoomService implements MeetingRoomInterface {
         Time meetingStartTime = new Time(startTime.getHour(),startTime.getMinute(),startTime.getSecond());
         Time meetingEndTime =new Time(endTime.getHour(),endTime.getMinute(), endTime.getSecond());
         FindFreeMeetingRoomDataRequest  findFreeMeetingRoomDataRequest = new FindFreeMeetingRoomDataRequest(listOfRoomsInOffice,dateOfMeeting,meetingStartTime,meetingEndTime);
-        System.out.println(meetingServiceClient);
         Integer freeMeetingRoom = meetingServiceClient.findFreeMeetingRoom(findFreeMeetingRoomDataRequest);
-        System.out.println(freeMeetingRoom);
         return freeMeetingRoom;
     }
 
@@ -57,13 +44,15 @@ public class MeetingRoomService implements MeetingRoomInterface {
     public boolean meetingRoomAvailable(String roomName, LocalDate date, LocalTime startTime, LocalTime endTime) {
         Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(roomName);
         if(meetingRoom.isPresent()){
-            int roomId = meetingRoom.get().getRoomId();
-            Date dateOfMeeting = new Date(date.getDayOfMonth(),date.getMonthValue(),date.getYear());
-            Time meetingStartTime = new Time(startTime.getHour(),startTime.getMinute(),startTime.getSecond());
-            Time meetingEndTime =new Time(endTime.getHour(),endTime.getMinute(), endTime.getSecond());
-            MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest = new MeetingRoomAvailableDataRequest(roomId,dateOfMeeting,meetingStartTime,meetingEndTime);
-            boolean meetingRoomAvailability = meetingServiceClient.meetingRoomAvailable(meetingRoomAvailableDataRequest);
-            return meetingRoomAvailability;
+            if(meetingRoom.get().isOpen()){
+                int roomId = meetingRoom.get().getRoomId();
+                Date dateOfMeeting = new Date(date.getDayOfMonth(),date.getMonthValue(),date.getYear());
+                Time meetingStartTime = new Time(startTime.getHour(),startTime.getMinute(),startTime.getSecond());
+                Time meetingEndTime =new Time(endTime.getHour(),endTime.getMinute(), endTime.getSecond());
+                MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest = new MeetingRoomAvailableDataRequest(roomId,dateOfMeeting,meetingStartTime,meetingEndTime);
+                boolean meetingRoomAvailability = meetingServiceClient.meetingRoomAvailable(meetingRoomAvailableDataRequest);
+                return meetingRoomAvailability;
+            }
         }
         return false;
     }

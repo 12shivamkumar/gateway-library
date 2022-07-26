@@ -19,7 +19,7 @@ class ValidateMeetingDateTimeTestDetails {
     @Test
     public void validateMeetingDateTimeTest_validDateTime()
     {
-        LocalDate date = LocalDate.of(2022,07,25);
+        LocalDate date = LocalDate.of(2022,8,25);
         LocalTime startTime = LocalTime.of(19,30);
         ValidateResponse validateResponse = validateMeetingDateTime.checkMeetingDateTime(date , startTime);
         assertNotNull(validateResponse);
@@ -29,7 +29,7 @@ class ValidateMeetingDateTimeTestDetails {
     @Test
     public void validateMeetingDateTimeTest_validFutureDate()
     {
-        LocalDate date = LocalDate.of(2022,07,26);
+        LocalDate date = LocalDate.of(2022,9,26);
         LocalTime startTime = LocalTime.of(14,30);
         ValidateResponse validateResponse = validateMeetingDateTime.checkMeetingDateTime(date , startTime);
         assertNotNull(validateResponse);

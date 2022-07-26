@@ -157,6 +157,11 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
         }
     }
 
+    @Override
+    public String isAlive() {
+        return null;
+    }
+
 }
 
 

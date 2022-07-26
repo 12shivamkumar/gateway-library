@@ -15,7 +15,7 @@ public class AddMeetingDataRequest {
     private String agenda;
 
     private String description;
-    @NotNull(message = "There must be atleast one employee")
+    @NotNull(message = "There must be at least one employee")
     private List<String> listOfEmployeeId;
 
     @NotNull(message = "date of meeting cannot be null")

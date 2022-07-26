@@ -32,11 +32,14 @@ public class MeetingRoom {
 
     public MeetingRoom(){}
 
-    public MeetingRoom( String roomName, int officeId,boolean isOpen) {
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public MeetingRoom(String roomName, int officeId, boolean isOpen) {
         this.roomName = roomName;
         this.officeId = officeId;
         this.isOpen = isOpen;
-
     }
 
     public int getRoomId() {

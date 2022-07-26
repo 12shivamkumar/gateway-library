@@ -1,11 +1,11 @@
 package org.example.CalendarManagement.calendarservice.implementation;
 
-import integrationtestclasses.config.MockMeetingServiceClient;
 import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.example.CalendarThriftConfiguration.Date;
 import org.example.CalendarThriftConfiguration.FindFreeMeetingRoomDataRequest;
+import org.example.CalendarThriftConfiguration.MeetingRoomAvailableDataRequest;
 import org.example.CalendarThriftConfiguration.Time;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class MeetingRoomServiceTest {
+    @Mock
+    MeetingServiceClient meetingServiceClient;
     @Mock
     MeetingRoomRepository meetingRoomRepository;
     @InjectMocks
@@ -57,9 +59,25 @@ class MeetingRoomServiceTest {
         LocalTime startTime = LocalTime.of(11 ,00);
         LocalTime endTime = LocalTime.of(12, 00);
         Mockito.when(meetingRoomRepository.findByOffice(2)).thenReturn(Arrays.asList(1,2));
+        Mockito.when(meetingServiceClient.findFreeMeetingRoom(Mockito.any(FindFreeMeetingRoomDataRequest.class))).
+                thenReturn(2);
         int responseFromService = meetingRoomService.findFreeMeetingRoom(officeId,dateOfMeeting,startTime,endTime);
         Assertions.assertTrue(responseFromService>0);
     }
+
+    @Test
+    public void meetingRoomServiceTest_meetingRoomAvailable_roomClosed(){
+        int meetingRoomId = 10;
+        String roomName = "reon-dev";
+        LocalDate dateOfMeeting = LocalDate.of(2022,8,27);
+        LocalTime startTime = LocalTime.of(11 ,00);
+        LocalTime endTime = LocalTime.of(12, 00);
+        Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).
+                thenReturn(Optional.of(new MeetingRoom(roomName,2,false)));
+        boolean responseFromService = meetingRoomService.meetingRoomAvailable(roomName,dateOfMeeting,startTime,endTime);
+        assertFalse(responseFromService);
+    }
+
     @Test
     public void meetingRoomServiceTest_meetingRoomAvailable_NotAvailable(){
         int meetingRoomId = 10;
@@ -69,6 +87,7 @@ class MeetingRoomServiceTest {
         LocalTime endTime = LocalTime.of(12, 00);
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).
                 thenReturn(Optional.of(new MeetingRoom(roomName,2,true)));
+        Mockito.when(meetingServiceClient.meetingRoomAvailable(Mockito.any(MeetingRoomAvailableDataRequest.class))).thenReturn(false);
         boolean responseFromService = meetingRoomService.meetingRoomAvailable(roomName,dateOfMeeting,startTime,endTime);
         assertFalse(responseFromService);
     }
@@ -81,6 +100,7 @@ class MeetingRoomServiceTest {
         LocalTime endTime = LocalTime.of(12, 00);
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).
                 thenReturn(Optional.of(new MeetingRoom(roomName,2,true)));
+        Mockito.when(meetingServiceClient.meetingRoomAvailable(Mockito.any(MeetingRoomAvailableDataRequest.class))).thenReturn(true);
         boolean responseFromService = meetingRoomService.meetingRoomAvailable(roomName,dateOfMeeting,startTime,endTime);
         assertTrue(responseFromService);
     }

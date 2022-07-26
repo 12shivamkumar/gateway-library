@@ -14,7 +14,7 @@ public class Office {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
+    @Column(name = "office_name")
     @NotNull
     private String name;
 
@@ -23,7 +23,7 @@ public class Office {
     private String officeLocation;
 
     @CreationTimestamp
-    @Column(name = "created_time")
+    @Column(name = "created_date")
     private LocalDateTime createdDateTime;
 
     public Office(){}

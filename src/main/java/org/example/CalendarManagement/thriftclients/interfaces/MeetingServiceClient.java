@@ -1,15 +1,12 @@
 package org.example.CalendarManagement.thriftclients.interfaces;
 
-import org.example.CalendarThriftConfiguration.EmployeeAvailabilityDataRequest;
-import org.example.CalendarThriftConfiguration.EmployeeStatusDataRequest;
-import org.example.CalendarThriftConfiguration.MeetingDetails;
+import org.example.CalendarThriftConfiguration.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@Profile("!test")
 public interface MeetingServiceClient {
 
     boolean cancelMeetingForRemovedEmployee(String employeeId);
@@ -21,5 +18,9 @@ public interface MeetingServiceClient {
     boolean addMeetingDetails(MeetingDetails meetingDetails);
 
     boolean addEmployeeMeetingStatus(List<EmployeeStatusDataRequest> employeeStatusDataRequestStatuses);
+
+    Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest);
+
+    boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest);
 
 }

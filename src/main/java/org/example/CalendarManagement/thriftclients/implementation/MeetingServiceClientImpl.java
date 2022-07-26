@@ -6,10 +6,7 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
-import org.example.CalendarThriftConfiguration.EmployeeAvailabilityDataRequest;
-import org.example.CalendarThriftConfiguration.EmployeeStatusDataRequest;
-import org.example.CalendarThriftConfiguration.MeetingDetails;
-import org.example.CalendarThriftConfiguration.MeetingSvc;
+import org.example.CalendarThriftConfiguration.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -119,6 +116,47 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             throw  new RuntimeException(exception.getMessage());
         }
     }
+
+    @Override
+    public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
+        try( TTransport transport = new TSocket("localhost" , 9090)) {
+            transport.open();
+
+            TProtocol protocol = new TBinaryProtocol(transport);
+
+            MeetingSvc.Client client = new MeetingSvc.Client(protocol);
+
+            Integer thriftResponse = client.findFreeMeetingRoom(findFreeMeetingRoomDataRequest);
+
+            transport.close();
+
+            return thriftResponse;
+        }catch (TException exception)
+        {
+            throw  new RuntimeException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest) {
+        try( TTransport transport = new TSocket("localhost" , 9090)) {
+            transport.open();
+
+            TProtocol protocol = new TBinaryProtocol(transport);
+
+            MeetingSvc.Client client = new MeetingSvc.Client(protocol);
+
+            boolean thriftResponse = client.meetingRoomAvailable(meetingRoomAvailableDataRequest);
+
+            transport.close();
+
+            return thriftResponse;
+        }catch (TException exception)
+        {
+            throw  new RuntimeException(exception.getMessage());
+        }
+    }
+
 }
 
 

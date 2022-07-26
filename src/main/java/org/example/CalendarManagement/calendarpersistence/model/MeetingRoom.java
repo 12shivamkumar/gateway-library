@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class MeetingRoom {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int roomId;
 
@@ -27,7 +28,7 @@ public class MeetingRoom {
     private boolean isOpen;
 
     @CreationTimestamp
-    @Column(name = "log")
+    @Column(name = "created_date")
     private LocalDateTime createdDateTime;
 
     public MeetingRoom(){}

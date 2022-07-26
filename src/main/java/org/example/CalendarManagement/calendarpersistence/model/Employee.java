@@ -1,6 +1,8 @@
 package org.example.CalendarManagement.calendarpersistence.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,9 +33,10 @@ public class Employee {
     private boolean isDeleted;
 
     @CreationTimestamp
-    @Column(name = "created_time")
+    @Column(name = "created_date")
     private LocalDateTime createdDateTime;
 
+    @UpdateTimestamp
     @Column(name = "auto_update_time")
     private LocalDateTime autoDateTime;
 

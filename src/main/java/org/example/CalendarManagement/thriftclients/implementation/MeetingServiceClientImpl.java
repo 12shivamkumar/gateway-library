@@ -3,6 +3,7 @@ package org.example.CalendarManagement.thriftclients.implementation;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
@@ -159,7 +160,22 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public String isAlive() {
-        return null;
+        try(TTransport transport = new THttpClient("http://localhost:" + 8080 + "/isAlive");) {
+            transport.open();
+
+            TProtocol protocol = new TBinaryProtocol(transport);
+
+            MeetingSvc.Client client = new MeetingSvc.Client(protocol);
+
+            String thriftResponse = client.isAlive();
+
+            transport.close();
+
+            return thriftResponse;
+        }catch (TException exception)
+        {
+            throw  new RuntimeException(exception.getMessage());
+        }
     }
 
 }

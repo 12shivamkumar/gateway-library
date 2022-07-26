@@ -1,4 +1,4 @@
-package integrationtestclasses.config;
+package org.example.CalendarManagement.thriftclients.implementation;
 
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.example.CalendarThriftConfiguration.*;
@@ -14,11 +14,12 @@ import java.util.List;
 public class MockMeetingServiceClient implements MeetingServiceClient {
     @Override
     public boolean cancelMeetingForRemovedEmployee(String employeeId) {
-
+        System.out.println("cancel meeting method");
         return  true;
     }
     @Override
     public boolean updateStatusForRemovedEmployee(String employeeId){
+        System.out.println("update status method");
         return  true;
     }
 
@@ -32,8 +33,8 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
     }
 
     @Override
-    public boolean addMeetingDetails(MeetingDetails meetingDetails) {
-        return false;
+    public String addMeetingDetails(MeetingDetails meetingDetails) {
+        return null;
     }
 
     @Override
@@ -57,6 +58,11 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String isAlive() {
+        return null;
     }
 
 }

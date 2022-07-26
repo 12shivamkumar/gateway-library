@@ -78,7 +78,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
     }
 
     @Override
-    public boolean addMeetingDetails(MeetingDetails meetingDetails) {
+    public String addMeetingDetails(MeetingDetails meetingDetails) {
         try( TTransport transport = new TSocket("localhost" , 9090)) {
             transport.open();
 
@@ -86,7 +86,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
             MeetingSvc.Client client = new MeetingSvc.Client(protocol);
 
-            Boolean thriftResponse = client.addMeetingDetails(meetingDetails);
+            String thriftResponse = client.addMeetingDetails(meetingDetails);
 
             transport.close();
 
@@ -155,6 +155,11 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
         {
             throw  new RuntimeException(exception.getMessage());
         }
+    }
+
+    @Override
+    public String isAlive() {
+        return null;
     }
 
 }

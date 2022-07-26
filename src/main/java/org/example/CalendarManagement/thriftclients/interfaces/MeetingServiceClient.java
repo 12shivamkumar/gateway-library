@@ -3,6 +3,7 @@ package org.example.CalendarManagement.thriftclients.interfaces;
 import org.example.CalendarThriftConfiguration.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,12 +16,14 @@ public interface MeetingServiceClient {
 
     List<String> checkEmployeeAvailability(EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest);
 
-    boolean addMeetingDetails(MeetingDetails meetingDetails);
+    String addMeetingDetails(MeetingDetails meetingDetails);
 
     boolean addEmployeeMeetingStatus(List<EmployeeStatusDataRequest> employeeStatusDataRequestStatuses);
 
     Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest);
 
     boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest);
+
+    String isAlive();
 
 }

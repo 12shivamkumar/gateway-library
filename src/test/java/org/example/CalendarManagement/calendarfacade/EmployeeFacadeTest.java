@@ -10,6 +10,7 @@ import org.example.CalendarManagement.calendarpersistence.model.Employee;
 import org.example.CalendarManagement.calendarservice.implementation.EmployeeService;
 //import org.example.CalendarManagement.thriftclients.implementation.Client;
 import org.example.CalendarManagement.thriftclients.implementation.MeetingServiceClientImpl;
+import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ public class EmployeeFacadeTest {
     EmployeeFacade employeeFacade;
 
     @Mock
-    MeetingServiceClientImpl client;
+    MeetingServiceClient client;
 
     @Test
     public void employeeFacadeTest_employeeSavedInRepository(){

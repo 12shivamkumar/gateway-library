@@ -1,8 +1,10 @@
 package org.example.CalendarManagement.api.validator;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+@Component
 public class ValidateMeetingDateTime {
 
     public ValidateResponse checkMeetingDateTime(LocalDate date , LocalTime startTime)

@@ -39,17 +39,17 @@ class MeetingFacadeTest {
     @Test
     public void meetingFacadeTest_scheduleMeetingFailed_employeeNotAvailable(){
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 "reon-dev"
         );
         Mockito.when(meetingServiceClient.checkEmployeeAvailability(Mockito.any(EmployeeAvailabilityDataRequest.class))).
-                thenReturn(Arrays.asList("xyz-12" , "xyz-13"));
+                thenReturn(Arrays.asList("abc-12" , "abc-13"));
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseFromFacade);
     }
@@ -58,10 +58,10 @@ class MeetingFacadeTest {
     public void meetingFacadeTest_scheduleMeetingFailedNoFreeMeetingRoomAvailable()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
@@ -80,10 +80,10 @@ class MeetingFacadeTest {
     public void meetingFacadeTest_scheduleMeetingFailedGivenMeetingRoomNotFree()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
@@ -101,10 +101,10 @@ class MeetingFacadeTest {
     public void meetingFacadeTest_scheduleMeetingSuccessFreeMeetingRoomAvailable()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
@@ -118,8 +118,6 @@ class MeetingFacadeTest {
                 .thenReturn(1);
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseFromFacade);
-        Boolean savedSuccessfully = (Boolean)responseFromFacade.getData();
-        assertTrue(savedSuccessfully);
     }
 
 
@@ -127,10 +125,10 @@ class MeetingFacadeTest {
     public void meetingFacadeTest_scheduleMeetingSuccessGivenMeetingRoomFree()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
@@ -144,18 +142,16 @@ class MeetingFacadeTest {
         Mockito.when(meetingRoomRepository.findByName("reon-dev")).thenReturn(Optional.of(new MeetingRoom("reon-dev" ,1, true)));
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseFromFacade);
-        Boolean savedSuccessfully = (Boolean)responseFromFacade.getData();
-        assertTrue(savedSuccessfully);
     }
 
     @Test
     public void meetingFacadeTest_saveMeetingDetails_meetingDetailsSavedSuccessfully()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
@@ -169,18 +165,18 @@ class MeetingFacadeTest {
         Mockito.when(meetingServiceClient.addMeetingDetails(Mockito.any(MeetingDetails.class))).thenReturn("20128229");
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseFromFacade);
-        Boolean savedSuccessfully = (Boolean)responseFromFacade.getData();
-        assertTrue(savedSuccessfully);
+        String responseMeetingId = (String) responseFromFacade.getData();
+        assertEquals("20128229" , responseMeetingId);
     }
 
     @Test
     public void meetingFacadeTest_saveMeetingDetails_meetingDetailsNotSavedSuccessfully()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
@@ -199,10 +195,10 @@ class MeetingFacadeTest {
     public void meetingFacadeTest_saveEmployeeMeetingStatus_statusSavedSuccessfully()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
@@ -217,18 +213,18 @@ class MeetingFacadeTest {
         Mockito.when(meetingServiceClient.addEmployeeMeetingStatus(Mockito.anyList())).thenReturn(true);
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseFromFacade);
-        boolean responseStatusSaved = (Boolean)responseFromFacade.getData();
-        assertTrue(responseStatusSaved);
+        String responseMeetingId = (String) responseFromFacade.getData();
+        assertEquals("20128229" , responseMeetingId);
     }
 
     @Test
     public void meetingFacadeTest_saveEmployeeMeetingStatus_statusNotSavedSuccessfully()
     {
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "xyz-12",
+                "abc-12",
                 "daily sync up",
                 "details",
-                Arrays.asList("xyz-12","xyz-13","xyz-14","xyz-15"),
+                Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),

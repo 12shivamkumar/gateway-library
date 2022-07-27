@@ -15,6 +15,6 @@ public interface MeetingRoomRepository extends CrudRepository<MeetingRoom, Integ
     @Query(value = "SELECT * FROM meeting_room m WHERE m.room_name = :name AND m.is_open = true" , nativeQuery = true)
     Optional<MeetingRoom> findByName(@Param("name")String name);
 
-    @Query(value = " SELECT m.roomId FROM meeting_room m WHERE m.officeId = :office_id AND m.isOpen = true",nativeQuery = true)
+    @Query(value = " SELECT m.id FROM meeting_room m WHERE m.office_id = :office_id AND m.is_open = true",nativeQuery = true)
     List<Integer> findByOffice(@Param("office_id")int office_id);
 }

@@ -10,6 +10,7 @@ import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceCli
 import org.example.CalendarThriftConfiguration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class MeetingFacade {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Transactional
     public Response scheduleMeeting(AddMeetingDataRequest addMeetingDataRequest){
         Response response =null;
         Date dateOfMeeting = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
@@ -46,7 +48,6 @@ public class MeetingFacade {
         }
 
         Integer meetingRoomId = 0;
-
         if(addMeetingDataRequest.getRoomName().equals(""))
         {
             int officeId = employeeRepository.findOfficeIdById(addMeetingDataRequest.getOwnerId());
@@ -54,7 +55,7 @@ public class MeetingFacade {
 
             if(meetingRoomId == 0)
             {
-                response = new Response("No Meeting room is available", meetingRoomId);
+                response = new Response("No Meeting room is available", "");
                 return response;
             }
             response = new Response(null, meetingRoomId);
@@ -66,14 +67,13 @@ public class MeetingFacade {
 
             if(!meetingRoomAvailableResponse)
             {
-                response = new Response("Given Meeting room is not available",false);
+                response = new Response("Given Meeting room is not available","");
                 return response;
             }
             Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(addMeetingDataRequest.getRoomName());
             meetingRoomId = meetingRoom.get().getRoomId();
             response = new Response(null, meetingRoom.get().getRoomName());
         }
-
 
         MeetingDetails meetingDetails = new MeetingDetails();
         meetingDetails.setDescription(addMeetingDataRequest.getDescription());
@@ -111,7 +111,7 @@ public class MeetingFacade {
 
         try {
             boolean addEmployeeMeetingStatusResponse  = meetingServiceClient.addEmployeeMeetingStatus(employeeStatusDataRequestArrayList);
-            response = new Response(null , true);
+            response = new Response(null , meetingId);
         }catch (RuntimeException ex){
             throw new RuntimeException(ex.getMessage());
         }

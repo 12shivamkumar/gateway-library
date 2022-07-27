@@ -2,11 +2,13 @@ package org.example.CalendarManagement.api.validator;
 
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
 
+@Component
 public class ValidateCompanyPolicies {
     public ValidateResponse noOfEmployeeInMeeting(List<String> employeeList)
     {

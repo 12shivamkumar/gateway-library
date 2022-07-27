@@ -13,6 +13,9 @@ public class ValidateMeetingRoom {
     MeetingRoomRepository meetingRoomRepository;
 
     public ValidateResponse checkMeetingRoomInDb(String meetingRoomName){
+        if(meetingRoomName.equals(""))
+            return new ValidateResponse("meeting room not given",true);
+
         Optional<MeetingRoom> meetingRoomResponseFromDb = meetingRoomRepository.findByName(meetingRoomName);
         if(meetingRoomResponseFromDb.isPresent()){
             return new ValidateResponse("meeting room present in db",true);

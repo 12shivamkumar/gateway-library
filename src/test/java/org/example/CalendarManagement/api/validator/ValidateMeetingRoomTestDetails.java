@@ -24,6 +24,15 @@ class ValidateMeetingRoomTestDetails {
     ValidateMeetingRoom validateMeetingRoom;
 
     @Test
+    public void validateMeetingRoomTest_meetingRoomNotGiven()
+    {
+        String meetingRoom = "";
+        ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoom.checkMeetingRoomInDb(meetingRoom);
+        Assertions.assertNotNull(validateResponseForExistingMeetingRoom);
+        Assertions.assertTrue(validateResponseForExistingMeetingRoom.isValid());
+    }
+
+    @Test
     public void validateMeetingRoomTest_meetingRoomExists(){
         String meetingRoomName = "reon-team";
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).

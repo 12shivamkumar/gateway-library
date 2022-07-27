@@ -44,7 +44,8 @@ public class MeetingRoomService implements MeetingRoomInterface {
     public boolean meetingRoomAvailable(String roomName, LocalDate date, LocalTime startTime, LocalTime endTime) {
         Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(roomName);
         if(meetingRoom.isPresent()){
-            if(meetingRoom.get().isOpen()){
+            if(meetingRoom.get().isOpen())
+            {
                 int roomId = meetingRoom.get().getRoomId();
                 Date dateOfMeeting = new Date(date.getDayOfMonth(),date.getMonthValue(),date.getYear());
                 Time meetingStartTime = new Time(startTime.getHour(),startTime.getMinute(),startTime.getSecond());

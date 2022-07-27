@@ -43,6 +43,10 @@ public class MeetingRoom {
         this.isOpen = isOpen;
     }
 
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
     public int getRoomId() {
         return roomId;
     }

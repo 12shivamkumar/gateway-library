@@ -29,23 +29,23 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
         if(employeeAvailabilityDataRequest.listOfEmployeeId.size()==4){
             return Arrays.asList("xyz-3");
         }
-        return null;
+        return Arrays.asList();
     }
 
     @Override
     public String addMeetingDetails(MeetingDetails meetingDetails) {
-        return null;
+        return "20128229";
     }
 
     @Override
     public boolean addEmployeeMeetingStatus(List<EmployeeStatusDataRequest> employeeStatusDataRequestStatuses) {
-        return false;
+        return true;
     }
 
     @Override
     public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
-        System.out.println("client");
-        if(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize()>0){
+        System.out.println(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize());
+        if(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize()<2){
             return 2;
         }
         return 0;
@@ -53,8 +53,8 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
 
     @Override
     public boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest) {
-        Date date1 = new Date(2022,07,27);
-        if(meetingRoomAvailableDataRequest.getDateOfMeeting()==date1){
+        Date date1 = new Date(26,8,2022);
+        if(meetingRoomAvailableDataRequest.getDateOfMeeting().equals(date1)){
             return true;
         }
         return false;

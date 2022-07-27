@@ -24,7 +24,7 @@ class ValidateCompanyPoliciesTest {
     @Test
     public void validateCompanyPoliciesTest_noOfEmployeesGreaterThanSix()
     {
-        List<String> employeeList = Arrays.asList("XYZ-11" ,"XYZ-12" ,"XYZ-13","XYZ-14","XYZ-15","XYZ-16","XYZ-17");
+        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16" , "abc-17");
         ValidateResponse validateResponse = validateCompanyPolicies.noOfEmployeeInMeeting(employeeList);
         assertNotNull(validateResponse);
         assertFalse(validateResponse.isValid());
@@ -33,7 +33,7 @@ class ValidateCompanyPoliciesTest {
     @Test
     public void validateCompanyPoliciesTest_noOfEmployeesLessThanAndEqualToSix()
     {
-        List<String> employeeList = Arrays.asList("XYZ-11" ,"XYZ-12" ,"XYZ-13","XYZ-14","XYZ-15","XYZ-16");
+        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         ValidateResponse validateResponse = validateCompanyPolicies.noOfEmployeeInMeeting(employeeList);
         assertNotNull(validateResponse);
         assertTrue(validateResponse.isValid());

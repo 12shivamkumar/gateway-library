@@ -12,22 +12,20 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-class ValidateMeetingRoomTestDetails {
+class ValidateMeetingRoomExistsInDbTestDetails {
 
     @Mock
     MeetingRoomRepository meetingRoomRepository;
 
     @InjectMocks
-    ValidateMeetingRoom validateMeetingRoom;
+    ValidateMeetingRoomExistsInDb validateMeetingRoomExistsInDb;
 
     @Test
     public void validateMeetingRoomTest_meetingRoomNotGiven()
     {
         String meetingRoom = "";
-        ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoom.checkMeetingRoomInDb(meetingRoom);
+        ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoom);
         Assertions.assertNotNull(validateResponseForExistingMeetingRoom);
         Assertions.assertTrue(validateResponseForExistingMeetingRoom.isValid());
     }
@@ -37,7 +35,7 @@ class ValidateMeetingRoomTestDetails {
         String meetingRoomName = "reon-team";
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).
                 thenReturn(Optional.of(new MeetingRoom("reon-team",3,true)));
-        ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoom.checkMeetingRoomInDb(meetingRoomName);
+        ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoomName);
         Assertions.assertNotNull(validateResponseForExistingMeetingRoom);
         Assertions.assertTrue(validateResponseForExistingMeetingRoom.isValid());
     }
@@ -45,7 +43,7 @@ class ValidateMeetingRoomTestDetails {
     public void validateMeetingRoomTest_meetingRoomDoesNotExists(){
         String meetingRoomName = "reon-team";
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).thenReturn(Optional.empty());
-        ValidateResponse validateResponseForMeetingRoomNotInDb = validateMeetingRoom.checkMeetingRoomInDb(meetingRoomName);
+        ValidateResponse validateResponseForMeetingRoomNotInDb = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoomName);
         Assertions.assertNotNull(validateResponseForMeetingRoomNotInDb);
         Assertions.assertFalse(validateResponseForMeetingRoomNotInDb.isValid());
     }

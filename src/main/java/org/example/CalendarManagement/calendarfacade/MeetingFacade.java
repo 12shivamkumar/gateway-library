@@ -32,48 +32,6 @@ public class MeetingFacade {
     @Transactional
     public Response scheduleMeeting(AddMeetingDataRequest addMeetingDataRequest){
         Response response =null;
-        Date dateOfMeeting = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
-        Time meetingStartTime = new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond());
-        Time meetingEndTime = new Time(addMeetingDataRequest.getEndTime().getHour(),addMeetingDataRequest.getEndTime().getMinute(),addMeetingDataRequest.getEndTime().getSecond());
-        EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest = new EmployeeAvailabilityDataRequest(
-                addMeetingDataRequest.getListOfEmployeeId(),
-                meetingStartTime,
-                meetingEndTime,
-                dateOfMeeting
-        );
-        List<String> employeesNotAvailable = meetingServiceClient.checkEmployeeAvailability(employeeAvailabilityDataRequest);
-        if(employeesNotAvailable.size()>0){
-            response = new Response("these employees are not available", employeesNotAvailable);
-            return response;
-        }
-
-        Integer meetingRoomId = 0;
-        if(addMeetingDataRequest.getRoomName().equals(""))
-        {
-            int officeId = employeeRepository.findOfficeIdById(addMeetingDataRequest.getOwnerId());
-            meetingRoomId =  meetingRoomService.findFreeMeetingRoom(officeId,addMeetingDataRequest.getDateOfMeeting(),addMeetingDataRequest.getStartTime(),addMeetingDataRequest.getEndTime());
-
-            if(meetingRoomId == 0)
-            {
-                response = new Response("No Meeting room is available", "");
-                return response;
-            }
-            response = new Response(null, meetingRoomId);
-        }
-        else
-        {
-            boolean meetingRoomAvailableResponse = meetingRoomService.meetingRoomAvailable(addMeetingDataRequest.getRoomName(),
-                    addMeetingDataRequest.getDateOfMeeting(),addMeetingDataRequest.getStartTime(),addMeetingDataRequest.getEndTime());
-
-            if(!meetingRoomAvailableResponse)
-            {
-                response = new Response("Given Meeting room is not available","");
-                return response;
-            }
-            Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(addMeetingDataRequest.getRoomName());
-            meetingRoomId = meetingRoom.get().getRoomId();
-            response = new Response(null, meetingRoom.get().getRoomName());
-        }
 
         MeetingDetails meetingDetails = new MeetingDetails();
         meetingDetails.setDescription(addMeetingDataRequest.getDescription());
@@ -83,7 +41,7 @@ public class MeetingFacade {
         meetingDetails.setStartTime(new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond()));
         meetingDetails.setEndTime(new Time(addMeetingDataRequest.getEndTime().getHour(),addMeetingDataRequest.getEndTime().getMinute(),addMeetingDataRequest.getEndTime().getSecond()));
         meetingDetails.setIsAvailable(true);
-        meetingDetails.setRoomId(meetingRoomId);
+    //    meetingDetails.setRoomId(meetingRoomId);
 
         String meetingId = null;
 
@@ -104,7 +62,7 @@ public class MeetingFacade {
             employeeStatusDataRequest.setEmployeeId(employeeId);
             employeeStatusDataRequest.setMeetingId(meetingId);
             employeeStatusDataRequest.setStatus("Pending");
-            employeeStatusDataRequest.setDateOfMeeting(dateOfMeeting);
+      //      employeeStatusDataRequest.setDateOfMeeting(dateOfMeeting);
 
             employeeStatusDataRequestArrayList.add(employeeStatusDataRequest);
         }

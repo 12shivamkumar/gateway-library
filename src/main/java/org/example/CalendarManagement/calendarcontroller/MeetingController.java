@@ -5,13 +5,16 @@ import org.example.CalendarManagement.api.request.AddMeetingDataRequest;
 import org.example.CalendarManagement.api.validator.*;
 import org.example.CalendarManagement.calendarfacade.MeetingFacade;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
-import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
+import org.example.CalendarThriftConfiguration.Date;
+import org.example.CalendarThriftConfiguration.EmployeeAvailabilityDataRequest;
+import org.example.CalendarThriftConfiguration.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/meeting")
@@ -29,7 +32,13 @@ public class MeetingController {
     ValidateListOfEmployees validateListOfEmployees;
 
     @Autowired
-    ValidateMeetingRoom validateMeetingRoom;
+    ValidateMeetingRoomExistsInDb validateMeetingRoomExistsInDb;
+
+    @Autowired
+    ValidateMeetingRoomAvailability validateMeetingRoomAvailability;
+
+    @Autowired
+    ValidateEmployeeAvailability validateEmployeeAvailability;
 
     @Autowired
     MeetingFacade meetingFacade;
@@ -40,7 +49,7 @@ public class MeetingController {
     @PostMapping
     public ResponseEntity<Response> scheduleMeeting(@Valid @RequestBody AddMeetingDataRequest addMeetingDataRequest){
 
-        ValidateResponse validateResponseNoOfEmployeeInMeeting = validateCompanyPolicies.noOfEmployeeInMeeting(addMeetingDataRequest.getListOfEmployeeId());
+      ValidateResponse validateResponseNoOfEmployeeInMeeting = validateCompanyPolicies.noOfEmployeeInMeeting(addMeetingDataRequest.getListOfEmployeeId());
       if(!validateResponseNoOfEmployeeInMeeting.isValid())
       {
           Response scheduleMeetingResponse = new Response( "Employees more than six are present So meeting is not Productive", null);
@@ -82,25 +91,44 @@ public class MeetingController {
           return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
-      ValidateResponse validateResponseValidateMeetingRoomName = validateMeetingRoom.checkMeetingRoomInDb(addMeetingDataRequest.getRoomName());
-      if(!validateResponseValidateMeetingRoomName.isValid())
+      ValidateResponse validateResponseValidateMeetingRoomNameExistsInDb = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(addMeetingDataRequest.getRoomName());
+      if(!validateResponseValidateMeetingRoomNameExistsInDb.isValid())
       {
           Response scheduleMeetingResponse = new Response( "meeting room does not exist or is closed" , false);
           return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
-      Response validateResponseScheduleMeeting = meetingFacade.scheduleMeeting(addMeetingDataRequest);
-
-      String meetingId = (String) validateResponseScheduleMeeting.getData();
-
-      if(meetingId.equals(""))
-      {
-          Response scheduleMeetingResponse = new Response( "meeting cannot be scheduled" , false);
-          return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
+      ValidateResponse validateResponseValidateMeetingRoomAvailability = validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest);
+      if (!validateResponseValidateMeetingRoomAvailability.isValid()) {
+          Response scheduleMeetingResponse = new Response(validateResponseValidateMeetingRoomAvailability.getMessage(), false);
+          return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.BAD_REQUEST);
       }
 
-      Response scheduleMeetingResponse = new Response(null , meetingId);
-      return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.CREATED);
+      Date meetingDate = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
+      Time meetingStartTime = new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond());
+      Time meetingEndTime = new Time(addMeetingDataRequest.getEndTime().getHour(),addMeetingDataRequest.getEndTime().getMinute(),addMeetingDataRequest.getEndTime().getSecond());
+      EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest = new EmployeeAvailabilityDataRequest(addMeetingDataRequest.getListOfEmployeeId(),meetingStartTime,meetingEndTime,meetingDate);
+      ValidateResponse validateResponseValidateEmployeeAvailability = validateEmployeeAvailability.checkEmployeeAvailability(employeeAvailabilityDataRequest);
+      if(!validateResponseValidateEmployeeAvailability.isValid())
+      {
+          Response scheduleMeetingResponse = new Response(validateResponseValidateEmployeeAvailability.getMessage(), false);
+          return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.BAD_REQUEST);
+      }
+
+//      Response validateResponseScheduleMeeting = meetingFacade.scheduleMeeting(addMeetingDataRequest);
+//
+//      String meetingId = (String) validateResponseScheduleMeeting.getData();
+//
+//      if(meetingId.equals(""))
+//      {
+//          Response scheduleMeetingResponse = new Response( "meeting cannot be scheduled" , false);
+//          return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
+//      }
+//
+//      Response scheduleMeetingResponse = new Response(null , meetingId);
+//      return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.CREATED);
+
+     return null;
     }
 }
 

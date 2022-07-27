@@ -7,9 +7,11 @@ import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRep
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
 import org.example.CalendarManagement.calendarservice.implementation.MeetingRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class ValidateMeetingRoomAvailability {
 
     @Autowired
@@ -49,7 +51,7 @@ public class ValidateMeetingRoomAvailability {
             }
             Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(addMeetingDataRequest.getRoomName());
             meetingRoomId = meetingRoom.get().getRoomId();
-            response = new ValidateResponse(meetingRoom.get().getRoomName(), true);
+            response = new ValidateResponse(meetingRoomId+"", true);
         }
        return response;
     }

@@ -5,6 +5,7 @@ import org.example.CalendarManagement.api.request.AddMeetingDataRequest;
 import org.example.CalendarManagement.api.validator.*;
 import org.example.CalendarManagement.calendarfacade.MeetingFacade;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
+import org.example.CalendarManagement.thriftobjectmappers.AddMeetingToEmployeeAvailabilityMapper;
 import org.example.CalendarThriftConfiguration.Date;
 import org.example.CalendarThriftConfiguration.EmployeeAvailabilityDataRequest;
 import org.example.CalendarThriftConfiguration.Time;
@@ -104,10 +105,7 @@ public class MeetingController {
           return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.BAD_REQUEST);
       }
 
-      Date meetingDate = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
-      Time meetingStartTime = new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond());
-      Time meetingEndTime = new Time(addMeetingDataRequest.getEndTime().getHour(),addMeetingDataRequest.getEndTime().getMinute(),addMeetingDataRequest.getEndTime().getSecond());
-      EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest = new EmployeeAvailabilityDataRequest(addMeetingDataRequest.getListOfEmployeeId(),meetingStartTime,meetingEndTime,meetingDate);
+      EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest = AddMeetingToEmployeeAvailabilityMapper.map(addMeetingDataRequest);
       ValidateResponse validateResponseValidateEmployeeAvailability = validateEmployeeAvailability.checkEmployeeAvailability(employeeAvailabilityDataRequest);
       if(!validateResponseValidateEmployeeAvailability.isValid())
       {
@@ -115,20 +113,11 @@ public class MeetingController {
           return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.BAD_REQUEST);
       }
 
-//      Response validateResponseScheduleMeeting = meetingFacade.scheduleMeeting(addMeetingDataRequest);
-//
-//      String meetingId = (String) validateResponseScheduleMeeting.getData();
-//
-//      if(meetingId.equals(""))
-//      {
-//          Response scheduleMeetingResponse = new Response( "meeting cannot be scheduled" , false);
-//          return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
-//      }
-//
-//      Response scheduleMeetingResponse = new Response(null , meetingId);
-//      return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.CREATED);
+      int roomId = Integer.parseInt(validateResponseValidateMeetingRoomAvailability.getMessage());
+      Response validateResponseScheduleMeeting = meetingFacade.scheduleMeeting(addMeetingDataRequest , roomId);
 
-     return null;
+      Response scheduleMeetingResponse = new Response(null , validateResponseScheduleMeeting.getData());
+      return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.CREATED);
     }
 }
 

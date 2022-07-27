@@ -29,6 +29,9 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
         if(employeeAvailabilityDataRequest.listOfEmployeeId.size()==4){
             return Arrays.asList("xyz-3");
         }
+        if(employeeAvailabilityDataRequest.listOfEmployeeId.size()==3){
+            throw new RuntimeException("Thrift down");
+        }
         return Arrays.asList();
     }
 

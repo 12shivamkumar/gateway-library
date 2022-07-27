@@ -6,8 +6,11 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
+import org.example.CalendarManagement.calendarfacade.EmployeeFacade;
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.example.CalendarThriftConfiguration.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +20,10 @@ import java.util.List;
 @Profile("!test")
 public class MeetingServiceClientImpl implements MeetingServiceClient
 {
+    Logger logger = LoggerFactory.getLogger(EmployeeFacade.class);
     @Override
     public boolean cancelMeetingForRemovedEmployee(String employeeId){
-        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/cancelMeetingForRemovedEmployee")) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -33,13 +37,14 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             return  thriftResponse;
         }catch (TException exception)
         {
+            logger.error(exception.getMessage());
             throw new RuntimeException(exception.getMessage());
         }
     }
 
     @Override
     public boolean updateStatusForRemovedEmployee(String employeeId){
-        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/updateStatusForRemovedEmployee")) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -53,13 +58,14 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             return thriftResponse;
         }catch (TException exception)
         {
+            logger.error(exception.getMessage());
             throw  new RuntimeException(exception.getMessage());
         }
     }
 
     @Override
     public List<String> checkEmployeeAvailability(EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest) {
-        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/checkEmployeeAvailability")) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -73,13 +79,14 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             return listOfEmployeeNotAvailable;
         }catch (TException exception)
         {
+            logger.error(exception.getMessage());
             throw  new RuntimeException(exception.getMessage());
         }
     }
 
     @Override
     public String addMeetingDetails(MeetingDetails meetingDetails) {
-        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/addMeetingDetails")) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -93,13 +100,14 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             return thriftResponse;
         }catch (TException exception)
         {
+            logger.error(exception.getMessage());
             throw  new RuntimeException(exception.getMessage());
         }
     }
 
     @Override
     public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
-        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/findFreeMeetingRoom")) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -113,13 +121,14 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             return thriftResponse;
         }catch (TException exception)
         {
+            logger.error(exception.getMessage());
             throw  new RuntimeException(exception.getMessage());
         }
     }
 
     @Override
     public boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest) {
-        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/meetingRoomAvailable")) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -133,13 +142,14 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             return thriftResponse;
         }catch (TException exception)
         {
+            logger.error(exception.getMessage());
             throw  new RuntimeException(exception.getMessage());
         }
     }
 
     @Override
     public String isAlive() {
-        try(TTransport transport = new THttpClient("http://localhost:" + 8080 + "/isAlive")) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -153,6 +163,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             return thriftResponse;
         }catch (TException exception)
         {
+            logger.error(exception.getMessage());
             throw  new RuntimeException(exception.getMessage());
         }
     }

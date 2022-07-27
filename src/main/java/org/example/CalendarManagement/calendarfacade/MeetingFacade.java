@@ -9,6 +9,8 @@ import org.example.CalendarManagement.calendarservice.implementation.MeetingRoom
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.example.CalendarManagement.thriftobjectmappers.AddMeetingDataRequestToMeetingDetailsMapper;
 import org.example.CalendarThriftConfiguration.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import java.util.Optional;
 
 @Component
 public class MeetingFacade {
+    Logger logger = LoggerFactory.getLogger(EmployeeFacade.class);
+
     @Autowired
     MeetingRoomService meetingRoomService;
     @Autowired
@@ -42,6 +46,7 @@ public class MeetingFacade {
             meetingId = meetingServiceClient.addMeetingDetails(meetingDetails);
             response = new Response(null, meetingId);
         }catch (RuntimeException ex){
+            logger.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
         return response;

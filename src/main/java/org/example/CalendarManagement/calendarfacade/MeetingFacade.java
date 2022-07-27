@@ -76,6 +76,7 @@ public class MeetingFacade {
         }
 
         MeetingDetails meetingDetails = new MeetingDetails();
+        meetingDetails.setListOfEmployee(addMeetingDataRequest.getListOfEmployeeId());
         meetingDetails.setDescription(addMeetingDataRequest.getDescription());
         meetingDetails.setAgenda(addMeetingDataRequest.getAgenda());
         meetingDetails.setOwnerId(addMeetingDataRequest.getOwnerId());

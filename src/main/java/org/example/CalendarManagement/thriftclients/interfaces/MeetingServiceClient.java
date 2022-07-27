@@ -18,8 +18,6 @@ public interface MeetingServiceClient {
 
     String addMeetingDetails(MeetingDetails meetingDetails);
 
-    boolean addEmployeeMeetingStatus(List<EmployeeStatusDataRequest> employeeStatusDataRequestStatuses);
-
     Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest);
 
     boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest);

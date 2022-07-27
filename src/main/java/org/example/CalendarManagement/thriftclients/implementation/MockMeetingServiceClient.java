@@ -37,10 +37,6 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
         return "20128229";
     }
 
-    @Override
-    public boolean addEmployeeMeetingStatus(List<EmployeeStatusDataRequest> employeeStatusDataRequestStatuses) {
-        return true;
-    }
 
     @Override
     public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {

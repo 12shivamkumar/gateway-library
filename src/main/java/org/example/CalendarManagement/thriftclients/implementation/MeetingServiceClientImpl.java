@@ -98,26 +98,6 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
     }
 
     @Override
-    public boolean addEmployeeMeetingStatus(List<EmployeeStatusDataRequest> employeeStatusDataRequest) {
-        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/addEmployeeMeetingStatus")) {
-            transport.open();
-
-            TProtocol protocol = new TBinaryProtocol(transport);
-
-            MeetingSvc.Client client = new MeetingSvc.Client(protocol);
-
-            Boolean thriftResponse = client.addEmployeeMeetingStatus(employeeStatusDataRequest);
-
-            transport.close();
-
-            return thriftResponse;
-        }catch (TException exception)
-        {
-            throw  new RuntimeException(exception.getMessage());
-        }
-    }
-
-    @Override
     public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
         try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/findFreeMeetingRoom")) {
             transport.open();

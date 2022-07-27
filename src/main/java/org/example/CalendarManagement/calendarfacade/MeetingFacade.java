@@ -34,6 +34,7 @@ public class MeetingFacade {
         Response response =null;
 
         MeetingDetails meetingDetails = new MeetingDetails();
+        meetingDetails.setListOfEmployee(addMeetingDataRequest.getListOfEmployeeId());
         meetingDetails.setDescription(addMeetingDataRequest.getDescription());
         meetingDetails.setAgenda(addMeetingDataRequest.getAgenda());
         meetingDetails.setOwnerId(addMeetingDataRequest.getOwnerId());

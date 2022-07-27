@@ -19,8 +19,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 {
     @Override
     public boolean cancelMeetingForRemovedEmployee(String employeeId){
-        try( TTransport transport = new TSocket("localhost" , 9090))
-        {
+        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/cancelMeetingForRemovedEmployee")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -40,7 +39,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public boolean updateStatusForRemovedEmployee(String employeeId){
-        try( TTransport transport = new TSocket("localhost" , 9090)) {
+        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/updateStatusForRemovedEmployee")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -60,7 +59,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public List<String> checkEmployeeAvailability(EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest) {
-        try( TTransport transport = new TSocket("localhost" , 9090)) {
+        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/checkEmployeeAvailability")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -80,7 +79,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public String addMeetingDetails(MeetingDetails meetingDetails) {
-        try( TTransport transport = new TSocket("localhost" , 9090)) {
+        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/addMeetingDetails")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -100,7 +99,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public boolean addEmployeeMeetingStatus(List<EmployeeStatusDataRequest> employeeStatusDataRequest) {
-        try( TTransport transport = new TSocket("localhost" , 9090)) {
+        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/addEmployeeMeetingStatus")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -120,7 +119,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
-        try( TTransport transport = new TSocket("localhost" , 9090)) {
+        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/findFreeMeetingRoom")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -140,7 +139,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest) {
-        try( TTransport transport = new TSocket("localhost" , 9090)) {
+        try( TTransport transport = new THttpClient("http://localhost:" + 8080 + "/meetingRoomAvailable")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
@@ -160,7 +159,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
     @Override
     public String isAlive() {
-        try(TTransport transport = new THttpClient("http://localhost:" + 8080 + "/isAlive");) {
+        try(TTransport transport = new THttpClient("http://localhost:" + 8080 + "/isAlive")) {
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);

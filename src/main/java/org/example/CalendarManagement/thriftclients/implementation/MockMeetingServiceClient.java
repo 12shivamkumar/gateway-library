@@ -14,12 +14,10 @@ import java.util.List;
 public class MockMeetingServiceClient implements MeetingServiceClient {
     @Override
     public boolean cancelMeetingForRemovedEmployee(String employeeId) {
-        System.out.println("cancel meeting method");
-        return  true;
+       return  true;
     }
     @Override
     public boolean updateStatusForRemovedEmployee(String employeeId){
-        System.out.println("update status method");
         return  true;
     }
 
@@ -43,7 +41,6 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
 
     @Override
     public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
-        System.out.println(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize());
         if(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize()<2){
             return 2;
         }

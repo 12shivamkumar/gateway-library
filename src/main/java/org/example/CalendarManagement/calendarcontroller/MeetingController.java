@@ -51,6 +51,7 @@ public class MeetingController {
     public ResponseEntity<Response> scheduleMeeting(@Valid @RequestBody AddMeetingDataRequest addMeetingDataRequest){
 
       ValidateResponse validateResponseNoOfEmployeeInMeeting = validateCompanyPolicies.noOfEmployeeInMeeting(addMeetingDataRequest.getListOfEmployeeId());
+
       if(!validateResponseNoOfEmployeeInMeeting.isValid())
       {
           Response scheduleMeetingResponse = new Response( "Employees more than six are present So meeting is not Productive", null);
@@ -100,6 +101,7 @@ public class MeetingController {
       }
 
       ValidateResponse validateResponseValidateMeetingRoomAvailability = validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest);
+
       if (!validateResponseValidateMeetingRoomAvailability.isValid()) {
           Response scheduleMeetingResponse = new Response(validateResponseValidateMeetingRoomAvailability.getMessage(), false);
           return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.BAD_REQUEST);

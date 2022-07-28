@@ -2,10 +2,7 @@ package org.example.CalendarManagement.api.request;
 
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,8 +15,7 @@ public class AddMeetingDataRequest {
 
     private String description;
     @NotNull(message = "there must be at least one employee")
-    @Size(min = 1 , max = 6 , message = "employee list must be in this range")
-    private List<String> listOfEmployeeId;
+    private List<@NotEmpty @Size(min = 1, max=7) String> listOfEmployeeId;
 
     @NotNull(message = "date of meeting cannot be null")
     private LocalDate dateOfMeeting;

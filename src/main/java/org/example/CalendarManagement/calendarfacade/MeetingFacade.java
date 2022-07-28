@@ -43,7 +43,9 @@ public class MeetingFacade {
         String meetingId = null;
 
         try {
+
             meetingId = meetingServiceClient.addMeetingDetails(meetingDetails);
+
             response = new Response(null, meetingId);
         }catch (RuntimeException ex){
             logger.error(ex.getMessage());

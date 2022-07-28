@@ -71,9 +71,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             TProtocol protocol = new TBinaryProtocol(transport);
 
             MeetingSvc.Client client = new MeetingSvc.Client(protocol);
-
             List<String> listOfEmployeeNotAvailable = client.checkEmployeeAvailability(employeeAvailabilityDataRequest);
-
             transport.close();
 
             return listOfEmployeeNotAvailable;

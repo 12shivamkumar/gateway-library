@@ -8,6 +8,7 @@ import org.example.CalendarThriftConfiguration.Time;
 public class AddMeetingDataRequestToMeetingDetailsMapper {
     public static MeetingDetails map(AddMeetingDataRequest addMeetingDataRequest,int meetingRoomId){
         MeetingDetails meetingDetails = new MeetingDetails();
+        addMeetingDataRequest.getListOfEmployeeId().add(addMeetingDataRequest.getOwnerId());
         meetingDetails.setListOfEmployee(addMeetingDataRequest.getListOfEmployeeId());
         meetingDetails.setDescription(addMeetingDataRequest.getDescription());
         meetingDetails.setAgenda(addMeetingDataRequest.getAgenda());

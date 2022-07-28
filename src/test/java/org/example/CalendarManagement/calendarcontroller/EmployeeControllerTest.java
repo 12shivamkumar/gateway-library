@@ -37,7 +37,7 @@ class EmployeeControllerTest {
     EmployeeController employeeController;
 
     @Test
-    public void employeeControllerTest_employeeSavedInFacade()
+    public void employeeSavedInFacade()
     {
         String employeeId = "CAP-1";
         String email = "s@cap.com";
@@ -56,7 +56,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    public void employeeControllerTest_employeeFailedEmailValidation()
+    public void employeeFailedEmailValidation()
     {
         String employeeId = "CAP-1";
         String email = "s@cap.com";
@@ -73,7 +73,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    public void employeeControllerTest_employeeFailedOfficeIdValidation()
+    public void employeeFailedOfficeIdValidation()
     {
         String employeeId = "CAP-1";
         String email = "s@cap.com";
@@ -90,7 +90,7 @@ class EmployeeControllerTest {
         assertEquals("Office Information is Not Present" , responseEntity.getBody().getError());
     }
     @Test
-    public void employeeControllerTest_removeEmployeeFailedIdValidation(){
+    public void removeEmployeeFailedIdValidation(){
         String id = "xyz-123";
         Mockito.when(validateEmployeeId.checkEmployeeId(id)).thenReturn(new ValidateResponse("Employee does not exists", false));
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
@@ -100,7 +100,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    public void employeeControllerTest_removeEmployeeByIdSuccessfully(){
+    public void removeEmployeeByIdSuccessfully(){
         String id = "xyz-123";
         Mockito.when(validateEmployeeId.checkEmployeeId(id)).
                 thenReturn(new ValidateResponse("Employee Exists", true));
@@ -112,7 +112,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    public void employeeControllerTest_removeEmployeeFailedDueToThriftException()
+    public void removeEmployeeFailedDueToThriftException()
     {
         String id = "xyz-123";
 

@@ -11,7 +11,6 @@ import org.example.CalendarThriftConfiguration.FindFreeMeetingRoomDataRequest;
 import org.example.CalendarThriftConfiguration.MeetingRoomAvailableDataRequest;
 import org.example.CalendarThriftConfiguration.Time;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,17 +26,20 @@ public class MeetingRoomService implements MeetingRoomInterface {
     private MeetingServiceClient meetingServiceClient;
 
     @Override
-    public Integer findFreeMeetingRoom(int officeID, LocalDate date, LocalTime startTime, LocalTime endTime) {
+    public Optional<Integer> findFreeMeetingRoom(int officeID, LocalDate date, LocalTime startTime, LocalTime endTime) {
         List<Integer> listOfRoomsInOffice = meetingRoomRepository.findByOffice(officeID);
         if(listOfRoomsInOffice.size()==0){
-            return 0;
+            return Optional.empty();
         }
         Date dateOfMeeting = new Date(date.getDayOfMonth(),date.getMonthValue(),date.getYear());
         Time meetingStartTime = new Time(startTime.getHour(),startTime.getMinute(),startTime.getSecond());
         Time meetingEndTime =new Time(endTime.getHour(),endTime.getMinute(), endTime.getSecond());
         FindFreeMeetingRoomDataRequest  findFreeMeetingRoomDataRequest = new FindFreeMeetingRoomDataRequest(listOfRoomsInOffice,dateOfMeeting,meetingStartTime,meetingEndTime);
         Integer freeMeetingRoom = meetingServiceClient.findFreeMeetingRoom(findFreeMeetingRoomDataRequest);
-        return freeMeetingRoom;
+        if(freeMeetingRoom==0) {
+            return Optional.empty();
+        }
+        return Optional.of(freeMeetingRoom);
     }
 
     @Override

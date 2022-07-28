@@ -34,7 +34,7 @@ public class EmployeeFacadeTest {
     MeetingServiceClient client;
 
     @Test
-    public void employeeFacadeTest_employeeSavedInRepository(){
+    public void employeeSavedInRepository(){
         String employeeId = "CAP-1";
         String email = "s@cap.com";
         String name = "xyz";
@@ -48,7 +48,7 @@ public class EmployeeFacadeTest {
     }
 
     @Test
-    public void employeeFacadeTest_employeeRemovedByIdSuccessfully() throws TException {
+    public void employeeRemovedByIdSuccessfully() throws TException {
         String id = "xyz-123";
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
@@ -67,7 +67,7 @@ public class EmployeeFacadeTest {
 
 
     @Test
-    public void employeeFacadeTest_removedEmployeeMeetingCancelFail() throws TException {
+    public void removedEmployeeMeetingCancelFail() throws TException {
         String id = "xyz-123";
         String findBy = "id";
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);
@@ -78,7 +78,7 @@ public class EmployeeFacadeTest {
     }
 
     @Test
-    public void  employeeFacadeTest_removedEmployeeUpdateStatusFail() throws TException {
+    public void  removedEmployeeUpdateStatusFail() throws TException {
         String id = "xyz-123";
         String findBy = "id";
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(id);

@@ -120,9 +120,3 @@ public class MeetingController {
       return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.CREATED);
     }
 }
-
-//1. company policy - time b/w 10 to 6 , no. of employees < 6 ,duration greater than 30
-//2. date and time greater than now
-//3. owner id in Db
-//4. all employees in same office
-//5. meeting room in db if available

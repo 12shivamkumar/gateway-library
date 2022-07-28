@@ -2,8 +2,10 @@ package org.example.CalendarManagement.api.request;
 
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -15,7 +17,8 @@ public class AddMeetingDataRequest {
     private String agenda;
 
     private String description;
-    @NotNull(message = "There must be at least one employee")
+    @NotNull(message = "there must be at least one employee")
+    @Size(min = 1 , max = 6 , message = "employee list must be in this range")
     private List<String> listOfEmployeeId;
 
     @NotNull(message = "date of meeting cannot be null")
@@ -27,15 +30,45 @@ public class AddMeetingDataRequest {
 
     private String roomName;
 
-    public AddMeetingDataRequest(String ownerId, String agenda, String description, List<String> listOfEmployeeId, LocalDate dateOfMeeting, LocalTime startTime, LocalTime endTime, String roomName) {
-        this.ownerId = ownerId;
-        this.agenda = agenda;
-        this.description = description;
-        this.listOfEmployeeId = listOfEmployeeId;
-        this.dateOfMeeting = dateOfMeeting;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.roomName = roomName;
+    public AddMeetingDataRequest() {}
+
+    private AddMeetingDataRequest(Builder builder)
+    {
+        this.ownerId = builder.ownerId;
+        this.agenda = builder.agenda;
+        this.description = builder.description;
+        this.listOfEmployeeId = builder.listOfEmployeeId;
+        this.dateOfMeeting = builder.dateOfMeeting;
+        this.startTime = builder.startTime;
+        this.endTime = builder.endTime;
+        this.roomName = builder.roomName;
+    }
+
+    public static class Builder {
+        private final String ownerId;
+        private final String agenda;
+        private final String description;
+        private final List<String> listOfEmployeeId;
+        private final LocalDate dateOfMeeting;
+        private final LocalTime startTime;
+        private final LocalTime endTime;
+        private final String roomName;
+
+        public Builder(String ownerId, String agenda, String description, List<String> listOfEmployeeId, LocalDate dateOfMeeting, LocalTime startTime, LocalTime endTime, String roomName)
+        {
+            this.ownerId = ownerId;
+            this.agenda = agenda;
+            this.description = description;
+            this.listOfEmployeeId = listOfEmployeeId;
+            this.dateOfMeeting = dateOfMeeting;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.roomName = roomName;
+        }
+
+        public AddMeetingDataRequest build() {
+            return new AddMeetingDataRequest(this);
+        }
     }
 
     public String getOwnerId() {

@@ -37,10 +37,10 @@ class ValidateMeetingRoomAvailabilityTest
     ValidateMeetingRoomAvailability validateMeetingRoomAvailability;
 
     @Test
-    public void validateMeetingRoomAvailabilityTest_freeMeetingRoomNotAvailableWhenMeetingRoomIsNotGiven()
+    public void freeMeetingRoomNotAvailableWhenMeetingRoomIsNotGiven()
     {
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -48,11 +48,11 @@ class ValidateMeetingRoomAvailabilityTest
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 ""
-        );
+        ).build();
 
         Mockito.when(employeeRepository.findOfficeIdById(Mockito.any())).thenReturn(1);
         Mockito.when(meetingRoomService.findFreeMeetingRoom(1 , LocalDate.of(2022,8,25), LocalTime.of(11,00,00), LocalTime.of(12,30,00)))
-                .thenReturn(0);
+                .thenReturn(Optional.empty());
         ValidateResponse validateResponse = validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest);
         assertNotNull(validateResponse);
         assertFalse(validateResponse.isValid());
@@ -60,10 +60,10 @@ class ValidateMeetingRoomAvailabilityTest
     }
 
     @Test
-    public void validateMeetingRoomAvailabilityTest_GivenMeetingRoomNotFree()
+    public void GivenMeetingRoomNotFree()
     {
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -71,7 +71,7 @@ class ValidateMeetingRoomAvailabilityTest
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 "reon-dev"
-        );
+        ).build();
 
         Mockito.when(meetingRoomService.meetingRoomAvailable("reon-dev",  LocalDate.of(2022,8,25),LocalTime.of(11,00,00), LocalTime.of(12,30,00)))
                 .thenReturn(false);
@@ -82,10 +82,10 @@ class ValidateMeetingRoomAvailabilityTest
     }
 
     @Test
-    public void validateMeetingRoomAvailabilityTest_freeMeetingRoomAvailableWhenMeetingRoomIsNotGiven()
+    public void freeMeetingRoomAvailableWhenMeetingRoomIsNotGiven()
     {
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -93,11 +93,11 @@ class ValidateMeetingRoomAvailabilityTest
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 ""
-        );
+        ).build();
 
         Mockito.when(employeeRepository.findOfficeIdById(Mockito.any())).thenReturn(1);
         Mockito.when(meetingRoomService.findFreeMeetingRoom(1, LocalDate.of(2022,8,25),LocalTime.of(11,00,00),LocalTime.of(12,30,00)))
-                .thenReturn(1);
+                .thenReturn(Optional.of(1));
         ValidateResponse validateResponse = validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest);
         assertNotNull(validateResponse);
         assertTrue(validateResponse.isValid());
@@ -105,10 +105,10 @@ class ValidateMeetingRoomAvailabilityTest
 
 
     @Test
-    public void validateMeetingRoomAvailabilityTest_GivenMeetingRoomFree()
+    public void GivenMeetingRoomFree()
     {
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -116,7 +116,7 @@ class ValidateMeetingRoomAvailabilityTest
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 "reon-dev"
-        );
+        ).build();
 
         Mockito.when(meetingRoomService.meetingRoomAvailable("reon-dev", LocalDate.of(2022,8,25),LocalTime.of(11,00,00),LocalTime.of(12,30,00))).
                 thenReturn(true);

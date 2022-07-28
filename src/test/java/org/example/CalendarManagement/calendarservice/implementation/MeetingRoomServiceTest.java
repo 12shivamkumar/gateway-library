@@ -33,27 +33,29 @@ class MeetingRoomServiceTest {
     MeetingRoomService meetingRoomService;
 
     @Test
-    public void meetingRoomServiceTest_findFreeMeetingRoom_RoomsClosed(){
+    public void findFreeMeetingRoom_RoomsClosed(){
         int officeId = 2;
         LocalDate dateOfMeeting = LocalDate.of(2022,07,27);
         LocalTime startTime = LocalTime.of(11 ,00);
         LocalTime endTime = LocalTime.of(12, 00);
         Mockito.when(meetingRoomRepository.findByOffice(2)).thenReturn(Arrays.asList());
-        int responseFromService = meetingRoomService.findFreeMeetingRoom(officeId,dateOfMeeting,startTime,endTime);
-        Assertions.assertEquals(0,responseFromService);
+        Optional<Integer> responseFromService = meetingRoomService.findFreeMeetingRoom(officeId,dateOfMeeting,startTime,endTime);
+        Assertions.assertFalse(responseFromService.isPresent());
     }
     @Test
-    public void meetingRoomServiceTest_findFreeMeetingRoom_RoomsNotAvailable(){
+    public void findFreeMeetingRoom_RoomsNotAvailable(){
         int officeId = 2;
         LocalDate dateOfMeeting = LocalDate.of(2022,07,27);
         LocalTime startTime = LocalTime.of(11 ,00);
         LocalTime endTime = LocalTime.of(12, 00);
         Mockito.when(meetingRoomRepository.findByOffice(2)).thenReturn(Arrays.asList(1,2,3));
-        int responseFromService = meetingRoomService.findFreeMeetingRoom(officeId,dateOfMeeting,startTime,endTime);
-        Assertions.assertEquals(0,responseFromService);
+        Mockito.when(meetingServiceClient.findFreeMeetingRoom(Mockito.any(FindFreeMeetingRoomDataRequest.class))).
+                thenReturn(0);
+        Optional<Integer> responseFromService = meetingRoomService.findFreeMeetingRoom(officeId,dateOfMeeting,startTime,endTime);
+        Assertions.assertFalse(responseFromService.isPresent());
     }
     @Test
-    public void meetingRoomServiceTest_findFreeMeetingRoom_RoomAvailable(){
+    public void findFreeMeetingRoom_RoomAvailable(){
         int officeId = 2;
         LocalDate dateOfMeeting = LocalDate.of(2022,07,27);
         LocalTime startTime = LocalTime.of(11 ,00);
@@ -61,12 +63,12 @@ class MeetingRoomServiceTest {
         Mockito.when(meetingRoomRepository.findByOffice(2)).thenReturn(Arrays.asList(1,2));
         Mockito.when(meetingServiceClient.findFreeMeetingRoom(Mockito.any(FindFreeMeetingRoomDataRequest.class))).
                 thenReturn(2);
-        int responseFromService = meetingRoomService.findFreeMeetingRoom(officeId,dateOfMeeting,startTime,endTime);
-        Assertions.assertTrue(responseFromService>0);
+        Optional<Integer> responseFromService = meetingRoomService.findFreeMeetingRoom(officeId,dateOfMeeting,startTime,endTime);
+        Assertions.assertTrue(responseFromService.isPresent());
     }
 
     @Test
-    public void meetingRoomServiceTest_meetingRoomAvailable_roomClosed(){
+    public void meetingRoomAvailable_roomClosed(){
         int meetingRoomId = 10;
         String roomName = "reon-dev";
         LocalDate dateOfMeeting = LocalDate.of(2022,8,27);
@@ -79,7 +81,7 @@ class MeetingRoomServiceTest {
     }
 
     @Test
-    public void meetingRoomServiceTest_meetingRoomAvailable_NotAvailable(){
+    public void meetingRoomAvailable_NotAvailable(){
         int meetingRoomId = 10;
         String roomName = "reon-dev";
         LocalDate dateOfMeeting = LocalDate.of(2022,8,27);
@@ -92,7 +94,7 @@ class MeetingRoomServiceTest {
         assertFalse(responseFromService);
     }
     @Test
-    public void meetingRoomServiceTest_meetingRoomAvailable_IsAvailable(){
+    public void meetingRoomAvailable_IsAvailable(){
         int meetingRoomId = 10;
         String roomName = "reon-dev";
         LocalDate dateOfMeeting = LocalDate.of(2022,07,27);

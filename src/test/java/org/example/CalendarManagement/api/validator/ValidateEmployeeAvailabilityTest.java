@@ -29,9 +29,9 @@ class ValidateEmployeeAvailabilityTest {
     ValidateEmployeeAvailability validateEmployeeAvailability;
 
     @Test
-    public void validateEmployeeAvailabilityTest_allEmployeeNotAvailable(){
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+    public void allEmployeeNotAvailable(){
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -39,7 +39,7 @@ class ValidateEmployeeAvailabilityTest {
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 "reon-dev"
-        );
+        ).build();
 
         Date dateOfMeeting = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
         Time meetingStartTime = new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond());
@@ -59,9 +59,9 @@ class ValidateEmployeeAvailabilityTest {
     }
 
     @Test
-    public void validateEmployeeAvailabilityTest_allEmployeeAvailable() {
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+    public void allEmployeeAvailable() {
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -69,7 +69,7 @@ class ValidateEmployeeAvailabilityTest {
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 "reon-dev"
-        );
+        ).build();
 
         Date dateOfMeeting = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
         Time meetingStartTime = new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond());

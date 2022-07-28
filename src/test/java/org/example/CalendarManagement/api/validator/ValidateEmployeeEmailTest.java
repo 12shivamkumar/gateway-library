@@ -20,7 +20,7 @@ class ValidateEmployeeEmailTest {
     @InjectMocks
     ValidateEmployeeEmail validateEmployeeEmail;
     @Test
-    public void validateEmployeeEmailTest_emailIsDuplicate(){
+    public void emailIsDuplicate(){
         String employeeId = "CAP-1";
         String email = "s@cap.com";
         String name = "xyz";
@@ -32,7 +32,7 @@ class ValidateEmployeeEmailTest {
         assertFalse(responseForDuplicateEmail.isValid());
     }
     @Test
-    public void validateEmployeeEmailTest_emailIsNotDuplicate(){
+    public void emailIsNotDuplicate(){
         String employeeId = "CAP-1";
         String email = "s@cap.com";
         String name = "xyz";

@@ -22,7 +22,7 @@ class ValidateCompanyPoliciesTest {
     ValidateCompanyPolicies validateCompanyPolicies;
 
     @Test
-    public void validateCompanyPoliciesTest_noOfEmployeesGreaterThanSix()
+    public void noOfEmployeesGreaterThanSix()
     {
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16" , "abc-17");
         ValidateResponse validateResponse = validateCompanyPolicies.noOfEmployeeInMeeting(employeeList);
@@ -31,7 +31,7 @@ class ValidateCompanyPoliciesTest {
     }
 
     @Test
-    public void validateCompanyPoliciesTest_noOfEmployeesLessThanAndEqualToSix()
+    public void noOfEmployeesLessThanAndEqualToSix()
     {
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         ValidateResponse validateResponse = validateCompanyPolicies.noOfEmployeeInMeeting(employeeList);
@@ -40,7 +40,7 @@ class ValidateCompanyPoliciesTest {
     }
 
     @Test
-    public void validateCompanyPoliciesTest_meetingDurationGreaterThanThirtyMinutes()
+    public void meetingDurationGreaterThanThirtyMinutes()
     {
         LocalTime startTime = LocalTime.of(11,30);
         LocalTime endTime = LocalTime.of(12,30);
@@ -50,7 +50,7 @@ class ValidateCompanyPoliciesTest {
     }
 
     @Test
-    public void validateCompanyPoliciesTest_meetingDurationLessThanThirtyMinutes()
+    public void meetingDurationLessThanThirtyMinutes()
     {
         LocalTime startTime = LocalTime.of(11,30);
         LocalTime endTime = LocalTime.of(11,55);
@@ -60,7 +60,7 @@ class ValidateCompanyPoliciesTest {
     }
 
     @Test
-    public void validateCompanyPoliciesTest_meetingBetweenOfficeHours()
+    public void meetingBetweenOfficeHours()
     {
         LocalTime startTime = LocalTime.of(11,30);
         LocalTime endTime = LocalTime.of(12,30);
@@ -70,7 +70,7 @@ class ValidateCompanyPoliciesTest {
     }
 
     @Test
-    public void validateCompanyPoliciesTest_meetingNotBetweenOfficeHours()
+    public void meetingNotBetweenOfficeHours()
     {
         LocalTime startTime = LocalTime.of(9,30);
         LocalTime endTime = LocalTime.of(10,30);

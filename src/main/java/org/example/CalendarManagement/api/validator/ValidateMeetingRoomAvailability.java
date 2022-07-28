@@ -26,18 +26,18 @@ public class ValidateMeetingRoomAvailability {
     public ValidateResponse checkMeetingRoomAvailability(AddMeetingDataRequest addMeetingDataRequest)
     {
         ValidateResponse response = null;
-        Integer meetingRoomId = 0;
+        Optional<Integer> meetingRoomId;
         if(addMeetingDataRequest.getRoomName().equals(""))
         {
             int officeId = employeeRepository.findOfficeIdById(addMeetingDataRequest.getOwnerId());
             meetingRoomId =  meetingRoomService.findFreeMeetingRoom(officeId,addMeetingDataRequest.getDateOfMeeting(),addMeetingDataRequest.getStartTime(),addMeetingDataRequest.getEndTime());
 
-            if(meetingRoomId == 0)
+            if(!meetingRoomId.isPresent())
             {
                 response = new ValidateResponse("No Meeting room is available", false);
                 return response;
             }
-            response = new ValidateResponse(meetingRoomId+"", true);
+            response = new ValidateResponse(meetingRoomId.get()+"", true);
         }
         else
         {
@@ -50,8 +50,9 @@ public class ValidateMeetingRoomAvailability {
                 return response;
             }
             Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(addMeetingDataRequest.getRoomName());
-            meetingRoomId = meetingRoom.get().getRoomId();
-            response = new ValidateResponse(meetingRoomId+"", true);
+
+             int meetingRoomIds = meetingRoom.get().getRoomId();
+            response = new ValidateResponse(meetingRoomIds+"", true);
         }
        return response;
     }

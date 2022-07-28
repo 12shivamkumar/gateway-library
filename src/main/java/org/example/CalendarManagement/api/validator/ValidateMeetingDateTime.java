@@ -16,14 +16,14 @@ public class ValidateMeetingDateTime {
                return new ValidateResponse("meeting can be scheduled" , true);
            }
            else{
-                return new ValidateResponse("Invalid TIme for Meeting" , false);
+                return new ValidateResponse("invalid time for meeting" , false);
            }
         }
         else if (date.isAfter(LocalDate.now())) {
             return new ValidateResponse("meeting can be scheduled" , true);
         }
         else {
-            return  new ValidateResponse("Invalid Date for Meeting" , false);
+            return  new ValidateResponse("invalid date for meeting" , false);
         }
     }
 

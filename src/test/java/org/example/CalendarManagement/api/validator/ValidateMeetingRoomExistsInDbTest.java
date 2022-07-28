@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-class ValidateMeetingRoomExistsInDbTestDetails {
+class ValidateMeetingRoomExistsInDbTest {
 
     @Mock
     MeetingRoomRepository meetingRoomRepository;
@@ -22,7 +22,7 @@ class ValidateMeetingRoomExistsInDbTestDetails {
     ValidateMeetingRoomExistsInDb validateMeetingRoomExistsInDb;
 
     @Test
-    public void validateMeetingRoomTest_meetingRoomNotGiven()
+    public void meetingRoomNotGiven()
     {
         String meetingRoom = "";
         ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoom);
@@ -31,7 +31,7 @@ class ValidateMeetingRoomExistsInDbTestDetails {
     }
 
     @Test
-    public void validateMeetingRoomTest_meetingRoomExists(){
+    public void meetingRoomExists(){
         String meetingRoomName = "reon-team";
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).
                 thenReturn(Optional.of(new MeetingRoom("reon-team",3,true)));
@@ -40,7 +40,7 @@ class ValidateMeetingRoomExistsInDbTestDetails {
         Assertions.assertTrue(validateResponseForExistingMeetingRoom.isValid());
     }
     @Test
-    public void validateMeetingRoomTest_meetingRoomDoesNotExists(){
+    public void meetingRoomDoesNotExists(){
         String meetingRoomName = "reon-team";
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).thenReturn(Optional.empty());
         ValidateResponse validateResponseForMeetingRoomNotInDb = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoomName);

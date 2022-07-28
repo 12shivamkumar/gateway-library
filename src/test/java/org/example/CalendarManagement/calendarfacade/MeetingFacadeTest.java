@@ -35,10 +35,10 @@ class MeetingFacadeTest {
     MeetingFacade meetingFacade;
 
     @Test
-    public void meetingFacadeTest_saveMeetingDetails_meetingDetailsSavedSuccessfully()
+    public void saveMeetingDetails_meetingDetailsSavedSuccessfully()
     {
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -46,7 +46,7 @@ class MeetingFacadeTest {
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 "reon-dev"
-        );
+        ).build();
 
         Mockito.when(meetingServiceClient.addMeetingDetails(Mockito.any(MeetingDetails.class))).thenReturn("20128229");
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest , 1);
@@ -56,10 +56,10 @@ class MeetingFacadeTest {
     }
 
     @Test
-    public void meetingFacadeTest_saveMeetingDetails_meetingDetailsNotSavedSuccessfully()
+    public void saveMeetingDetails_meetingDetailsNotSavedSuccessfully()
     {
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest(
-                "abc-12",
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
+                "abc-10",
                 "daily sync up",
                 "details",
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
@@ -67,7 +67,7 @@ class MeetingFacadeTest {
                 LocalTime.of(11,00,00),
                 LocalTime.of(12,30,00),
                 "reon-dev"
-        );
+        ).build();
          Mockito.when(meetingServiceClient.addMeetingDetails(Mockito.any(MeetingDetails.class))).thenThrow(RuntimeException.class);
         Assertions.assertThrows(RuntimeException.class , () -> meetingFacade.scheduleMeeting(addMeetingDataRequest,1));
     }

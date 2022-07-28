@@ -1,7 +1,7 @@
 INSERT INTO office(id, office_name, location) VALUES(1,"XYZ Banglore","hsr layout");
 INSERT INTO office(id, office_name, location) VALUES(2,"XYZ Hyderabad","Madhapur");
 
-
+INSERT INTO employee(id,name,email,office_id) VALUES("abc-10" , "abc0" , "abc0@xyz.com" , 1);
 INSERT INTO employee(id,name,email,office_id) VALUES("abc-11" , "abc1" , "abc1@xyz.com" , 1);
 INSERT INTO employee(id,name,email,office_id) VALUES("abc-12" , "abc2" , "abc2@xyz.com" , 1);
 INSERT INTO employee(id,name,email,office_id) VALUES("abc-13" , "abc3", "abc3@xyz.com" , 1);

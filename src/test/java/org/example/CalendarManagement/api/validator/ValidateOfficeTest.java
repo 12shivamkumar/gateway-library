@@ -29,7 +29,7 @@ public class ValidateOfficeTest {
     ValidateOfficeId validateOfficeId = new ValidateOfficeId();
 
     @Test
-    public void validateOfficeTest_officeIdExistsInDb()
+    public void officeIdExistsInDb()
     {
         String employeeId = "CAP-1";
         String email = "s@cap.com";
@@ -49,7 +49,7 @@ public class ValidateOfficeTest {
     }
 
     @Test
-    public void validateOfficeTest_officeIdNotExistsInDb()
+    public void officeIdNotExistsInDb()
     {
         String employeeId = "CAP-1";
         String email = "s@cap.com";

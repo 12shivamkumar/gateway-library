@@ -3,8 +3,8 @@ package integrationtestclasses;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddMeetingDataRequest;
-import org.example.CalendarManagement.calendarpersistence.model.MeetingRoom;
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -16,13 +16,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class MeetingControllerIT extends BaseIntegrationTestClass
+public class MeetingControllerIT extends BaseIntegrationTest
 {
     @Autowired
     MeetingRoomRepository meetingRoomRepository;
 
     @Test
-    public void scheduleMeetingSuccessTestRoomIsGiven() throws JsonProcessingException {
+    public void scheduleMeetingSuccessTest_roomIsGiven() throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -30,9 +30,7 @@ public class MeetingControllerIT extends BaseIntegrationTestClass
         LocalTime startTime = LocalTime.of(16,00);
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
-        AddMeetingDataRequest request = new AddMeetingDataRequest
-                ("abc-11" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1");
-
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
         HttpEntity<String> httpEntity =
@@ -43,11 +41,10 @@ public class MeetingControllerIT extends BaseIntegrationTestClass
         assertEquals(201, responseEntity.getStatusCodeValue());
         assertNotNull(responseEntity.getBody());
         assertNotNull(responseEntity.getBody().getData());
-        System.out.println(responseEntity.getBody().getData());
     }
 
     @Test
-    public void scheduleMeetingSuccessTestRoomIsNotGiven() throws JsonProcessingException {
+    public void scheduleMeetingSuccessTest_roomIsNotGiven() throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -55,9 +52,7 @@ public class MeetingControllerIT extends BaseIntegrationTestClass
         LocalTime startTime = LocalTime.of(16,00);
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
-        AddMeetingDataRequest request = new AddMeetingDataRequest
-                ("abc-11" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "");
-
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
         HttpEntity<String> httpEntity =
@@ -67,11 +62,10 @@ public class MeetingControllerIT extends BaseIntegrationTestClass
         assertEquals(201, responseEntity.getStatusCodeValue());
         assertNotNull(responseEntity.getBody());
         assertNotNull(responseEntity.getBody().getData());
-        System.out.println(responseEntity.getBody().getData());
     }
 
     @Test
-    public void scheduleMeetingFailTestRoomIsGiven() throws JsonProcessingException {
+    public void scheduleMeetingFailTest_roomIsGiven() throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -79,9 +73,8 @@ public class MeetingControllerIT extends BaseIntegrationTestClass
         LocalTime startTime = LocalTime.of(16,00);
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
-        AddMeetingDataRequest request = new AddMeetingDataRequest
-                ("abc-11" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room5");
 
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room5").build();
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
         HttpEntity<String> httpEntity =
@@ -96,15 +89,16 @@ public class MeetingControllerIT extends BaseIntegrationTestClass
     }
 
     @Test
-    public void scheduleMeetingFailTestRoomIsNotGiven() throws JsonProcessingException {
+    @DisplayName("Meeting is Not Productive with seven employees , fails validation")
+    public void scheduleMeetingFailTest_roomIsNotGiven() throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
         LocalTime startTime = LocalTime.of(16,00);
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16" ,"abc-17");
-        AddMeetingDataRequest request = new AddMeetingDataRequest
-                ("abc-11" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "");
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
 
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
@@ -116,18 +110,19 @@ public class MeetingControllerIT extends BaseIntegrationTestClass
 
         assertEquals(400, responseEntity.getStatusCodeValue());
         assertNotNull(responseEntity.getBody());
+
     }
 
     @Test
-    public void scheduleMeetingFailTestInternalServerError() throws JsonProcessingException {
+    public void scheduleMeetingFailTest_internalServerError() throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
         LocalTime startTime = LocalTime.of(16,00);
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
-        AddMeetingDataRequest request = new AddMeetingDataRequest
-                ("abc-11" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "");
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
 
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 

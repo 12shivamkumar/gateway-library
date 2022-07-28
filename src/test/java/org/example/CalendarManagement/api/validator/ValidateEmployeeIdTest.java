@@ -25,7 +25,7 @@ public class ValidateEmployeeIdTest {
     private ValidateEmployeeId validateEmployeeId;
 
     @Test
-    public void validateEmployeeIdentityTest_employeeIdExists(){
+    public void employeeIdExists(){
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("XYZ-123");
 
@@ -40,7 +40,7 @@ public class ValidateEmployeeIdTest {
     }
 
     @Test
-    public void validateEmployeeIdentityTest_employeeIdNotExists(){
+    public void employeeIdNotExists(){
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("XYZ-123");
 

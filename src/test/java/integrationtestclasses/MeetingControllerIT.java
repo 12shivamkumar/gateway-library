@@ -125,7 +125,7 @@ public class MeetingControllerIT extends BaseIntegrationTest
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
         AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.empty()).build();
 
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
@@ -167,26 +167,4 @@ public class MeetingControllerIT extends BaseIntegrationTest
         assertEquals(500,responseEntity.getStatusCodeValue());
 
     }
-
-    @Test
-    public void scheduleMeetingFailTest_internalServerError() throws JsonProcessingException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
-        LocalTime startTime = LocalTime.of(16,00);
-        LocalTime endTime = LocalTime.of(16,50);
-        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
-        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).build();
-
-        String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
-
-        HttpEntity<String> httpEntity =
-                new HttpEntity<String>(scheduleMeetingRequestString, headers);
-
-        ResponseEntity<Response> responseEntity = restTemplate.exchange(createURLWithPort("/meeting"), HttpMethod.POST, httpEntity,
-                Response.class);
-
-        assertEquals(500, responseEntity.getStatusCodeValue());
-   }
 }

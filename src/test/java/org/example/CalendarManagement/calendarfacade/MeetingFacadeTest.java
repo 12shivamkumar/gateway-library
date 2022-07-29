@@ -8,6 +8,7 @@ import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRep
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
 import org.example.CalendarManagement.calendarservice.implementation.MeetingRoomService;
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
+import org.example.CalendarManagement.thriftobjectmappers.MeetingsOfEmployee;
 import org.example.CalendarThriftConfiguration.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -91,7 +92,7 @@ class MeetingFacadeTest {
         Mockito.when(meetingServiceClient.getEmployeeMeetingDetails(employeeId)).thenReturn(employeeMeetingDetails);
         Response responseFromFacade= meetingFacade.getMeetings(employeeId);
         assertNotNull(responseFromFacade);
-        List<EmployeeMeetingDetails> recordedResponse = (List<EmployeeMeetingDetails>) responseFromFacade.getData();
+        List<MeetingsOfEmployee> recordedResponse = (List<MeetingsOfEmployee>) responseFromFacade.getData();
         assertEquals(2,recordedResponse.get(0).getMeetId());
     }
     @Test

@@ -24,6 +24,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -242,7 +243,7 @@ class MeetingControllerTest {
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
         Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting is productive", true));
         Mockito.when(validateMeetingDateTime.checkMeetingDateTime(dateOfMeeting,startTime)).thenReturn(new ValidateResponse("meeting can be scheduled" , true));
-        Mockito.when(validateOwnerId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
+        Mockito.when(validateEmployeeId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
         Mockito.when(employeeRepository.findOfficeIdById("abc-10")).thenReturn(1);
         Mockito.when(validateListOfEmployees.checkIfEmployeeExistInSameOffice(employeeList,officeId)).thenReturn(new ValidateResponse(" Employees exist in DB and belong to same office" , true));
         Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb(Optional.of("Room1"))).thenReturn(new ValidateResponse("meeting room present in db",true));

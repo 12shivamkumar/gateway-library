@@ -42,26 +42,7 @@ public class MeetingRoom {
         this.officeId = officeId;
         this.isOpen = isOpen;
     }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
     public int getRoomId() {
         return roomId;
-    }
-    public String getRoomName() {return roomName;}
-    public int getOfficeId() {return officeId;}
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
-    }
-    @Override
-    public String toString() {
-        return "MeetingRoom{" +
-                "roomId=" + roomId +
-                ", roomName='" + roomName + '\'' +
-                ", officeId=" + officeId +
-                ", createdDateTime=" + createdDateTime +
-                '}';
     }
 }

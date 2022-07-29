@@ -26,6 +26,26 @@ class ValidateMeetingDateTimeTest {
     }
 
     @Test
+    public void validCurrentDateTime()
+    {
+        LocalDate date = LocalDate.of(2022,7,29);
+        LocalTime startTime = LocalTime.of(19,30);
+        ValidateResponse validateResponse = validateMeetingDateTime.checkMeetingDateTime(date , startTime);
+        assertNotNull(validateResponse);
+        assertTrue(validateResponse.isValid());
+    }
+
+    @Test
+    public void inValidCurrentDateTime()
+    {
+        LocalDate date = LocalDate.of(2022,7,29);
+        LocalTime startTime = LocalTime.of(10,30);
+        ValidateResponse validateResponse = validateMeetingDateTime.checkMeetingDateTime(date , startTime);
+        assertNotNull(validateResponse);
+        assertFalse(validateResponse.isValid());
+    }
+
+    @Test
     public void validFutureDate()
     {
         LocalDate date = LocalDate.of(2022,9,26);

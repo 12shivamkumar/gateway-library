@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +31,7 @@ class ValidateEmployeeAvailabilityTest {
 
     @Test
     public void allEmployeeNotAvailable(){
+
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder(
                 "abc-10",
                 "daily sync up",
@@ -37,9 +39,8 @@ class ValidateEmployeeAvailabilityTest {
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                "reon-dev"
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.of("reon-dev")).build();
 
         Date dateOfMeeting = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
         Time meetingStartTime = new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond());
@@ -67,9 +68,8 @@ class ValidateEmployeeAvailabilityTest {
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                "reon-dev"
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.of("reon-dev")).build();
 
         Date dateOfMeeting = new Date(addMeetingDataRequest.getDateOfMeeting().getDayOfMonth(),addMeetingDataRequest.getDateOfMeeting().getMonthValue(),addMeetingDataRequest.getDateOfMeeting().getYear());
         Time meetingStartTime = new Time(addMeetingDataRequest.getStartTime().getHour(),addMeetingDataRequest.getStartTime().getMinute(),addMeetingDataRequest.getStartTime().getSecond());

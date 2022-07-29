@@ -68,7 +68,7 @@ class MeetingControllerTest {
     {
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16", "abc-17");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, LocalDate.of(2022,8,10), LocalTime.of(11,00), LocalTime.of(12,00), "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, LocalDate.of(2022,8,10), LocalTime.of(11,00), LocalTime.of(12,00)).roomName(Optional.of("Room1")).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList))
                 .thenReturn(new ValidateResponse("Employees more than six are present So meeting is not Productive" ,false));
         ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
@@ -84,7 +84,7 @@ class MeetingControllerTest {
         LocalTime startTime = LocalTime.of(11,00);
         LocalTime endTime = LocalTime.of(11,20);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
-        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, LocalDate.of(2022,8,10),startTime, endTime, "Room1").build();
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, LocalDate.of(2022,8,10),startTime, endTime).roomName(Optional.of("Room1")).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting won't be productive" , false));
         ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
@@ -101,7 +101,7 @@ class MeetingControllerTest {
         LocalTime endTime = LocalTime.of(18,20);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, LocalDate.of(2022,8,10),startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, LocalDate.of(2022,8,10),startTime, endTime).roomName(Optional.of("Room1")).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
         Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting won't be productive because meeting is outside office hours", false));
@@ -120,7 +120,7 @@ class MeetingControllerTest {
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
         Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting is productive", true));
@@ -140,7 +140,7 @@ class MeetingControllerTest {
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
         Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting is productive", true));
@@ -162,7 +162,7 @@ class MeetingControllerTest {
         int officeId = 1;
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
         Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting is productive", true));
@@ -178,7 +178,7 @@ class MeetingControllerTest {
     }
 
     @Test
-    public void meetingRoomNotExistsInDb()
+    public void givenMeetingRoomNotExistsInDb()
     {
         LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
         LocalTime startTime = LocalTime.of(16,00);
@@ -186,7 +186,7 @@ class MeetingControllerTest {
         int officeId = 1;
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
         Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting is productive", true));
@@ -194,7 +194,7 @@ class MeetingControllerTest {
         Mockito.when(validateEmployeeId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
         Mockito.when(employeeRepository.findOfficeIdById("abc-10")).thenReturn(1);
         Mockito.when(validateListOfEmployees.checkIfEmployeeExistInSameOffice(employeeList,officeId)).thenReturn(new ValidateResponse(" Employees exist in DB and belong to same office" , true));
-        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb("Room1")).thenReturn(new ValidateResponse("meeting room does not exist or is closed",false));
+        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb(Optional.of("Room1"))).thenReturn(new ValidateResponse("meeting room does not exist or is closed",false));
         ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseEntity);
         assertEquals(400,responseEntity.getStatusCodeValue());
@@ -203,7 +203,7 @@ class MeetingControllerTest {
     }
 
     @Test
-    public void givenMeetingRoomNotAvailable()
+    public void noMeetingRoomGivenNoFreeRoomAvailable()
     {
         LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
         LocalTime startTime = LocalTime.of(16,00);
@@ -211,7 +211,7 @@ class MeetingControllerTest {
         int officeId = 1;
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.empty()).build();
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
         Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting is productive", true));
@@ -219,7 +219,33 @@ class MeetingControllerTest {
         Mockito.when(validateEmployeeId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
         Mockito.when(employeeRepository.findOfficeIdById("abc-10")).thenReturn(1);
         Mockito.when(validateListOfEmployees.checkIfEmployeeExistInSameOffice(employeeList,officeId)).thenReturn(new ValidateResponse(" Employees exist in DB and belong to same office" , true));
-        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb("Room1")).thenReturn(new ValidateResponse("meeting room present in db",true));
+        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb(Optional.empty())).thenReturn(new ValidateResponse("meeting room is not entered by owner search for any room",true));
+        Mockito.when(validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest)).thenReturn(new ValidateResponse("No Meeting room is available" , false));
+        ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
+        assertNotNull(responseEntity);
+        assertEquals(400,responseEntity.getStatusCodeValue());
+        assertNotNull(responseEntity.getBody());
+        assertEquals( "No Meeting room is available", responseEntity.getBody().getError());
+    }
+
+    @Test
+    public void givenMeetingRoomExistsButNotAvailable()
+    {
+        LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
+        LocalTime startTime = LocalTime.of(16,00);
+        LocalTime endTime = LocalTime.of(16,50);
+        int officeId = 1;
+        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
+        AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
+        Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
+        Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
+        Mockito.when(validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime)).thenReturn(new ValidateResponse("meeting is productive", true));
+        Mockito.when(validateMeetingDateTime.checkMeetingDateTime(dateOfMeeting,startTime)).thenReturn(new ValidateResponse("meeting can be scheduled" , true));
+        Mockito.when(validateOwnerId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
+        Mockito.when(employeeRepository.findOfficeIdById("abc-10")).thenReturn(1);
+        Mockito.when(validateListOfEmployees.checkIfEmployeeExistInSameOffice(employeeList,officeId)).thenReturn(new ValidateResponse(" Employees exist in DB and belong to same office" , true));
+        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb(Optional.of("Room1"))).thenReturn(new ValidateResponse("meeting room present in db",true));
         Mockito.when(validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest)).thenReturn(new ValidateResponse("Given Meeting room is not available" , false));
         ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseEntity);
@@ -237,7 +263,7 @@ class MeetingControllerTest {
         int officeId = 1;
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
         EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest = AddMeetingToEmployeeAvailabilityMapper.map(addMeetingDataRequest);
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
@@ -246,7 +272,7 @@ class MeetingControllerTest {
         Mockito.when(validateEmployeeId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
         Mockito.when(employeeRepository.findOfficeIdById("abc-10")).thenReturn(1);
         Mockito.when(validateListOfEmployees.checkIfEmployeeExistInSameOffice(employeeList,officeId)).thenReturn(new ValidateResponse(" Employees exist in DB and belong to same office" , true));
-        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb("Room1")).thenReturn(new ValidateResponse("1",true));
+        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb(Optional.of("Room1"))).thenReturn(new ValidateResponse("1",true));
         Mockito.when(validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest)).thenReturn(new ValidateResponse("Room1" , true));
         Mockito.when(validateEmployeeAvailability.checkEmployeeAvailability(employeeAvailabilityDataRequest)).thenReturn(new ValidateResponse(Arrays.asList("abc-12" , "abc-13")+"" , false));
         ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
@@ -264,7 +290,7 @@ class MeetingControllerTest {
         int officeId = 1;
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
         EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest = AddMeetingToEmployeeAvailabilityMapper.map(addMeetingDataRequest);
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
@@ -273,7 +299,7 @@ class MeetingControllerTest {
         Mockito.when(validateEmployeeId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
         Mockito.when(employeeRepository.findOfficeIdById("abc-10")).thenReturn(1);
         Mockito.when(validateListOfEmployees.checkIfEmployeeExistInSameOffice(employeeList,officeId)).thenReturn(new ValidateResponse(" Employees exist in DB and belong to same office" , true));
-        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb("Room1")).thenReturn(new ValidateResponse("meeting room present in db",true));
+        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb(Optional.of("Room1"))).thenReturn(new ValidateResponse("meeting room present in db",true));
         Mockito.when(validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest)).thenReturn(new ValidateResponse("1",true));
         Mockito.when(validateEmployeeAvailability.checkEmployeeAvailability(employeeAvailabilityDataRequest)).thenReturn(new ValidateResponse("All Employees are available", true));
         Mockito.when(meetingFacade.scheduleMeeting(addMeetingDataRequest,1)).thenReturn(new Response(null ,20128229));
@@ -292,7 +318,7 @@ class MeetingControllerTest {
         int officeId = 1;
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
         AddMeetingDataRequest addMeetingDataRequest = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).build();
         EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest = AddMeetingToEmployeeAvailabilityMapper.map(addMeetingDataRequest);
         Mockito.when(validateCompanyPolicies.noOfEmployeeInMeeting(employeeList)).thenReturn(new ValidateResponse( "Employee less than or equal to six are present so meeting is productive", true));
         Mockito.when(validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime)).thenReturn(new ValidateResponse("meeting is productive" , true));
@@ -301,7 +327,7 @@ class MeetingControllerTest {
         Mockito.when(validateEmployeeId.checkEmployeeId("abc-10")).thenReturn(new ValidateResponse("Owner exists", true));
         Mockito.when(employeeRepository.findOfficeIdById("abc-10")).thenReturn(1);
         Mockito.when(validateListOfEmployees.checkIfEmployeeExistInSameOffice(employeeList,officeId)).thenReturn(new ValidateResponse(" Employees exist in DB and belong to same office" , true));
-        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb("")).thenReturn(new ValidateResponse("meeting room not given",true));
+        Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb(Optional.empty())).thenReturn(new ValidateResponse("meeting room is not entered by owner search for any room",true));
         Mockito.when(validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest)).thenReturn(new ValidateResponse("1",true));
         Mockito.when(validateEmployeeAvailability.checkEmployeeAvailability(employeeAvailabilityDataRequest)).thenReturn(new ValidateResponse("All Employees are available", true));
         Mockito.when(meetingFacade.scheduleMeeting(addMeetingDataRequest ,1)).thenReturn(new Response(null ,20128229));

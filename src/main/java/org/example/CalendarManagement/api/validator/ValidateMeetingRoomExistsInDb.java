@@ -12,11 +12,14 @@ public class ValidateMeetingRoomExistsInDb {
     @Autowired
     MeetingRoomRepository meetingRoomRepository;
 
-    public ValidateResponse checkMeetingRoomInDb(String meetingRoomName){
-        if(meetingRoomName.equals(""))
-            return new ValidateResponse("meeting room not given",true);
+    public ValidateResponse checkMeetingRoomInDb(Optional<String> meetingRoomName){
 
-        Optional<MeetingRoom> meetingRoomResponseFromDb = meetingRoomRepository.findByName(meetingRoomName);
+        if(!meetingRoomName.isPresent())
+            return new ValidateResponse("meeting room is not entered by owner search for any room",true);
+
+        String meetingRoomNamePresent = meetingRoomName.get();
+
+        Optional<MeetingRoom> meetingRoomResponseFromDb = meetingRoomRepository.findByName(meetingRoomNamePresent);
         if(meetingRoomResponseFromDb.isPresent()){
             return new ValidateResponse("meeting room present in db",true);
         }

@@ -42,9 +42,10 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
 
 
     @Override
-    public int findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
-        if(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize()<2){
-            return 2;
+
+    public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
+        if(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize()<3){
+            return 3;
         }
         return 0;
     }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/employee")
@@ -39,15 +40,21 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<Response> saveEmployee(@Valid @RequestBody AddEmployeeDataRequest request)
     {
+          ValidateResponse validateResponseEmployeeIdExistsInDb =  validateEmployeeId.checkEmployeeId(request.getEmployeeId());
 
+          if(validateResponseEmployeeIdExistsInDb.isValid())
+          {
+              Response addEmployeeResponse = new Response(validateResponseEmployeeIdExistsInDb.getMessage(), null);
+              return new ResponseEntity<Response>(addEmployeeResponse, HttpStatus.BAD_REQUEST);
+          }
 
         ValidateResponse validateResponseEmployeeEmailDuplicate = validateEmployeeEmail.checkEmployeeEmailExist(request.getEmail());
-
 
         if(!validateResponseEmployeeEmailDuplicate.isValid()) {
             Response addEmployeeResponse = new Response(validateResponseEmployeeEmailDuplicate.getMessage(), null);
             return new ResponseEntity<Response>(addEmployeeResponse, HttpStatus.BAD_REQUEST);
         }
+
         ValidateResponse validationResponseOfficeIdInDb = validateOfficeId.checkOfficeId(request.getOfficeId());
 
         if(!validationResponseOfficeIdInDb.isValid()){
@@ -60,7 +67,8 @@ public class EmployeeController {
         return new ResponseEntity<Response>(addEmployeeResponse,HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> removeEmployee(@NotNull @PathVariable(name = "id") String employeeId)  {
+    public ResponseEntity<Response> removeEmployee(@Valid @PathVariable(name = "id") String employeeId)  {
+
         ValidateResponse validateResponseForEmployeeIdentity= null;
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest(employeeId);
         validateResponseForEmployeeIdentity = validateEmployeeId.checkEmployeeId(employeeId);

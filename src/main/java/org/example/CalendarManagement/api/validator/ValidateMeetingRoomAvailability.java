@@ -27,7 +27,7 @@ public class ValidateMeetingRoomAvailability {
     {
         ValidateResponse response = null;
         Optional<Integer> meetingRoomId;
-        if(addMeetingDataRequest.getRoomName().equals(""))
+        if(!addMeetingDataRequest.getRoomName().isPresent())
         {
             int officeId = employeeRepository.findOfficeIdById(addMeetingDataRequest.getOwnerId());
             meetingRoomId =  meetingRoomService.findFreeMeetingRoom(officeId,addMeetingDataRequest.getDateOfMeeting(),addMeetingDataRequest.getStartTime(),addMeetingDataRequest.getEndTime());
@@ -41,7 +41,7 @@ public class ValidateMeetingRoomAvailability {
         }
         else
         {
-            boolean meetingRoomAvailableResponse = meetingRoomService.meetingRoomAvailable(addMeetingDataRequest.getRoomName(),
+            boolean meetingRoomAvailableResponse = meetingRoomService.meetingRoomAvailable(addMeetingDataRequest.getRoomName().get(),
                     addMeetingDataRequest.getDateOfMeeting(),addMeetingDataRequest.getStartTime(),addMeetingDataRequest.getEndTime());
 
             if(!meetingRoomAvailableResponse)
@@ -49,7 +49,7 @@ public class ValidateMeetingRoomAvailability {
                 response = new ValidateResponse("Given Meeting room is not available",false);
                 return response;
             }
-            Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(addMeetingDataRequest.getRoomName());
+            Optional<MeetingRoom> meetingRoom = meetingRoomRepository.findByName(addMeetingDataRequest.getRoomName().get());
 
              int meetingRoomIds = meetingRoom.get().getRoomId();
             response = new ValidateResponse(meetingRoomIds+"", true);

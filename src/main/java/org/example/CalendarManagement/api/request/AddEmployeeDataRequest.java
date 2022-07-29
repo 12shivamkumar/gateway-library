@@ -1,5 +1,7 @@
 package org.example.CalendarManagement.api.request;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -18,6 +20,7 @@ public class AddEmployeeDataRequest {
     private String email;
 
     @NotNull(message = "Employee must belongs to an office")
+    @Min(value = 1 , message = "Employee must belong to any office")
     private int officeId;
 
     public AddEmployeeDataRequest(String employeeId, String name, String email, int officeId) {

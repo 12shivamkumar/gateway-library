@@ -48,11 +48,11 @@ class MeetingFacadeTest {
                 "reon-dev"
         ).build();
 
-        Mockito.when(meetingServiceClient.addMeetingDetails(Mockito.any(MeetingDetails.class))).thenReturn("20128229");
+        Mockito.when(meetingServiceClient.addMeetingDetails(Mockito.any(MeetingDetails.class))).thenReturn(20128229);
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest , 1);
         assertNotNull(responseFromFacade);
-        String responseMeetingId = (String) responseFromFacade.getData();
-        assertEquals("20128229" , responseMeetingId);
+        Integer responseMeetingId = (Integer) responseFromFacade.getData();
+        assertEquals(20128229 , responseMeetingId);
     }
 
     @Test

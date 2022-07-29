@@ -5,11 +5,16 @@ import org.example.CalendarThriftConfiguration.Date;
 import org.example.CalendarThriftConfiguration.MeetingDetails;
 import org.example.CalendarThriftConfiguration.Time;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddMeetingDataRequestToMeetingDetailsMapper {
     public static MeetingDetails map(AddMeetingDataRequest addMeetingDataRequest,int meetingRoomId){
         MeetingDetails meetingDetails = new MeetingDetails();
-        addMeetingDataRequest.getListOfEmployeeId().add(addMeetingDataRequest.getOwnerId());
-        meetingDetails.setListOfEmployee(addMeetingDataRequest.getListOfEmployeeId());
+        String ownerId = addMeetingDataRequest.getOwnerId();
+        List<String> listOfEmployeeId = new ArrayList<>(addMeetingDataRequest.getListOfEmployeeId());
+        listOfEmployeeId.add(ownerId);
+        meetingDetails.setListOfEmployee(listOfEmployeeId);
         meetingDetails.setDescription(addMeetingDataRequest.getDescription());
         meetingDetails.setAgenda(addMeetingDataRequest.getAgenda());
         meetingDetails.setOwnerId(addMeetingDataRequest.getOwnerId());

@@ -34,8 +34,8 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
     }
 
     @Override
-    public String addMeetingDetails(MeetingDetails meetingDetails) {
-        return "20128229";
+    public Integer addMeetingDetails(MeetingDetails meetingDetails) {
+        return 20128229;
     }
 
 

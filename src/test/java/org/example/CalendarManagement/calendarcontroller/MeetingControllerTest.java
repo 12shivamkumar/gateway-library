@@ -276,7 +276,7 @@ class MeetingControllerTest {
         Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb("Room1")).thenReturn(new ValidateResponse("meeting room present in db",true));
         Mockito.when(validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest)).thenReturn(new ValidateResponse("1",true));
         Mockito.when(validateEmployeeAvailability.checkEmployeeAvailability(employeeAvailabilityDataRequest)).thenReturn(new ValidateResponse("All Employees are available", true));
-        Mockito.when(meetingFacade.scheduleMeeting(addMeetingDataRequest,1)).thenReturn(new Response(null ,"20128229"));
+        Mockito.when(meetingFacade.scheduleMeeting(addMeetingDataRequest,1)).thenReturn(new Response(null ,20128229));
         ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseEntity);
         assertEquals(201,responseEntity.getStatusCodeValue());
@@ -304,7 +304,7 @@ class MeetingControllerTest {
         Mockito.when(validateMeetingRoomExistsInDb.checkMeetingRoomInDb("")).thenReturn(new ValidateResponse("meeting room not given",true));
         Mockito.when(validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest)).thenReturn(new ValidateResponse("1",true));
         Mockito.when(validateEmployeeAvailability.checkEmployeeAvailability(employeeAvailabilityDataRequest)).thenReturn(new ValidateResponse("All Employees are available", true));
-        Mockito.when(meetingFacade.scheduleMeeting(addMeetingDataRequest ,1)).thenReturn(new Response(null ,"20128229"));
+        Mockito.when(meetingFacade.scheduleMeeting(addMeetingDataRequest ,1)).thenReturn(new Response(null ,20128229));
         ResponseEntity<Response> responseEntity = meetingController.scheduleMeeting(addMeetingDataRequest);
         assertNotNull(responseEntity);
         assertEquals(201,responseEntity.getStatusCodeValue());

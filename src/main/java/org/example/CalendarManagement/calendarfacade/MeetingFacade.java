@@ -40,7 +40,7 @@ public class MeetingFacade {
 
         MeetingDetails meetingDetails = AddMeetingDataRequestToMeetingDetailsMapper.map(addMeetingDataRequest,roomId);
 
-        String meetingId = null;
+        int meetingId = 0;
 
         try {
 

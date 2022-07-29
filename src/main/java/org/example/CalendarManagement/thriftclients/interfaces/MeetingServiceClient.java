@@ -16,7 +16,7 @@ public interface MeetingServiceClient {
 
     List<String> checkEmployeeAvailability(EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest);
 
-    String addMeetingDetails(MeetingDetails meetingDetails);
+    Integer addMeetingDetails(MeetingDetails meetingDetails);
 
     Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest);
 

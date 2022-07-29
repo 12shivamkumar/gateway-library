@@ -83,7 +83,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
     }
 
     @Override
-    public String addMeetingDetails(MeetingDetails meetingDetails) {
+    public Integer addMeetingDetails(MeetingDetails meetingDetails) {
         try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
@@ -91,7 +91,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
             MeetingSvc.Client client = new MeetingSvc.Client(protocol);
 
-            String thriftResponse = client.addMeetingDetails(meetingDetails);
+            Integer thriftResponse = client.addMeetingDetails(meetingDetails);
 
             transport.close();
 

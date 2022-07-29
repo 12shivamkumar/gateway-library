@@ -25,6 +25,15 @@ public class ValidateEmployeeIdTest {
     private ValidateEmployeeId validateEmployeeId;
 
     @Test
+    public void employeeIdIllegal(){
+        RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("XYZ");
+
+        ValidateResponse validateResponse = validateEmployeeId.checkEmployeeId(removeEmployeeDataRequest.getEmployeeId());
+        Assertions.assertNotNull(validateResponse);
+        Assertions.assertFalse(validateResponse.isValid());
+    }
+
+    @Test
     public void employeeIdExists(){
 
         RemoveEmployeeDataRequest removeEmployeeDataRequest = new RemoveEmployeeDataRequest("XYZ-123");

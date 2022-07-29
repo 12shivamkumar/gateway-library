@@ -33,8 +33,4 @@ public class Office {
         this.name = officeName;
         this.officeLocation = officeLocation;
     }
-
-    public int getOfficeID() {
-        return id;
-    }
 }

@@ -24,7 +24,7 @@ public class ValidateCompanyPolicies {
     {
         Duration duration = Duration.between(startTime , endTime);
 
-        if(duration.toMinutes()>30) {
+        if(duration.toMinutes()>=30) {
             return new ValidateResponse("meeting is productive", true);
         }else {
             return new ValidateResponse("meeting won't be productive" , false);
@@ -33,8 +33,8 @@ public class ValidateCompanyPolicies {
 
     public ValidateResponse meetingBetweenOfficeHours(LocalTime startTime, LocalTime endTime)
     {
-        LocalTime officeOpen = LocalTime.of(10,00);
-        LocalTime officeClose = LocalTime.of(18,00);
+        LocalTime officeOpen = LocalTime.of(9,59);
+        LocalTime officeClose = LocalTime.of(18,01);
 
         if(startTime.isAfter(officeOpen) && startTime.isBefore(officeClose)
                 && endTime.isBefore(officeClose)) {

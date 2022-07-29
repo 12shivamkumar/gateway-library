@@ -24,7 +24,7 @@ class ValidateMeetingRoomExistsInDbTest {
     @Test
     public void meetingRoomNotGiven()
     {
-        String meetingRoom = "";
+        Optional<String> meetingRoom = Optional.empty();
         ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoom);
         Assertions.assertNotNull(validateResponseForExistingMeetingRoom);
         Assertions.assertTrue(validateResponseForExistingMeetingRoom.isValid());
@@ -32,7 +32,7 @@ class ValidateMeetingRoomExistsInDbTest {
 
     @Test
     public void meetingRoomExists(){
-        String meetingRoomName = "reon-team";
+        Optional<String> meetingRoomName = Optional.of("reon-team");
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).
                 thenReturn(Optional.of(new MeetingRoom("reon-team",3,true)));
         ValidateResponse validateResponseForExistingMeetingRoom = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoomName);
@@ -41,7 +41,7 @@ class ValidateMeetingRoomExistsInDbTest {
     }
     @Test
     public void meetingRoomDoesNotExists(){
-        String meetingRoomName = "reon-team";
+        Optional<String> meetingRoomName = Optional.of("reon-team");
         Mockito.when(meetingRoomRepository.findByName(Mockito.anyString())).thenReturn(Optional.empty());
         ValidateResponse validateResponseForMeetingRoomNotInDb = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(meetingRoomName);
         Assertions.assertNotNull(validateResponseForMeetingRoomNotInDb);

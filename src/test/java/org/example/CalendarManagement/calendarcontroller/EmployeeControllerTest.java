@@ -37,6 +37,59 @@ class EmployeeControllerTest {
     EmployeeController employeeController;
 
     @Test
+    public void employeeSavedFailedIdValidation()
+    {
+        String employeeId = "CAP-1";
+        String email = "s@cap.com";
+        String name = "xyz";
+        int officeID = 101;
+        Employee employee = new Employee(employeeId,name,officeID,email);
+        AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
+        Mockito.when(validateEmployeeId.checkEmployeeId(employeeId)).thenReturn(new ValidateResponse( "Employee Exists" , true));
+        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
+        assertNotNull(responseEntity);
+        assertEquals(400,responseEntity.getStatusCodeValue());
+        assertEquals("Employee Exists" , responseEntity.getBody().getError());
+    }
+
+        @Test
+    public void employeeSaveFailedEmailValidation()
+    {
+        String employeeId = "CAP-1";
+        String email = "s@cap.com";
+        String name = "xyz";
+        int officeID = 101;
+        Employee employee = new Employee(employeeId,name,officeID,email);
+        AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
+        Mockito.when(validateEmployeeId.checkEmployeeId(employeeId)).thenReturn(new ValidateResponse("Employee does not exists", false));
+        Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("Employee with this email exists", false));
+        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
+        assertNotNull(responseEntity);
+        assertEquals(400, responseEntity.getStatusCodeValue());
+        assertNotNull(responseEntity.getBody());
+        assertEquals("Employee with this email exists" , responseEntity.getBody().getError());
+    }
+
+    @Test
+    public void employeeSaveFailedOfficeIdValidation()
+    {
+        String employeeId = "CAP-1";
+        String email = "s@cap.com";
+        String name = "xyz";
+        int officeID = 101;
+        Employee employee = new Employee(employeeId,name,officeID,email);
+        AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
+        Mockito.when(validateEmployeeId.checkEmployeeId(employeeId)).thenReturn(new ValidateResponse("Employee does not exists", false));
+        Mockito.when(validateOfficeId.checkOfficeId(officeID)).thenReturn(new ValidateResponse("Office Information is Not Present" , false));
+        Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("Employee with this email does not exist", true));
+        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
+        assertNotNull(responseEntity);
+        assertEquals(400, responseEntity.getStatusCodeValue());
+        assertNotNull(responseEntity.getBody());
+        assertEquals("Office Information is Not Present" , responseEntity.getBody().getError());
+    }
+
+    @Test
     public void employeeSavedInFacade()
     {
         String employeeId = "CAP-1";
@@ -45,6 +98,7 @@ class EmployeeControllerTest {
         int officeID = 101;
         Employee employee = new Employee(employeeId,name,officeID,email);
         AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
+        Mockito.when(validateEmployeeId.checkEmployeeId(employeeId)).thenReturn(new ValidateResponse("Employee does not exists", false));
         Mockito.when(validateOfficeId.checkOfficeId(officeID)).thenReturn(new ValidateResponse("Valid OfficeID" , true));
         Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("valid Email", true));
         Mockito.when(employeeFacade.saveEmployee(addEmployeeDataRequest)).thenReturn(employee);
@@ -55,40 +109,9 @@ class EmployeeControllerTest {
         assertEquals(employee , responseEntity.getBody().getData());
     }
 
-    @Test
-    public void employeeFailedEmailValidation()
-    {
-        String employeeId = "CAP-1";
-        String email = "s@cap.com";
-        String name = "xyz";
-        int officeID = 101;
-        Employee employee = new Employee(employeeId,name,officeID,email);
-        AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
-        Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("Employee with this email exists", false));
-        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
-        assertNotNull(responseEntity);
-        assertEquals(400, responseEntity.getStatusCodeValue());
-        assertNotNull(responseEntity.getBody());
-        assertEquals("Employee with this email exists" , responseEntity.getBody().getError());
-    }
 
-    @Test
-    public void employeeFailedOfficeIdValidation()
-    {
-        String employeeId = "CAP-1";
-        String email = "s@cap.com";
-        String name = "xyz";
-        int officeID = 101;
-        Employee employee = new Employee(employeeId,name,officeID,email);
-        AddEmployeeDataRequest addEmployeeDataRequest = new AddEmployeeDataRequest(employeeId,name,email,officeID);
-        Mockito.when(validateOfficeId.checkOfficeId(officeID)).thenReturn(new ValidateResponse("Office Information is Not Present" , false));
-        Mockito.when(validateEmployeeEmail.checkEmployeeEmailExist(email)).thenReturn(new ValidateResponse("Employee with this email does not exist", true));
-        ResponseEntity<Response> responseEntity = employeeController.saveEmployee(addEmployeeDataRequest);
-        assertNotNull(responseEntity);
-        assertEquals(400, responseEntity.getStatusCodeValue());
-        assertNotNull(responseEntity.getBody());
-        assertEquals("Office Information is Not Present" , responseEntity.getBody().getError());
-    }
+
+
     @Test
     public void removeEmployeeFailedIdValidation(){
         String id = "xyz-123";

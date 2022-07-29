@@ -46,9 +46,8 @@ class ValidateMeetingRoomAvailabilityTest
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                ""
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.empty()).build();
 
         Mockito.when(employeeRepository.findOfficeIdById(Mockito.any())).thenReturn(1);
         Mockito.when(meetingRoomService.findFreeMeetingRoom(1 , LocalDate.of(2022,8,25), LocalTime.of(11,00,00), LocalTime.of(12,30,00)))
@@ -69,9 +68,8 @@ class ValidateMeetingRoomAvailabilityTest
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                "reon-dev"
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.of("reon-dev")).build();
 
         Mockito.when(meetingRoomService.meetingRoomAvailable("reon-dev",  LocalDate.of(2022,8,25),LocalTime.of(11,00,00), LocalTime.of(12,30,00)))
                 .thenReturn(false);
@@ -91,9 +89,8 @@ class ValidateMeetingRoomAvailabilityTest
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                ""
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.empty()).build();
 
         Mockito.when(employeeRepository.findOfficeIdById(Mockito.any())).thenReturn(1);
         Mockito.when(meetingRoomService.findFreeMeetingRoom(1, LocalDate.of(2022,8,25),LocalTime.of(11,00,00),LocalTime.of(12,30,00)))
@@ -114,9 +111,8 @@ class ValidateMeetingRoomAvailabilityTest
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                "reon-dev"
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.of("reon-dev")).build();
 
         Mockito.when(meetingRoomService.meetingRoomAvailable("reon-dev", LocalDate.of(2022,8,25),LocalTime.of(11,00,00),LocalTime.of(12,30,00))).
                 thenReturn(true);

@@ -44,9 +44,8 @@ class MeetingFacadeTest {
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                "reon-dev"
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.of("reon-dev")).build();
 
         Mockito.when(meetingServiceClient.addMeetingDetails(Mockito.any(MeetingDetails.class))).thenReturn(20128229);
         Response responseFromFacade = meetingFacade.scheduleMeeting(addMeetingDataRequest , 1);
@@ -65,9 +64,8 @@ class MeetingFacadeTest {
                 Arrays.asList("abc-12","abc-13","abc-14","abc-15"),
                 LocalDate.of(2022,8,25),
                 LocalTime.of(11,00,00),
-                LocalTime.of(12,30,00),
-                "reon-dev"
-        ).build();
+                LocalTime.of(12,30,00)
+        ).roomName(Optional.of("reon-dev")).build();
          Mockito.when(meetingServiceClient.addMeetingDetails(Mockito.any(MeetingDetails.class))).thenThrow(RuntimeException.class);
         Assertions.assertThrows(RuntimeException.class , () -> meetingFacade.scheduleMeeting(addMeetingDataRequest,1));
     }

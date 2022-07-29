@@ -1,30 +1,33 @@
 package org.example.CalendarManagement.api.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public class AddMeetingDataRequest {
-    @NotNull(message = "owner id cannot be nulll")
+    @NotNull(message = "owner id cannot be null")
+    @Size(min = 5 , message = "please provide correct employee id")
     private String ownerId;
     @NotNull(message = "agenda must exist")
+    @Size(min = 3 , message = "please provide correct agenda")
     private String agenda;
 
     private String description;
+
     @NotNull(message = "there must be at least one employee")
     private List<@NotEmpty @Size(min = 1, max=7) String> listOfEmployeeId;
-
     @NotNull(message = "date of meeting cannot be null")
     private LocalDate dateOfMeeting;
     @NotNull(message = "meeting start time cannot be null")
     private LocalTime startTime;
     @NotNull(message = "meeting end time cannot be null")
     private LocalTime endTime;
-
-    private String roomName;
+    private Optional<String> roomName = Optional.empty();
 
     public AddMeetingDataRequest() {}
 
@@ -48,9 +51,9 @@ public class AddMeetingDataRequest {
         private final LocalDate dateOfMeeting;
         private final LocalTime startTime;
         private final LocalTime endTime;
-        private final String roomName;
+        private Optional<String> roomName = Optional.empty();
 
-        public Builder(String ownerId, String agenda, String description, List<String> listOfEmployeeId, LocalDate dateOfMeeting, LocalTime startTime, LocalTime endTime, String roomName)
+        public Builder(String ownerId, String agenda, String description, List<String> listOfEmployeeId, LocalDate dateOfMeeting, LocalTime startTime, LocalTime endTime)
         {
             this.ownerId = ownerId;
             this.agenda = agenda;
@@ -59,7 +62,16 @@ public class AddMeetingDataRequest {
             this.dateOfMeeting = dateOfMeeting;
             this.startTime = startTime;
             this.endTime = endTime;
-            this.roomName = roomName;
+        }
+
+        public Builder roomName(Optional<String> roomName) {
+            if(roomName.isPresent())
+            {
+                this.roomName = roomName;
+                return  this;
+            }
+            this.roomName = Optional.empty();
+            return this;
         }
 
         public AddMeetingDataRequest build() {
@@ -95,7 +107,21 @@ public class AddMeetingDataRequest {
         return endTime;
     }
 
-    public String getRoomName() {
+    public Optional<String> getRoomName() {
         return roomName;
+    }
+
+    @Override
+    public String toString() {
+        return "AddMeetingDataRequest{" +
+                "ownerId='" + ownerId + '\'' +
+                ", agenda='" + agenda + '\'' +
+                ", description='" + description + '\'' +
+                ", listOfEmployeeId=" + listOfEmployeeId +
+                ", dateOfMeeting=" + dateOfMeeting +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", roomName=" + roomName +
+                '}';
     }
 }

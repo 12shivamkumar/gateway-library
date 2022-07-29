@@ -10,3 +10,4 @@ INSERT INTO employee(id,name,email,office_id) VALUES("abc-15" , "abc5" , "abc5@x
 INSERT INTO employee(id,name,email,office_id) VALUES("abc-16" , "abc6" , "abc6@xyz.com" , 1);
 
 INSERT INTO meeting_room(id ,room_name ,office_id ,is_open) VALUES (1 , "Room1" , 1 , true);
+INSERT INTO meeting_room(id ,room_name ,office_id ,is_open) VALUES (2 , "Room2" , 1 , true);

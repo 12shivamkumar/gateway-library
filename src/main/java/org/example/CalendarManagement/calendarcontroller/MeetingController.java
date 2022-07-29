@@ -50,6 +50,8 @@ public class MeetingController {
     @PostMapping
     public ResponseEntity<Response> scheduleMeeting(@Valid @RequestBody AddMeetingDataRequest addMeetingDataRequest){
 
+        System.out.println(addMeetingDataRequest.toString());
+
       ValidateResponse validateResponseNoOfEmployeeInMeeting = validateCompanyPolicies.noOfEmployeeInMeeting(addMeetingDataRequest.getListOfEmployeeId());
 
       if(!validateResponseNoOfEmployeeInMeeting.isValid())
@@ -94,10 +96,9 @@ public class MeetingController {
       }
 
       ValidateResponse validateResponseValidateMeetingRoomNameExistsInDb = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(addMeetingDataRequest.getRoomName());
-      if(!validateResponseValidateMeetingRoomNameExistsInDb.isValid())
-      {
-          Response scheduleMeetingResponse = new Response( "meeting room does not exist or is closed" , false);
-          return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
+      if (!validateResponseValidateMeetingRoomNameExistsInDb.isValid()) {
+          Response scheduleMeetingResponse = new Response("meeting room does not exist or is closed", false);
+          return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.BAD_REQUEST);
       }
 
       ValidateResponse validateResponseValidateMeetingRoomAvailability = validateMeetingRoomAvailability.checkMeetingRoomAvailability(addMeetingDataRequest);

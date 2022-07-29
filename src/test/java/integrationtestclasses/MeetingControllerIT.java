@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -30,7 +31,7 @@ public class MeetingControllerIT extends BaseIntegrationTest
         LocalTime startTime = LocalTime.of(16,00);
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
-        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room1").build();
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room1")).build();
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
         HttpEntity<String> httpEntity =
@@ -49,10 +50,10 @@ public class MeetingControllerIT extends BaseIntegrationTest
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
-        LocalTime startTime = LocalTime.of(16,00);
-        LocalTime endTime = LocalTime.of(16,50);
+        LocalTime startTime = LocalTime.of(11,00);
+        LocalTime endTime = LocalTime.of(12,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
-        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).build();
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
         HttpEntity<String> httpEntity =
@@ -74,7 +75,7 @@ public class MeetingControllerIT extends BaseIntegrationTest
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
 
-        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "Room5").build();
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.of("Room5")).build();
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
         HttpEntity<String> httpEntity =
@@ -98,7 +99,7 @@ public class MeetingControllerIT extends BaseIntegrationTest
         LocalTime endTime = LocalTime.of(16,50);
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16" ,"abc-17");
         AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
-                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).build();
 
         String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 
@@ -122,7 +123,7 @@ public class MeetingControllerIT extends BaseIntegrationTest
 //        LocalTime endTime = LocalTime.of(16,50);
 //        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
 //        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
-//                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
+//                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).build();
 //
 //        String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
 //

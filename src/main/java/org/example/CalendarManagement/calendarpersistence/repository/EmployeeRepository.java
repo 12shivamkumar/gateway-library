@@ -13,6 +13,9 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee,String>
 {
+    @Query(value = "SELECT  * FROM employee e WHERE e.id = :id AND e.is_deleted = false" , nativeQuery = true)
+    Optional<Employee> findById(String id);
+
     Optional<Employee> findByEmail(String email);
 
     @Query(value = "SELECT e.office_id FROM employee e WHERE e.id IN :listOfEmployeeId AND e.is_deleted=false" ,nativeQuery = true)

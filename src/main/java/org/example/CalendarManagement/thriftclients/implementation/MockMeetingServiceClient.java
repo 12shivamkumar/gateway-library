@@ -1,10 +1,12 @@
 package org.example.CalendarManagement.thriftclients.implementation;
 
+import org.apache.thrift.TException;
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.example.CalendarThriftConfiguration.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,13 +36,13 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
     }
 
     @Override
-    public Integer addMeetingDetails(MeetingDetails meetingDetails) {
+    public int addMeetingDetails(MeetingDetails meetingDetails) {
         return 20128229;
     }
 
 
     @Override
-    public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
+    public int findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
         if(findFreeMeetingRoomDataRequest.getMeetingRoomsInOfficeSize()<2){
             return 2;
         }
@@ -54,6 +56,41 @@ public class MockMeetingServiceClient implements MeetingServiceClient {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<EmployeeMeetingDetails> getEmployeeMeetingDetails(String employeeId) {
+        if(employeeId.equals("abc-15")){
+            throw new RuntimeException("mocking internal server error");
+        }
+        List<EmployeeMeetingDetails> employeeMeetingDetails = new ArrayList<>();
+        EmployeeMeetingDetails meetingOfEmployee = new EmployeeMeetingDetails(
+                2,
+                "accepted",
+                "Mock description",
+                "mock agenda",
+                "xyz-300",
+                new Date(30,9,2022),
+                new Time(14,00,00),
+                new Time(15,30,00),
+                true,
+                3
+        );
+        EmployeeMeetingDetails anotherMeetingOfEmployee = new EmployeeMeetingDetails(
+                8,
+                "cancelled",
+                "IT description",
+                "IT agenda",
+                "xyz-14",
+                new Date(30,9,2022),
+                new Time(16,00,00),
+                new Time(17,45,00),
+                true,
+                1
+        );
+        employeeMeetingDetails.add(meetingOfEmployee);
+        employeeMeetingDetails.add(anotherMeetingOfEmployee);
+        return employeeMeetingDetails;
     }
 
     @Override

@@ -16,11 +16,13 @@ public interface MeetingServiceClient {
 
     List<String> checkEmployeeAvailability(EmployeeAvailabilityDataRequest employeeAvailabilityDataRequest);
 
-    Integer addMeetingDetails(MeetingDetails meetingDetails);
+    int addMeetingDetails(MeetingDetails meetingDetails);
 
-    Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest);
+    int findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest);
 
     boolean meetingRoomAvailable(MeetingRoomAvailableDataRequest meetingRoomAvailableDataRequest);
+
+    List<EmployeeMeetingDetails> getEmployeeMeetingDetails(String employeeId);
 
     String isAlive();
 

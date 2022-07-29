@@ -8,6 +8,8 @@ import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoom
 import org.example.CalendarManagement.calendarservice.implementation.MeetingRoomService;
 import org.example.CalendarManagement.thriftclients.interfaces.MeetingServiceClient;
 import org.example.CalendarManagement.thriftobjectmappers.AddMeetingDataRequestToMeetingDetailsMapper;
+import org.example.CalendarManagement.thriftobjectmappers.EmployeeMeetingDetailsToMeetingsOfEmployee;
+import org.example.CalendarManagement.thriftobjectmappers.MeetingsOfEmployee;
 import org.example.CalendarThriftConfiguration.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,10 +49,21 @@ public class MeetingFacade {
             meetingId = meetingServiceClient.addMeetingDetails(meetingDetails);
 
             response = new Response(null, meetingId);
-        }catch (RuntimeException ex){
+        }catch (Exception ex){
             logger.error(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
         return response;
+    }
+
+    public Response getMeetings(String employeeId) {
+        try {
+            List<EmployeeMeetingDetails> meetingsOfEmployeeForToday = meetingServiceClient.getEmployeeMeetingDetails(employeeId);
+            List<MeetingsOfEmployee> meetingsOfEmployee = EmployeeMeetingDetailsToMeetingsOfEmployee.map(meetingsOfEmployeeForToday);
+            return new Response(null, meetingsOfEmployee);
+        } catch (Exception ex) {
+            logger.error("get meetings failed due to exception", ex);
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 }

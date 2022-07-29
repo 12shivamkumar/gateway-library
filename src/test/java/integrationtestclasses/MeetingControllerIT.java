@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.CalendarManagement.api.Response;
 import org.example.CalendarManagement.api.request.AddMeetingDataRequest;
 import org.example.CalendarManagement.calendarpersistence.repository.MeetingRoomRepository;
+import org.example.CalendarThriftConfiguration.EmployeeMeetingDetails;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -113,27 +115,78 @@ public class MeetingControllerIT extends BaseIntegrationTest
         assertNotNull(responseEntity.getBody());
 
     }
+    
+    @Test
+    public void scheduleMeetingFailTest_internalServerError() throws JsonProcessingException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
+        LocalTime startTime = LocalTime.of(16,00);
+        LocalTime endTime = LocalTime.of(16,50);
+        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime, "").build();
 
-//    @Test
-//    public void scheduleMeetingFailTest_internalServerError() throws JsonProcessingException {
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
-//        LocalTime startTime = LocalTime.of(16,00);
-//        LocalTime endTime = LocalTime.of(16,50);
-//        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
-//        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
-//                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).build();
-//
-//        String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
-//
-//        HttpEntity<String> httpEntity =
-//                new HttpEntity<String>(scheduleMeetingRequestString, headers);
-//
-//        ResponseEntity<Response> responseEntity = restTemplate.exchange(createURLWithPort("/meeting"), HttpMethod.POST, httpEntity,
-//                Response.class);
-//
-//        assertEquals(500, responseEntity.getStatusCodeValue());
-//
-//    }
+        String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
+
+        HttpEntity<String> httpEntity =
+                new HttpEntity<String>(scheduleMeetingRequestString, headers);
+
+        ResponseEntity<Response> responseEntity = restTemplate.exchange(createURLWithPort("/meeting"), HttpMethod.POST, httpEntity,
+                Response.class);
+
+        assertEquals(500, responseEntity.getStatusCodeValue());
+
+    }
+
+    @Test
+    public void getMeetingsOfEmployeeTestSuccess(){
+        String employeeId = "abc-13";
+        HttpEntity<?> httpEntity = HttpEntity.EMPTY;
+        ResponseEntity<Response> responseEntity = restTemplate.exchange(createURLWithPort("/meeting/"+employeeId),HttpMethod.GET,httpEntity,Response.class);
+        assertEquals(200,responseEntity.getStatusCodeValue());
+        Response responseFromMeetingController = responseEntity.getBody();
+        assertNotNull(responseFromMeetingController);
+        assertEquals(ArrayList.class,responseFromMeetingController.getData().getClass());
+
+    }
+
+    @Test
+    public void getMeetingsOfEmployeeTestFail_failedValidation() {
+        String employeeId = "abc-20";
+        HttpEntity<?> httpEntity = HttpEntity.EMPTY;
+        ResponseEntity<Response> responseEntity = restTemplate.exchange(createURLWithPort("/meeting/"+employeeId),HttpMethod.GET,httpEntity,Response.class);
+        assertEquals(400,responseEntity.getStatusCodeValue());
+
+    }
+    @Test
+    public void getMeetingsOfEmployeeTestFail_internalServerError() {
+        String employeeId = "abc-15";
+        HttpEntity<?> httpEntity = HttpEntity.EMPTY;
+        ResponseEntity<Response> responseEntity = restTemplate.exchange(createURLWithPort("/meeting/"+employeeId),HttpMethod.GET,httpEntity,Response.class);
+        assertEquals(500,responseEntity.getStatusCodeValue());
+
+    }
+
+    @Test
+    public void scheduleMeetingFailTest_internalServerError() throws JsonProcessingException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
+        LocalTime startTime = LocalTime.of(16,00);
+        LocalTime endTime = LocalTime.of(16,50);
+        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
+        AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
+                ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).build();
+
+        String scheduleMeetingRequestString = objectMapper.writeValueAsString(request);
+
+        HttpEntity<String> httpEntity =
+                new HttpEntity<String>(scheduleMeetingRequestString, headers);
+
+        ResponseEntity<Response> responseEntity = restTemplate.exchange(createURLWithPort("/meeting"), HttpMethod.POST, httpEntity,
+                Response.class);
+
+        assertEquals(500, responseEntity.getStatusCodeValue());
+   }
 }

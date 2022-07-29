@@ -83,7 +83,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
     }
 
     @Override
-    public Integer addMeetingDetails(MeetingDetails meetingDetails) {
+    public int addMeetingDetails(MeetingDetails meetingDetails) {
         try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
@@ -91,7 +91,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
             MeetingSvc.Client client = new MeetingSvc.Client(protocol);
 
-            Integer thriftResponse = client.addMeetingDetails(meetingDetails);
+            int thriftResponse = client.addMeetingDetails(meetingDetails);
 
             transport.close();
 
@@ -104,7 +104,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
     }
 
     @Override
-    public Integer findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
+    public int findFreeMeetingRoom(FindFreeMeetingRoomDataRequest findFreeMeetingRoomDataRequest) {
         try( TTransport transport = new TSocket("localhost",9090)) {
             transport.open();
 
@@ -112,7 +112,7 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
 
             MeetingSvc.Client client = new MeetingSvc.Client(protocol);
 
-            Integer thriftResponse = client.findFreeMeetingRoom(findFreeMeetingRoomDataRequest);
+            int thriftResponse = client.findFreeMeetingRoom(findFreeMeetingRoomDataRequest);
 
             transport.close();
 
@@ -134,6 +134,27 @@ public class MeetingServiceClientImpl implements MeetingServiceClient
             MeetingSvc.Client client = new MeetingSvc.Client(protocol);
 
             boolean thriftResponse = client.meetingRoomAvailable(meetingRoomAvailableDataRequest);
+
+            transport.close();
+
+            return thriftResponse;
+        }catch (TException exception)
+        {
+            logger.error(exception.getMessage());
+            throw  new RuntimeException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public List<EmployeeMeetingDetails> getEmployeeMeetingDetails(String employeeId) {
+        try( TTransport transport = new TSocket("localhost",9090)) {
+            transport.open();
+
+            TProtocol protocol = new TBinaryProtocol(transport);
+
+            MeetingSvc.Client client = new MeetingSvc.Client(protocol);
+
+            List<EmployeeMeetingDetails> thriftResponse = client.getEmployeeMeetingDetails(employeeId);
 
             transport.close();
 

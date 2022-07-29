@@ -6,25 +6,25 @@ import org.example.CalendarManagement.api.validator.*;
 import org.example.CalendarManagement.calendarfacade.MeetingFacade;
 import org.example.CalendarManagement.calendarpersistence.repository.EmployeeRepository;
 import org.example.CalendarManagement.thriftobjectmappers.AddMeetingToEmployeeAvailabilityMapper;
-import org.example.CalendarThriftConfiguration.Date;
 import org.example.CalendarThriftConfiguration.EmployeeAvailabilityDataRequest;
-import org.example.CalendarThriftConfiguration.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalTime;
+import javax.validation.constraints.NotNull;
 
 @RestController
+@Validated
 @RequestMapping("/meeting")
 public class MeetingController {
     @Autowired
     ValidateCompanyPolicies validateCompanyPolicies;
 
     @Autowired
-    ValidateEmployeeId validateOwnerId;
+    ValidateEmployeeId validateEmployeeId;
 
     @Autowired
     ValidateMeetingDateTime validateMeetingDateTime;
@@ -81,7 +81,7 @@ public class MeetingController {
           return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
-      ValidateResponse validateResponseValidateOwnerId = validateOwnerId.checkEmployeeId(addMeetingDataRequest.getOwnerId());
+      ValidateResponse validateResponseValidateOwnerId = validateEmployeeId.checkEmployeeId(addMeetingDataRequest.getOwnerId());
       if(!validateResponseValidateOwnerId.isValid())
       {
           Response scheduleMeetingResponse = new Response( "Owner does not exists" , false);
@@ -121,5 +121,16 @@ public class MeetingController {
 
       Response scheduleMeetingResponse = new Response(null , validateResponseScheduleMeeting.getData());
       return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Response> getMeetingsOfEmployee(@NotNull(message = "employeeId cannot be null")@PathVariable(name = "id") String employeeId){
+        ValidateResponse validEmployeeId = validateEmployeeId.checkEmployeeId(employeeId);
+        if(!validEmployeeId.isValid()){
+            Response invalidRequestResponse = new Response(validEmployeeId.getMessage(),null);
+            return new ResponseEntity<>(invalidRequestResponse,HttpStatus.BAD_REQUEST);
+        }
+        Response getMeetings = meetingFacade.getMeetings(employeeId);
+        return new ResponseEntity<Response>(getMeetings,HttpStatus.OK);
     }
 }

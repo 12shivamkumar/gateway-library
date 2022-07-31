@@ -18,7 +18,12 @@ public class ValidateListOfEmployees {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public ValidateResponse checkIfEmployeeExistInSameOffice(List<String> listOfEmployeeId,int officeId){
+    public ValidateResponse checkIfEmployeeExistInSameOffice(List<String> listOfEmployeeId,int officeId, String ownerId){
+
+        if(listOfEmployeeId.contains(ownerId)) {
+            return new ValidateResponse("owner is also in list of employees" , false);
+        }
+
         Set<String> listOfEmployeeDuplicateCheck = new HashSet<>(listOfEmployeeId);
         if(listOfEmployeeDuplicateCheck.size()!=listOfEmployeeId.size()){
             return new ValidateResponse(" Duplicate employee found",false);
@@ -29,20 +34,20 @@ public class ValidateListOfEmployees {
                 return new ValidateResponse("Not all employees exist in db",false);
             }
         }
+
+        ValidateResponse validateResponse = null;
         int countOfEmployeeInDB = employeeRepository.countByIdIn(listOfEmployeeId);
         if(countOfEmployeeInDB == listOfEmployeeId.size())
         {
             Set<Integer> listOfOfficeId = new HashSet<>(employeeRepository.findOfficeByEmployeeId(listOfEmployeeId));
 
             if(listOfOfficeId.size()== 1 && listOfOfficeId.contains(officeId)){
-                return new ValidateResponse(" Employees exist in DB and belong to same office",true);
+                validateResponse = new  ValidateResponse(" Employees exist in DB and belong to same office",true);
             }
             else {
-                return new ValidateResponse("Employee working in different offices",false);
+                validateResponse = new  ValidateResponse("Employee working in different offices",false);
             }
         }
-        else {
-            return new ValidateResponse("Not all employees exist",false);
-        }
+      return validateResponse;
     }
 }

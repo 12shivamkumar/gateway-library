@@ -23,9 +23,19 @@ class ValidateListOfEmployeesTest {
     ValidateListOfEmployees validateListOfEmployees;
 
     @Test
+    public void ownerAlsoInListOfEmployee()
+    {
+        List<String> listOfEmployee = Arrays.asList("abc-12", "abc-13", "abc-14","abc-14");
+        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2,"abc-12");
+        assertNotNull(validateResponse);
+        assertFalse(validateResponse.isValid());
+        assertEquals("owner is also in list of employees",validateResponse.getMessage());
+    }
+
+    @Test
     public void employeeDuplicatesInList(){
         List<String> listOfEmployee = Arrays.asList("abc-12", "abc-13", "abc-14","abc-14");
-        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2);
+        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2 ,"abc-11");
         assertNotNull(validateResponse);
         assertFalse(validateResponse.isValid());
         assertEquals(" Duplicate employee found",validateResponse.getMessage());
@@ -34,7 +44,7 @@ class ValidateListOfEmployeesTest {
     public void employeeNotInDatabase(){
         List<String> listOfEmployee = Arrays.asList("abc-12", "abc-13", "abc-14","abc-8");
         Mockito.when(validateEmployeeId.checkEmployeeId(Mockito.anyString())).thenReturn(new ValidateResponse("Employee Not in Db",false));
-        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2);
+        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2,"abc-11");
         assertNotNull(validateResponse);
         assertFalse(validateResponse.isValid());
         assertEquals("Not all employees exist in db",validateResponse.getMessage());
@@ -46,7 +56,7 @@ class ValidateListOfEmployeesTest {
         Mockito.when(validateEmployeeId.checkEmployeeId(Mockito.anyString())).thenReturn(new ValidateResponse("Employee in Db",true));
         Mockito.when(employeeRepository.countByIdIn(Mockito.anyList())).thenReturn(3);
         Mockito.when(employeeRepository.findOfficeByEmployeeId(Mockito.anyList())).thenReturn(Arrays.asList(2));
-        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2);
+        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2,"abc-11");
         assertNotNull(validateResponse);
         assertTrue(validateResponse.isValid());
     }
@@ -56,7 +66,7 @@ class ValidateListOfEmployeesTest {
         Mockito.when(validateEmployeeId.checkEmployeeId(Mockito.anyString())).thenReturn(new ValidateResponse("Employee in Db",true));
         Mockito.when(employeeRepository.countByIdIn(Mockito.anyList())).thenReturn(3);
         Mockito.when(employeeRepository.findOfficeByEmployeeId(Mockito.anyList())).thenReturn(Arrays.asList(2,3));
-        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2);
+        ValidateResponse validateResponse = validateListOfEmployees.checkIfEmployeeExistInSameOffice(listOfEmployee,2, "abc-11");
         assertNotNull(validateResponse);
         assertFalse(validateResponse.isValid());
     }

@@ -123,7 +123,7 @@ public class MeetingControllerIT extends BaseIntegrationTest
         LocalDate dateOfMeeting = LocalDate.of(2022,8,26);
         LocalTime startTime = LocalTime.of(16,00);
         LocalTime endTime = LocalTime.of(16,50);
-        List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13");
+        List<String> employeeList = Arrays.asList("abc-11", "abc-12");
         AddMeetingDataRequest request = new AddMeetingDataRequest.Builder
                 ("abc-10" , "sync-up","details",employeeList, dateOfMeeting,startTime, endTime).roomName(Optional.empty()).build();
 

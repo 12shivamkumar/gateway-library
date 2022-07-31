@@ -26,7 +26,11 @@ public class ValidateCompanyPolicies {
 
         if(duration.toMinutes()>=30) {
             return new ValidateResponse("meeting is productive", true);
-        }else {
+        }else if(duration.toMinutes()<0)
+        {
+            return new ValidateResponse("meeting starting time is after meeting end time", false);
+        }
+        else{
             return new ValidateResponse("meeting won't be productive" , false);
         }
     }

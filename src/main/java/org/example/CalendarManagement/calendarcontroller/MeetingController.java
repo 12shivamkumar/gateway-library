@@ -88,7 +88,7 @@ public class MeetingController {
           return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
-      ValidateResponse validateResponseValidateListOfEmployee  =validateListOfEmployees.checkIfEmployeeExistInSameOffice(addMeetingDataRequest.getListOfEmployeeId(), employeeRepository.findOfficeIdById(addMeetingDataRequest.getOwnerId()));
+      ValidateResponse validateResponseValidateListOfEmployee  =validateListOfEmployees.checkIfEmployeeExistInSameOffice(addMeetingDataRequest.getListOfEmployeeId(), employeeRepository.findOfficeIdById(addMeetingDataRequest.getOwnerId()), addMeetingDataRequest.getOwnerId());
       if(!validateResponseValidateListOfEmployee.isValid())
       {
           Response scheduleMeetingResponse = new Response( validateResponseValidateListOfEmployee.getMessage(), false);

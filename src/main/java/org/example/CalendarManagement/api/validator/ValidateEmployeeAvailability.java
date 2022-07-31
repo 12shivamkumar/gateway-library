@@ -6,7 +6,9 @@ import org.example.CalendarThriftConfiguration.EmployeeAvailabilityDataRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class ValidateEmployeeAvailability
@@ -20,7 +22,9 @@ public class ValidateEmployeeAvailability
 
         List<String> employeesNotAvailable = meetingServiceClient.checkEmployeeAvailability(employeeAvailabilityDataRequest);
         if(employeesNotAvailable.size()>0){
-            response = new ValidateResponse(employeesNotAvailable+"", false);
+            Set<String> employeeNotAvailable = new HashSet<>(employeesNotAvailable);
+
+            response = new ValidateResponse(employeeNotAvailable+"", false);
             return response;
         }
        return new ValidateResponse(null, true);

@@ -31,6 +31,16 @@ class ValidateCompanyPoliciesTest {
     }
 
     @Test
+    public void meetingTimingInputWrong()
+    {
+        LocalTime startTime = LocalTime.of(11,30);
+        LocalTime endTime = LocalTime.of(10,30);
+        ValidateResponse validateResponse = validateCompanyPolicies.meetingBetweenOfficeHours(startTime, endTime);
+        assertNotNull(validateResponse);
+        assertTrue(validateResponse.isValid());
+    }
+
+    @Test
     public void noOfEmployeesLessThanAndEqualToSix()
     {
         List<String> employeeList = Arrays.asList("abc-11", "abc-12", "abc-13", "abc-14", "abc-15", "abc-16");
@@ -54,6 +64,16 @@ class ValidateCompanyPoliciesTest {
     {
         LocalTime startTime = LocalTime.of(11,30);
         LocalTime endTime = LocalTime.of(11,55);
+        ValidateResponse validateResponse = validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime);
+        assertNotNull(validateResponse);
+        assertFalse(validateResponse.isValid());
+    }
+
+    @Test
+    public void meetingDurationLessThanZero()
+    {
+        LocalTime startTime = LocalTime.of(11,30);
+        LocalTime endTime = LocalTime.of(11,25);
         ValidateResponse validateResponse = validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(startTime,endTime);
         assertNotNull(validateResponse);
         assertFalse(validateResponse.isValid());

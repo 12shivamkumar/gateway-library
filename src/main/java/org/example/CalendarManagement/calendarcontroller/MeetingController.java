@@ -56,48 +56,48 @@ public class MeetingController {
 
       if(!validateResponseNoOfEmployeeInMeeting.isValid())
       {
-          Response scheduleMeetingResponse = new Response( "Employees more than six are present So meeting is not Productive", null);
+          Response scheduleMeetingResponse = new Response( validateResponseNoOfEmployeeInMeeting.getMessage(), null);
           return  new ResponseEntity<Response>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
       ValidateResponse validateResponseMeetingDurationGreaterThanThirtyMinutes = validateCompanyPolicies.meetingDurationGreaterThanThirtyMinutes(addMeetingDataRequest.getStartTime(),addMeetingDataRequest.getEndTime());
       if(!validateResponseMeetingDurationGreaterThanThirtyMinutes.isValid())
       {
-          Response scheduleMeetingResponse = new Response( "meeting won't be productive because meeting duration is less than 30 minutes", null);
+          Response scheduleMeetingResponse = new Response( validateResponseMeetingDurationGreaterThanThirtyMinutes.getMessage(), null);
           return  new ResponseEntity<Response>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
       ValidateResponse validateResponseMeetingBetweenOfficeHours =  validateCompanyPolicies.meetingBetweenOfficeHours(addMeetingDataRequest.getStartTime(),addMeetingDataRequest.getEndTime());
       if(!validateResponseMeetingBetweenOfficeHours.isValid())
       {
-          Response scheduleMeetingResponse = new Response( "meeting won't be productive because meeting is outside office hours", null);
+          Response scheduleMeetingResponse = new Response( validateResponseMeetingBetweenOfficeHours.getMessage(), null);
           return  new ResponseEntity<Response>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
       ValidateResponse validateResponseValidateMeetingDateTime =  validateMeetingDateTime.checkMeetingDateTime(addMeetingDataRequest.getDateOfMeeting(), addMeetingDataRequest.getStartTime());
       if(!validateResponseValidateMeetingDateTime.isValid())
       {
-          Response scheduleMeetingResponse = new Response("Invalid input for scheduling a meeting" , false);
+          Response scheduleMeetingResponse = new Response(validateResponseValidateMeetingDateTime.getMessage() , false);
           return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
       ValidateResponse validateResponseValidateOwnerId = validateEmployeeId.checkEmployeeId(addMeetingDataRequest.getOwnerId());
       if(!validateResponseValidateOwnerId.isValid())
       {
-          Response scheduleMeetingResponse = new Response( "Owner does not exists" , false);
+          Response scheduleMeetingResponse = new Response( validateResponseValidateOwnerId.getMessage() , false);
           return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
       ValidateResponse validateResponseValidateListOfEmployee  =validateListOfEmployees.checkIfEmployeeExistInSameOffice(addMeetingDataRequest.getListOfEmployeeId(), employeeRepository.findOfficeIdById(addMeetingDataRequest.getOwnerId()));
       if(!validateResponseValidateListOfEmployee.isValid())
       {
-          Response scheduleMeetingResponse = new Response( "All employees does not belongs to same office" , false);
+          Response scheduleMeetingResponse = new Response( validateResponseValidateListOfEmployee.getMessage(), false);
           return new ResponseEntity<>(scheduleMeetingResponse , HttpStatus.BAD_REQUEST);
       }
 
       ValidateResponse validateResponseValidateMeetingRoomNameExistsInDb = validateMeetingRoomExistsInDb.checkMeetingRoomInDb(addMeetingDataRequest.getRoomName());
       if (!validateResponseValidateMeetingRoomNameExistsInDb.isValid()) {
-          Response scheduleMeetingResponse = new Response("meeting room does not exist or is closed", false);
+          Response scheduleMeetingResponse = new Response(validateResponseValidateMeetingRoomNameExistsInDb.getMessage(), false);
           return new ResponseEntity<>(scheduleMeetingResponse, HttpStatus.BAD_REQUEST);
       }
 

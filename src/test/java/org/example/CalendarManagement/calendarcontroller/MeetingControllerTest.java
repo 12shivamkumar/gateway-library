@@ -92,7 +92,7 @@ class MeetingControllerTest {
         assertNotNull(responseEntity);
         assertEquals(400,responseEntity.getStatusCodeValue());
         assertNotNull(responseEntity.getBody());
-        assertEquals("meeting won't be productive because meeting duration is less than 30 minutes" , responseEntity.getBody().getError());
+        assertEquals("meeting won't be productive" , responseEntity.getBody().getError());
     }
 
     @Test
@@ -175,7 +175,7 @@ class MeetingControllerTest {
         assertNotNull(responseEntity);
         assertEquals(400,responseEntity.getStatusCodeValue());
         assertNotNull(responseEntity.getBody());
-        assertEquals("All employees does not belongs to same office", responseEntity.getBody().getError());
+        assertEquals("Employee working in different offices", responseEntity.getBody().getError());
     }
 
     @Test

@@ -133,4 +133,8 @@ public class MeetingController {
         Response getMeetings = meetingFacade.getMeetings(employeeId);
         return new ResponseEntity<Response>(getMeetings,HttpStatus.OK);
     }
+     public String isAlive()
+    {
+        return "";
+    }
 }

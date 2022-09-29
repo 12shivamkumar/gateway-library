@@ -26,7 +26,6 @@ public class EmployeeService implements  EmployeeInterface
     @Override
     public Employee removeEmployeeById(String id) {
         Optional<Employee> employee = employeeRepository.findById(id);
-        employee.get().setDeleted(true);
         employeeRepository.save(employee.get());
         return employee.get();
     }
